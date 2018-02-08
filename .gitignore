@@ -1,5 +1,5 @@
 node_modules/
 immutable0/
 immutable1/
-xyz.code-workspace
+*.code-workspace
 old.git
