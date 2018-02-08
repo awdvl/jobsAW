@@ -1,0 +1,77 @@
+{
+    "en": {
+
+    },
+    "de": {
+        "job": {
+            "type": {
+                "1": "Vollzeit",
+                "2": "Teilzeit",
+                "3": "Interim"
+            }
+        },
+        "companies": {
+            "industries": {
+                "1": "Automotive",
+                "2": "Software Development",
+                "3": "Bank"
+            }, 
+            "size": {
+                "4": "< 50",
+                "5": "50 - 200",
+                "6": "200 - 500",
+                "7": "500 - 1000",
+                "8": "1000 - 5000",
+                "9": "> 5000"
+            }
+
+        },
+        "cities": {
+            "size": {
+                "4": "> 3 Mio",
+                "5": "1 Mio - 3 Mio",
+                "6": "500 Tsd - 1 Mio",
+                "7": "250 Tsd - 500 Tsd",
+                "8": "100 Tsd - 250 Tsd",
+                "9": "50 Tsd - 100 Tsd",
+                "10": "20 Tsd - 50 Tsd",
+                "11": "5 Tsd - 20 Tsd",
+                "12": "1 Tsd - 5 Tsd",
+                "13": "< 1 Tsd"
+            },
+            "state": {
+                "1": "Schleswig-Holstein",
+                "2": "Freie und Hansestadt Hamburg",
+                "3": "Niedersachsen",
+                "4": "Freie Hansestadt Bremen",
+                "5": "Nordrhein-Westfalen",
+                "6": "Hessen",
+                "7": "Rheinland-Pfalz",
+                "8": "Baden-Württemberg",
+                "9": "Bayern",
+                "10": "Saarland",
+                "11": "Berlin",
+                "12": "Brandenburg",
+                "13": "Mecklenburg-Vorpommern",
+                "14": "Freistaat Sachsen",
+                "15": "Sachsen-Anhalt",
+                "16": "Thüringen"
+            },
+            "loc": {
+                "N": "Nord",
+                "S": "Süd",
+                "W": "West",
+                "E": "Ost"
+            },
+            "names": {
+                "B": "Berlin",
+                "HH": "Hamburg",
+                "M": "München",
+                "K": "Köln",
+                "F": "Frankfurt am Main",
+                "S": "Stuttgart"
+            }
+    
+        }
+    }
+}
