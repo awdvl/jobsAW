@@ -1,14 +1,23 @@
-// import {} from 'redux';
+import { combineReducers } from 'redux';
+import cities from './cities';
+import companies from './companies';
 
-const cities = (state, action) => {
-    switch(action.type) {
-        case 'FETCH_CITIES_SUCCESS':
-            return action.response;
+const reducers = combineReducers({
+    cities,
+    companies
+});
 
-        // case 'FETCH_CITIES_ERROR':
-        default:
-            return state;
-    }
-}
+export default reducers;
 
-export default cities;
+// const cities = (state, action) => {
+//     switch(action.type) {
+//         case 'FETCH_CITIES_SUCCESS':
+//             return action.response;
+
+//         // case 'FETCH_CITIES_ERROR':
+//         default:
+//             return state;
+//     }
+// }
+
+// export default cities;

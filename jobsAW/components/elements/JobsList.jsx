@@ -19,8 +19,9 @@ class JobsList extends Component {
 
     getData() {
                                 bug('JobsList.jsx, this.props', this.props);
-        const { state, getCities, fetched } = this.props;
+        const { state, getCities, getCompanies, fetched } = this.props;
         getCities(fetched);
+        getCompanies();
     }
 
     render () {

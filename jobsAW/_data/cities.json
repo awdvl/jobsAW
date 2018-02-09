@@ -1,33 +1,33 @@
 {
-        "B": {
-            "size": 4,
-            "state": 11,
-            "loc": "O"
-        },
-        "HH": {
-            "size": 5,
-            "state": 2,
-            "loc": "N"
-        },
-        "M": {
-            "size": 5,
-            "state": 9,
-            "loc": "S"
-        },
-        "K": {
-            "size": 5,
-            "state": 5,
-            "loc": "W"
-        },
-        "F": {
-            "size": 6,
-            "state": 6,
-            "loc": "S"
-        },
-        "S": {
-            "size": 6,
-            "state": 8,
-            "loc": "S"
-        }
+    "B": {
+        "pop": 4,
+        "state": 11,
+        "loc": "O"
+    },
+    "HH": {
+        "pop": 5,
+        "state": 2,
+        "loc": "N"
+    },
+    "M": {
+        "pop": 5,
+        "state": 9,
+        "loc": "S"
+    },
+    "K": {
+        "pop": 5,
+        "state": 5,
+        "loc": "W"
+    },
+    "F": {
+        "pop": 6,
+        "state": 6,
+        "loc": "S"
+    },
+    "S": {
+        "pop": 6,
+        "state": 8,
+        "loc": "S"
+    }
 }
 
