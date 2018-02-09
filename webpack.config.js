@@ -11,7 +11,8 @@ const ENABLE_POLLING = process.env.ENABLE_POLLING;
 
 const PATHS = {
 	// app: path.join(__dirname, 'app'),
-	app: path.join(__dirname, 'immutable1'),
+	// app: path.join(__dirname, 'immutable1'),
+	app: path.join(__dirname, 'jobsAW'),
 	build: path.join(__dirname, 'build'),
 };
 //										console.log('PATHS.build', PATHS.build)
