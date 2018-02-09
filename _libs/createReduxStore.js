@@ -1,7 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
-export default (reducer, middleWares=[]) => {
+// thunk necessary for async fetching
+export default (reducer, middleWares=[thunk]) => {
     if (process.env.NODE_ENV !== 'production') {
         middleWares.push(createLogger());
     }

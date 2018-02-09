@@ -26,7 +26,8 @@ const commonConfig = (env) => {
 				filename: '[name].js',
 			},
 			resolve: {
-				extensions: ['.js', '.jsx']
+				// extensions: ['.js', '.jsx']
+				extensions: ['.json', '.js', '.jsx']
 			},
 			plugins: [
 
