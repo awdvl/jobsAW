@@ -6,8 +6,8 @@ import City from '../records/City';
 const bug = console.log
 
 // const initState = new Record({});
-const initState = Map({});
-// const initState = fromJS({}, reviver);
+// const initState = Map({});
+
 // const initState = new Map();
 
 // const mergeEntities = (state, newCity) => {
@@ -25,18 +25,38 @@ const initState = Map({});
 // }
 
 const reviver = (key, value) => {
-    // bug('key', key, value)
-    return value === Object(value) ?
+    bug('key', key, value)
+    // return value === Object(value) ?
+    // City(value):
+    // value;
+    return key !== '' ?
         City(value):
-        value;
+        Map(value);
 };
 
-const asRecord = (data) => 
-    fromJS(data, reviver);
-// const asRecord = (state, data) => 
-//     // fromJS(data, reviver);
-//     state.merge(fromJS(data, reviver));
-//     // state.mergeDeep(fromJS(data, reviver));
+// const initState = fromJS({_:{}}, reviver);
+const initState = Map({});
+
+// --->> here check 
+// return {
+//     ...state,
+//     ...action.response.entities.todos,
+// }
+
+// const asRecord = (data) => 
+//     fromJS(data, reviver);
+// const asRecord = (state, data) => {
+//     bug('asRecord state', state)
+//     const newRecords = fromJS(data, reviver);
+
+//     return newRecords;
+// }
+
+const asRecord = (state, data) => 
+    // fromJS(data, reviver);
+    state.merge(fromJS(data, reviver));
+    // state.mergeWith(fromJS(data, reviver));
+    // state.mergeDeep(fromJS(data, reviver));
 
 // const cities = (state={}, action) => {
 const cities = (state=initState, action) => {
@@ -50,8 +70,8 @@ const cities = (state=initState, action) => {
                     // bug('Map fromJs', new City(fromJS(action.response)));
                     // bug('merged', mergeEntities(state, fromJS(action.response)));
             return action.response ?
-                asRecord(action.response) :
-                // asRecord(state, action.response) :
+                // asRecord(action.response) :
+                asRecord(state, action.response) :
                 state;
 
             // return action.response;
