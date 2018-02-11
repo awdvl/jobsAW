@@ -2,7 +2,7 @@ import {Promise} from 'core-js';
 import cities from '../_data/cities';
 import companies from '../_data/companies';
 import jobs from '../_data/jobs';
-import commonLoc from '../_loc/common';
+import locCommon from '../_loc/common';
 // import { resolve } from 'path';
 // import { setTimeout } from 'core-js/library/web/timers';
 
@@ -19,9 +19,9 @@ export const fetchCompanies = () => (
     })
 )
     
-export const fetchCommonLoc = () => (
+export const fetchLocCommon = () => (
     delay(500).then(() => {
-        return commonLoc;
+        return locCommon;
     })
 )
     

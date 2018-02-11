@@ -1,13 +1,17 @@
 import { FETCH_COMPANIES_SUCCESS } from '../constants';
+import Company from '../records/Company';
+import buildSimpleDataReducer from '../utils/buildSimpleDataReducer';
 
-const companies = (state={}, action) => {
-    switch(action.type) {
-        case FETCH_COMPANIES_SUCCESS:
-            return action.response;
+export default buildSimpleDataReducer(FETCH_COMPANIES_SUCCESS, Company);
 
-        default:
-            return state;
-    }
-}
+// const companies = (state={}, action) => {
+//     switch(action.type) {
+//         case FETCH_COMPANIES_SUCCESS:
+//             return action.response;
 
-export default companies;
+//         default:
+//             return state;
+//     }
+// }
+
+// export default companies;

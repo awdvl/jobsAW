@@ -22,6 +22,8 @@ class JobsList extends Component {
         const { state, getCities, getCompanies, fetched } = this.props;
         getCities(fetched);
         getCompanies();
+        this.props.getLocCommon();
+        this.props.getJobs();
     }
 
     render () {
