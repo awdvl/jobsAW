@@ -49,25 +49,6 @@ export const fetchCompanies = () => (dispatch) => {
     );
 };
 
-// export const fetchLocCommon = () => (dispatch) => {
-//     const { FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR } = consts;
-
-//     return api.fetchLocCommon().then(
-//         response => {
-//             dispatch({
-//                 type: FETCH_LOC_COMMON_SUCCESS,
-//                 response
-//             })
-//         },
-//         error => {
-//             dispatch({
-//                 type: FETCH_LOC_COMMON_ERROR,
-//                 message: error.message || 'Something went wrong.'
-//             })
-//         }
-//     );
-// };
-
 export const fetchLocCommon = () => (dispatch) => {
     const { FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR } = consts;
 

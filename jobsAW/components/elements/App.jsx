@@ -1,5 +1,7 @@
 // import React from 'react';
 import React, { Component } from 'react';
+import Head from './Head';
+import Filter from './FilterSection';
 
 const bug = console.log;
 
@@ -37,7 +39,11 @@ class JobsList extends Component {
     render () {
         return (
             <div>
-                HURZ
+                <Head></Head>
+                <Filter />
+                {/* <Results /> */}
+                {/* <Foot /> */}
+                {/* HURZ */}
             </div>
         );        
     }

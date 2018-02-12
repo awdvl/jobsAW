@@ -1,7 +1,6 @@
 import { fromJS } from 'immutable';
 import { FETCH_JOBS_SUCCESS } from '../constants/fetch';
 
-
 const initState = fromJS({details:{}, loc:{}});
 
 export default (state=initState, action) => {

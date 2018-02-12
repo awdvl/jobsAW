@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import createReduxStore from '../_libs/createReduxStore';
 import reducer from './reducers';
-import Container from './containers';
+import Container from './containers/fetch';
 
 const store = createReduxStore(reducer);
 

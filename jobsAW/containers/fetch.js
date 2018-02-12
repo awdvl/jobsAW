@@ -1,14 +1,21 @@
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import JobsList from '../components/elements/JobsList'
+// import { createSelector } from 'reselect';
+
+import { getJobs } from '../selectors';
+import * as actions from '../actions/fetch';
+// import JobsList from '../components/elements/App'
+import App from '../components/elements/App';
 
 // --> ownProps comes from the props passed from the presentational component
 // --> see: https://egghead.io/lessons/javascript-redux-filtering-redux-state-with-react-router-params
 // --> here in the container apply the fitlered data logic and pass the props to the presentational components!
 // const mapStateToProps = (state) => ({state: state});
-const mapStateToProps = (state, ownProps) => {
-    console.log('ownProps', ownProps)
-    return {state: state};
+const mapStateToProps = (state, props) => {
+    // console.log('ownProps', props)
+
+    return {
+        jobs: getJobs(state)
+    };
     // return {
     //     state: state,
     //     ownProps,
@@ -35,4 +42,4 @@ const enhance = connect(
 );
 
 // export default withRouter(enhance(JobsList));
-export default enhance(JobsList);
+export default enhance(App);

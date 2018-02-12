@@ -5,9 +5,11 @@
   ],
   "env": {
     "start": {
+      "plugins": ["babel-plugin-styled-components"],
       "presets": [
         "react-hmre"
       ]
     }
-  }
+  },
+  "plugins": ["babel-plugin-styled-components"]
 }

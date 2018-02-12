@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 
 /**
- * Get a reviver for a Map/(Map...)/Record immutable structure
+ * Get a reviver for a Map/(Map/...)/Record immutable structure
  * 
  * @param {Class} recordClass  - a Record class definition
  * @param {function} recordCondition  - default: check for an empty string (standard case for a Map/Record)

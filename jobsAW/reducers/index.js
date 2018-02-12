@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import cities from './cities';
 import companies from './companies';
 import locCommon from './loc_common';
