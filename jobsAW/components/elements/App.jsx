@@ -1,5 +1,6 @@
 // import React from 'react';
 import React, { Component } from 'react';
+// import styled from 'styled-components';
 import Head from './Head';
 import Filter from './FilterSection';
 
@@ -36,6 +37,7 @@ class JobsList extends Component {
 
     }
 
+    // const Head =
     render () {
         return (
             <div>
