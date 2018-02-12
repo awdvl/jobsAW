@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import asMapRecord from './asMapRecord';
+import asMapRecord, { getReviver } from '../utils/asMapRecord';
 
 export default (successActionType, recordClass) => {
     const initState = Map({});
@@ -8,7 +8,7 @@ export default (successActionType, recordClass) => {
         switch(action.type) {
             case successActionType:
                 return action.response ?
-                    asMapRecord(recordClass, state, action.response) :
+                    asMapRecord(state, action.response, getReviver(recordClass)) :
                     state;
 
             // case 'FETCH_CITIES_ERROR':

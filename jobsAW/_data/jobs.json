@@ -1,5 +1,5 @@
 {
-    "jobs": {
+    "details": {
         "1234567890": {
             "id": 1234567890,
             "company": "Porsche",
@@ -159,55 +159,55 @@
 
         
     },
-    "jobsDesc": {
+    "loc": {
         "de": {
             "1234567890": {
                 "title": "Senior Frontend Engineer",
-                "desc": "Senior Frontend Engineer is aweravas...."
+                "intro": "Senior Frontend Engineer is aweravas...."
             },
             "1234567891": {
                 "title": "Senior Backend Engineer",
-                "desc": "Senior Backend Engineer is aweravas...."
+                "intro": "Senior Backend Engineer is aweravas...."
             },
             "1234567892": {
                 "title": "Data Analyst",
-                "desc": "Data Analyst is aweravas...."
+                "intro": "Data Analyst is aweravas...."
             },
             "2234567890": {
                 "title": "Senior Backend Engineer",
-                "desc": "Senior Backend Engineer is aweravas...."
+                "intro": "Senior Backend Engineer is aweravas...."
             },
             "2234567891": {
                 "title": "Data Analyst",
-                "desc": "Data Analyst is aweravas...."
+                "intro": "Data Analyst is aweravas...."
             },
             "3234567890": {
                 "title": "Frontend Engineer",
-                "desc": "Frontend Engineer is aweravas...."
+                "intro": "Frontend Engineer is aweravas...."
             },
             "3234567891": {
                 "title": "Senior Frontend Engineer",
-                "desc": "Senior Frontend Engineer is aweravas...."
+                "intro": "Senior Frontend Engineer is aweravas...."
             },
             "3234567892": {
                 "title": "Senior Backend Engineer",
-                "desc": "Senior Backend Engineer is aweravas...."
+                "intro": "Senior Backend Engineer is aweravas...."
             },
             "3234567893": {
                 "title": "Data Analyst",
-                "desc": "Data Analyst is aweravas...."
+                "intro": "Data Analyst is aweravas...."
             },
             "4234567890": {
                 "title": "Senior Data Analyst",
-                "desc": "Data Analyst is aweravas...."
+                "intro": "Data Analyst is aweravas...."
             },
             "5234567890": {
                 "title": "Frontend Engineer",
-                "desc": "Frontend Engineer is aweravas...."
+                "intro": "Frontend Engineer is aweravas...."
             },
             "5234567891": {
                 "title": "Senior Frontend Engineer",
-                "desc": "Senior Frontend Engineer is aweravas...."
+                "intro": "Senior Frontend Engineer is aweravas...."
             }
         }
     }

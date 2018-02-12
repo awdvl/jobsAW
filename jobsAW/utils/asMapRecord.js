@@ -1,25 +1,25 @@
 import { Map, fromJS } from 'immutable';
 
-export default (recordClass, state, data) => {
-    // first level a Map (key is an empty string), second a Record
-    const reviver = (key, value) => {
-        return key !== '' ?
-            recordClass(value):
-            Map(value);
-    };
+/**
+ * Get a reviver for a Map/(Map...)/Record immutable structure
+ * 
+ * @param {Class} recordClass  - a Record class definition
+ * @param {function} recordCondition  - default: check for an empty string (standard case for a Map/Record)
+ */
+export const getReviver = (recordClass, recordCondition = key => key !== '') => (key, value) => (
+    recordCondition(key) ?
+        recordClass(value) :
+        Map(value)
+);
 
-    return state.merge(fromJS(data, reviver));
+/**
+ * Merge JSON data into a Map, with a possible transforming into a Map/(Map...)/Record
+ * 
+ * @param {Map} state  - a Record class definition
+ * @param {JSON} data  - default: check for an empty string (standard case for a Map/Record)
+ * @param {function} reviver  - default: undefined, leads to a Map merge without a Record layer
+ * @param {function} mergeMethod  - default: merge
+ */
+export default (state, data, reviver, mergeMode = 'merge') => {
+    return state[mergeMode](fromJS(data, reviver));
 };
-
-// export default (recordClass) => {
-//     // first level a Map (key is an empty string), second a Record
-//     const reviver = (key, value) => {
-//         return key !== '' ?
-//             recordClass(value):
-//             Map(value);
-//     };
-
-//     return (state, data) => 
-//         state.merge(fromJS(data, reviver));
-// };
-

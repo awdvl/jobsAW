@@ -37,6 +37,4 @@ class JobsList extends Component {
 
 
 
-
-
 export default JobsList;
