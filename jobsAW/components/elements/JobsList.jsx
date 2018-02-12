@@ -19,11 +19,19 @@ class JobsList extends Component {
 
     getData() {
                                 bug('JobsList.jsx, this.props', this.props);
-        const { state, getCities, getCompanies, fetched } = this.props;
-        getCities(fetched);
-        getCompanies();
-        this.props.getLocCommon();
-        this.props.getJobs();
+        // const { state, getCities, getCompanies, fetched } = this.props;
+        // getCities(fetched);
+        // getCompanies();
+        // this.props.getLocCommon();
+        // this.props.getJobs();
+
+        const { fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
+
+        fetchCities();
+        fetchCompanies();
+        fetchLocCommon();
+        fetchJobs();
+
     }
 
     render () {

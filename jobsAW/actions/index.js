@@ -1,6 +1,13 @@
+import { Map, fromJS } from 'immutable';
 import * as api from '../api';
-import * as consts from '../constants';
-import { FETCH_LOC_COMMON_ERROR } from '../constants';
+import * as consts from '../constants/fetch';
+import reviverFor from '../utils/reviverFor';
+
+import City from '../records/City';
+import Company from '../records/Company';
+import Jobs from '../records/Jobs';
+import JobsLoc from '../records/JobsLoc';
+
 
 
 export const fetchCities = (fetched) => (dispatch, getState) => {
@@ -11,7 +18,7 @@ export const fetchCities = (fetched) => (dispatch, getState) => {
             dispatch({
                 type: FETCH_CITIES_SUCCESS,
                 fetched,
-                response,
+                data: fromJS(response, reviverFor(City)),
             });
         },
         error => {
@@ -30,7 +37,7 @@ export const fetchCompanies = () => (dispatch) => {
         response => {
             dispatch({
                 type: FETCH_COMPANIES_SUCCESS,
-                response
+                data: fromJS(response, reviverFor(Company)),
             })
         },
         error => {
@@ -42,6 +49,25 @@ export const fetchCompanies = () => (dispatch) => {
     );
 };
 
+// export const fetchLocCommon = () => (dispatch) => {
+//     const { FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR } = consts;
+
+//     return api.fetchLocCommon().then(
+//         response => {
+//             dispatch({
+//                 type: FETCH_LOC_COMMON_SUCCESS,
+//                 response
+//             })
+//         },
+//         error => {
+//             dispatch({
+//                 type: FETCH_LOC_COMMON_ERROR,
+//                 message: error.message || 'Something went wrong.'
+//             })
+//         }
+//     );
+// };
+
 export const fetchLocCommon = () => (dispatch) => {
     const { FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR } = consts;
 
@@ -49,7 +75,7 @@ export const fetchLocCommon = () => (dispatch) => {
         response => {
             dispatch({
                 type: FETCH_LOC_COMMON_SUCCESS,
-                response
+                data: fromJS(response),
             })
         },
         error => {
@@ -66,9 +92,14 @@ export const fetchJobs = () => (dispatch) => {
 
     return api.fetchJobs().then(
         response => {
+            const recordCondition = key => key.length > 3;
+            
             dispatch({
                 type: FETCH_JOBS_SUCCESS,
-                response
+                data: Map({
+                    details: fromJS(response.details, reviverFor(Jobs, recordCondition)),
+                    loc: fromJS(response.loc, reviverFor(JobsLoc, recordCondition))
+                }),
             })
         },
         error => {
@@ -79,3 +110,4 @@ export const fetchJobs = () => (dispatch) => {
         }
     );
 };
+

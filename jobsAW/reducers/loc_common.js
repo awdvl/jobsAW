@@ -1,19 +1,6 @@
-import { Map, fromJS } from 'immutable';
-import { FETCH_LOC_COMMON_SUCCESS } from '../constants';
-import asMapRecord from '../utils/asMapRecord';
+// import { Map } from 'immutable';
+import { FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR } from '../constants/fetch';
+import buildDumbDataReducer from '../utils/buildDumbDataReducer';
 
-const initState = Map({});
+export default buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
 
-export default (state=initState, action) => {
-    switch(action.type) {
-        case FETCH_LOC_COMMON_SUCCESS:
-                            // console.log('loc_common', action.response);
-            return action.response ?
-                asMapRecord(state, action.response) :
-                state;
-
-        // case 'FETCH_CITIES_ERROR':
-        default:
-            return state;
-    }
-};
