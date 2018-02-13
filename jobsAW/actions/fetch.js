@@ -2,23 +2,15 @@ import { Map, fromJS } from 'immutable';
 import * as api from '../api';
 import * as consts from '../constants/fetch';
 import reviverFor from '../utils/reviverFor';
+import { actionLc, dispatchIncLc } from '../utils/loadCtrl';
 
 import City from '../records/City';
 import Company from '../records/Company';
 import Jobs from '../records/Jobs';
 import JobsLoc from '../records/JobsLoc';
 
-// import { loadCtrlAction, dispatchLoadInc } from '../utils/loadCtrl';
-import loadCtrl from '../utils/loadCtrl';
 
-export const fetchCtrl = loadCtrl.loadCtrlAction;
-
-// export const fetchCtrl = n => (dispatch) => {
-//     dispatch({
-//         type: consts.FETCH_CTRL_SET_NUMBER,
-//         payload: n
-//     });
-// }
+export { actionLc as loadCtrl };
 
 export const fetchCities = (fetched) => (dispatch, getState) => {
     const { FETCH_CITIES_SUCCESS, FETCH_CITIES_ERROR } = consts;
@@ -81,11 +73,6 @@ export const fetchLocCommon = () => (dispatch) => {
 export const fetchJobs = () => (dispatch) => {
     const { FETCH_CTRL_INCREMENT, FETCH_JOBS_REQUEST, FETCH_JOBS_SUCCESS, FETCH_JOBS_ERROR } = consts;
 
-    // dispatch({
-    //     type: FETCH_JOBS_REQUEST
-    // });
-
-
     return api.fetchJobs().then(
         response => {
             const recordCondition = key => key.length > 3;
@@ -99,10 +86,7 @@ export const fetchJobs = () => (dispatch) => {
                 }),
             });
 
-            loadCtrl.dispatchLoadInc(dispatch);
-            // dispatch({
-            //     type: FETCH_CTRL_INCREMENT
-            // });
+            dispatchIncLc(dispatch);
             
         },
         error => {
