@@ -14,6 +14,7 @@ const mapStateToProps = (state, props) => {
     // console.log('ownProps', props)
 
     return {
+        state,
         jobs: getJobs(state)
     };
     // return {

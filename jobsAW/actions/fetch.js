@@ -8,13 +8,17 @@ import Company from '../records/Company';
 import Jobs from '../records/Jobs';
 import JobsLoc from '../records/JobsLoc';
 
+// import { loadCtrlAction, dispatchLoadInc } from '../utils/loadCtrl';
+import loadCtrl from '../utils/loadCtrl';
 
-export const fetchCtrl = n => (dispatch) => {
-    dispatch({
-        type: consts.FETCH_CTRL_SET_NUMBER,
-        payload: n
-    });
-}
+export const fetchCtrl = loadCtrl.loadCtrlAction;
+
+// export const fetchCtrl = n => (dispatch) => {
+//     dispatch({
+//         type: consts.FETCH_CTRL_SET_NUMBER,
+//         payload: n
+//     });
+// }
 
 export const fetchCities = (fetched) => (dispatch, getState) => {
     const { FETCH_CITIES_SUCCESS, FETCH_CITIES_ERROR } = consts;
@@ -84,10 +88,6 @@ export const fetchJobs = () => (dispatch) => {
 
     return api.fetchJobs().then(
         response => {
-            dispatch({
-                type: FETCH_CTRL_INCREMENT
-            });
-                    
             const recordCondition = key => key.length > 3;
 
             // ---> data in payload??
@@ -97,7 +97,13 @@ export const fetchJobs = () => (dispatch) => {
                     details: fromJS(response.details, reviverFor(Jobs, recordCondition)),
                     loc: fromJS(response.loc, reviverFor(JobsLoc, recordCondition))
                 }),
-            })
+            });
+
+            loadCtrl.dispatchLoadInc(dispatch);
+            // dispatch({
+            //     type: FETCH_CTRL_INCREMENT
+            // });
+            
         },
         error => {
             dispatch({

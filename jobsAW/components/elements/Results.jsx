@@ -37,7 +37,7 @@ export default (props) => {
 
     return (
         <Wrapper>
-            <ResultsList props={props} />
+            <ResultsList {...props} />
             {/* <ResultsList /> */}
             <Results>
                 Hurz

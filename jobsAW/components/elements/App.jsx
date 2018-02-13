@@ -54,17 +54,64 @@ class JobsList extends Component {
 
     }
 
+    // allLoaded(state) {
+    //     const key = 'fetchCtrl';
+    //     const loadCtrl = state[key];
 
+    //     return loadCtrl.get('n') === loadCtrl.get('i');
+    // }
+    checkLoadStatus(loadCtrl) {
+        // const key = 'fetchCtrl';
+        // const loadCtrl = state[key];
+
+        return loadCtrl.get('n') === loadCtrl.get('i');
+    }
 
     render () {
         bug('App.jsx -> this.props', this.props)
+        const { state } = this.props;
+        const key = 'fetchCtrl';
+        const loadCtrl = state[key];
+
+        const checkLoadStatus = (loadCtrl) => () => loadCtrl.get('n') === loadCtrl.get('i');
+        // const checkLoadStatus = (loadCtrl) => () => {
+        //     bug('"loadCtrl.get(n)"', loadCtrl.get('n'));
+        //     bug('"loadCtrl.get(i)"', loadCtrl.get('i'));
+        //     bug('comp', loadCtrl.get('n') === loadCtrl.get('i'))
+
+        //     return loadCtrl.get('n') === loadCtrl.get('i');
+        // }
+        
+        // bug('checkLoadStatus(loadCtrl)', checkLoadStatus(loadCtrl))
+        // bug('checkLoadStatus(loadCtrl)()', checkLoadStatus(loadCtrl)())
+
+//         const allLoaded = checkLoadStatus(loadCtrl);
+// bug('allLoaded', allLoaded)
+
+        // const Content = () => (this.allLoaded(this.props.state) ?
+        //     <div>
+        //         <Filter />
+        //         <Results 
+        //             allLoaded={this.allLoaded} 
+        //             props={this.props} 
+        //         />
+        //     </div> :
+
+        //     <p>Loading...</p> );
+    
         return (
             <Site>
                 <Head></Head>
+                {/* <Content /> */}
                 <Filter />
-                <Results props={this.props} />
+                <Results 
+                    // allLoaded={this.allLoaded}
+                    // allLoaded={allLoaded}
+                    allLoaded={checkLoadStatus(loadCtrl)}
+                    loadCtrl={this.props.state.fetchCtrl}
+                    props={this.props} 
+                />
                 <Footer />
-                {/* HURZ */}
             </Site>
         );        
     }
