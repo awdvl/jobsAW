@@ -9,6 +9,12 @@ import Jobs from '../records/Jobs';
 import JobsLoc from '../records/JobsLoc';
 
 
+export const fetchCtrl = n => (dispatch) => {
+    dispatch({
+        type: consts.FETCH_CTRL_SET_NUMBER,
+        payload: n
+    });
+}
 
 export const fetchCities = (fetched) => (dispatch, getState) => {
     const { FETCH_CITIES_SUCCESS, FETCH_CITIES_ERROR } = consts;
@@ -69,12 +75,22 @@ export const fetchLocCommon = () => (dispatch) => {
 };
 
 export const fetchJobs = () => (dispatch) => {
-    const { FETCH_JOBS_SUCCESS, FETCH_JOBS_ERROR } = consts;
+    const { FETCH_CTRL_INCREMENT, FETCH_JOBS_REQUEST, FETCH_JOBS_SUCCESS, FETCH_JOBS_ERROR } = consts;
+
+    // dispatch({
+    //     type: FETCH_JOBS_REQUEST
+    // });
+
 
     return api.fetchJobs().then(
         response => {
+            dispatch({
+                type: FETCH_CTRL_INCREMENT
+            });
+                    
             const recordCondition = key => key.length > 3;
-            
+
+            // ---> data in payload??
             dispatch({
                 type: FETCH_JOBS_SUCCESS,
                 data: Map({

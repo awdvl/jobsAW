@@ -3,9 +3,11 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
     font-size: 1.5em;
-    color: palevioletred;
-    background: papayawhip;
-    padding: 1em 2.5em;
+    color: grey;
+    font-style: italic;
+    background: white;
+    border-bottom: 1px solid saddlebrown;
+    padding: .75em 3em;
 `;
 
 const Logo = styled.div`
@@ -19,7 +21,7 @@ const Logo = styled.div`
 
 export default () => (
     <Wrapper>
-        <Logo />
-        jobsAW
+        {/* <Logo /> */}
+        BlueJobs
     </Wrapper>
 );

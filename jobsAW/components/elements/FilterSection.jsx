@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     font-size: 1.5em;
     color: gray;
-    background: darkseagreen;
+    /* background: darkseagreen; */
     padding: 1em 2.5em;
 
 `;

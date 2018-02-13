@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ResultsList from './ResultsList';
+
 const Wrapper = styled.div`
     background: aliceblue;
     flex: 1; /* same as flex: 1 1 auto; */
@@ -23,10 +25,23 @@ const Results = styled.div`
     overflow: auto; 
 `;
 
-export default () => (
-    <Wrapper>
-        <Results>
-            Hurz
-        </Results>
-    </Wrapper>
-);
+// const ResultsList = styled.div`
+//     background: white;
+//     border-top: 1px solid #000000;
+//     border-bottom: 1px solid #000000;
+//     width: 500px;
+// `;
+
+export default (props) => {
+    console.log('Results.jsx props', props)
+
+    return (
+        <Wrapper>
+            <ResultsList props={props} />
+            {/* <ResultsList /> */}
+            <Results>
+                Hurz
+            </Results>
+        </Wrapper>
+    );
+}

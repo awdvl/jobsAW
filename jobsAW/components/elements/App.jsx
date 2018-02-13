@@ -41,13 +41,11 @@ class JobsList extends Component {
 
     getData() {
                                 bug('JobsList.jsx, this.props', this.props);
-        // const { state, getCities, getCompanies, fetched } = this.props;
-        // getCities(fetched);
-        // getCompanies();
-        // this.props.getLocCommon();
-        // this.props.getJobs();
 
-        const { fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
+        const { fetchCtrl, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
+
+        // pass number of async fetch actions
+        fetchCtrl(1);
 
         fetchCities();
         fetchCompanies();
@@ -59,11 +57,12 @@ class JobsList extends Component {
 
 
     render () {
+        bug('App.jsx -> this.props', this.props)
         return (
             <Site>
                 <Head></Head>
                 <Filter />
-                <Results />
+                <Results props={this.props} />
                 <Footer />
                 {/* HURZ */}
             </Site>
