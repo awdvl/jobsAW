@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const bug = console.log;
+import bug from '../../../_libs/bug';
+
+import ResultsListItems from './ResultsListItems';
+
 
 // export default ResultsList;
 export default  (props) => {
@@ -43,7 +46,7 @@ export default  (props) => {
 
 
 
-    const LoadedList = () => (
+    const LoadedList = ({jobs}) => (
         <div>
             <ResultsListHeader>
                 <HeaderHeading>
@@ -54,16 +57,20 @@ export default  (props) => {
                 </HeaderJobNumers>
             </ResultsListHeader>   
             <ResultsListItemsWrapper>
-                {bug('inside props.jobs', props.jobs)}
+                {/* {bug('inside props.jobs', props.get('jobs'))} */}
+                {bug('inside props.state.jobs', jobs)}
+                {jobs.map((job) => (
+                    <ResultsListItems key={job.id}
+                        job={job}
+                    />
+                ))}
             </ResultsListItemsWrapper>
         </div>
     );
     
 
-    // const List = () => (props.allLoaded() ?
     const List = () => (props.allLoaded ?
-            // <div>Loaded</div> :
-            <LoadedList /> :
+            <LoadedList jobs={props.jobs} /> :
             <p>Loading...</p>);
     
     return (

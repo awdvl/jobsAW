@@ -28,9 +28,18 @@ export const cities = buildDumbDataReducer(FETCH_CITIES_SUCCESS);
 export const companies = buildDumbDataReducer(FETCH_COMPANIES_SUCCESS);
 export const Loc_common = buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
 
-// export default combineReducers({
-//     cities,
-//     companies,
-//     Loc_common,
-//     jobs
-// });
+// export default fromJS({
+//     data: {
+//         cities,
+//         companies,
+//         Loc_common,
+//         jobs
+//     }
+// })
+
+export default combineReducers({
+    cities,
+    companies,
+    Loc_common,
+    jobs
+});

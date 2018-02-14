@@ -16,7 +16,7 @@ import { fromJS } from 'immutable';
  *          export const actionLc = loadCtrl.action;
  *          export const reducerLc = loadCtrl.reducer;
  *          export const dispatchIncLc = loadCtrl.dispatchInc;
- *          export const checkStatusLc = loadCtrl.checkStatus;
+ *          export const finishedLc = loadCtrl.finished('loadCtrl');  // pass the reducer name as key 
  * 
  *      actions: 
  *          export { actionLc as loadCtrl };
@@ -29,9 +29,10 @@ import { fromJS } from 'immutable';
  *          call action loadCtrl(n) with n as number of load actions
  * 
  *      component rendering:
- *          add a props allLoaded={finished(state.loadCtrl)}
+ *          add a props allLoaded={finished(state)}
  * 
  *      check for allLoaded by allLoaded() [true/false]
+ * 
  */
 export default (
     setActionConst = 'LOADER_SET', 
@@ -76,8 +77,8 @@ export default (
             });
         },
 
-        finished(loadCtrlState) {
-            return loadCtrlState.get('finished');
+        finished(stateKey) {
+            return (state) => state[stateKey].get('finished');
         }
     };
 }

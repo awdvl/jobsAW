@@ -63,7 +63,7 @@
                 "W": "West",
                 "E": "Ost"
             },
-            "names": {
+            "name": {
                 "B": "Berlin",
                 "HH": "Hamburg",
                 "M": "München",
@@ -72,6 +72,18 @@
                 "S": "Stuttgart"
             }
     
+        },
+        "countries": {
+            "name": {
+                "DE": "Deutschland"
+            },
+            "loc": {
+                "_": "here as North/South_Europe etc."
+            },
+            "continent": {
+                "_": "this connected to a continent table",
+                "EU": "Europe"
+            }
         }
     }
 }

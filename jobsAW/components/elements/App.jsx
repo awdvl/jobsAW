@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../../base.css';
 import styled from 'styled-components';
 
-// import { checkStatusLc } from '../../utils/loadCtrl';
+import bug from '../../../_libs/bug';
 import { finishedLc } from '../../utils/loadCtrl';
 
 import Head from './Head';
@@ -11,7 +11,6 @@ import Filter from './FilterSection';
 import Results from './Results';
 import Footer from './Footer';
 
-const bug = console.log;
 
 // s. https://jsfiddle.net/MadLittleMods/LmYay/
 const Site = styled.div`
@@ -43,7 +42,7 @@ class JobsList extends Component {
     }
 
     getData() {
-                                                            bug('App.jsx::getData, this.props', this.props);
+                                                            bug.rt('App.jsx::getData, this.props', this.props);
         const { loadCtrl, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
 
         // init load control for fetch actions - pass number of async fetch actions
@@ -68,8 +67,10 @@ class JobsList extends Component {
                 <Filter />
                 <Results 
                     // allLoaded={checkStatusLc(state.loadCtrl)}
-                    allLoaded={finishedLc(state.loadCtrl)}  // here or reducers.getAllLoaded(state)
-                    props={this.props} 
+                    // allLoaded={finishedLc(state.loadCtrl)}  // here or reducers.getAllLoaded(state)
+                    allLoaded={finishedLc(state)}  // here or reducers.getAllLoaded(state)
+                    {...this.props} 
+                    // props={...this.props} 
                 />
                 <Footer />
             </Site>

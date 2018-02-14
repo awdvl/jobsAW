@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import bug from '../../../_libs/bug';
+
 import ResultsList from './ResultsList';
 
 const Wrapper = styled.div`
@@ -33,7 +35,7 @@ const Results = styled.div`
 // `;
 
 export default (props) => {
-    console.log('Results.jsx props', props)
+    bug.rt('Results.jsx props', props)
 
     return (
         <Wrapper>
