@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import '../../base.css';
 import styled from 'styled-components';
 
-import { checkStatusLc } from '../../utils/loadCtrl';
+// import { checkStatusLc } from '../../utils/loadCtrl';
+import { finishedLc } from '../../utils/loadCtrl';
 
 import Head from './Head';
 import Filter from './FilterSection';
@@ -46,7 +47,7 @@ class JobsList extends Component {
         const { loadCtrl, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
 
         // init load control for fetch actions - pass number of async fetch actions
-        loadCtrl(1);
+        loadCtrl(4);
 
         fetchCities();
         fetchCompanies();
@@ -66,7 +67,8 @@ class JobsList extends Component {
                 <Head></Head>
                 <Filter />
                 <Results 
-                    allLoaded={checkStatusLc(state.loadCtrl)}
+                    // allLoaded={checkStatusLc(state.loadCtrl)}
+                    allLoaded={finishedLc(state.loadCtrl)}  // here or reducers.getAllLoaded(state)
                     props={this.props} 
                 />
                 <Footer />

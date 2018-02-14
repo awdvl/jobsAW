@@ -29,7 +29,7 @@ import { fromJS } from 'immutable';
  *          call action loadCtrl(n) with n as number of load actions
  * 
  *      component rendering:
- *          add a props allLoaded={checkStatusLc(state.loadCtrl)}
+ *          add a props allLoaded={finished(state.loadCtrl)}
  * 
  *      check for allLoaded by allLoaded() [true/false]
  */
@@ -37,7 +37,13 @@ export default (
     setActionConst = 'LOADER_SET', 
     incActionConst = 'LOADER_INC'
 ) => {
-    const initState = fromJS({n: 0, i: 0});
+    const initState = fromJS({n: 0, i: 0, finished: false});
+    const updateState = (state) => {
+        const newI = state.get('i') + 1;
+        const finished = newI === state.get('n');
+
+        return state.set('i', newI).set('finished', finished);
+    }
 
     return {
         action(n) {
@@ -55,7 +61,9 @@ export default (
                     return state.set('n', action.payload);
         
                 case incActionConst:
-                    return state.update('i', i => i + 1);
+                    return updateState(state);
+
+                    // return state.update('i', i => i + 1);
         
                 default: 
                     return state;
@@ -68,9 +76,8 @@ export default (
             });
         },
 
-        checkStatus(loadCtrlState) { 
-            return () => loadCtrlState.get('n') === loadCtrlState.get('i');
+        finished(loadCtrlState) {
+            return loadCtrlState.get('finished');
         }
-
     };
 }

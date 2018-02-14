@@ -2,7 +2,7 @@ import { Map, fromJS } from 'immutable';
 import * as api from '../api';
 import * as consts from '../constants/fetch';
 import reviverFor from '../utils/reviverFor';
-import { actionLc, dispatchIncLc } from '../utils/loadCtrl';
+import { actionLc, dispatchIncLc, finishedLc } from '../utils/loadCtrl';
 
 import City from '../records/City';
 import Company from '../records/Company';
@@ -11,6 +11,12 @@ import JobsLoc from '../records/JobsLoc';
 
 
 export { actionLc as loadCtrl };
+
+// export const fetchData = () => (dispatch, getState) => {
+//     if (!finishedLc(getState())) {
+
+//     }
+// }
 
 export const fetchCities = (fetched) => (dispatch, getState) => {
     const { FETCH_CITIES_SUCCESS, FETCH_CITIES_ERROR } = consts;
@@ -22,6 +28,8 @@ export const fetchCities = (fetched) => (dispatch, getState) => {
                 fetched,
                 data: fromJS(response, reviverFor(City)),
             });
+
+            dispatchIncLc(dispatch);            
         },
         error => {
             dispatch({
@@ -40,13 +48,15 @@ export const fetchCompanies = () => (dispatch) => {
             dispatch({
                 type: FETCH_COMPANIES_SUCCESS,
                 data: fromJS(response, reviverFor(Company)),
-            })
+            });
+
+            dispatchIncLc(dispatch);            
         },
         error => {
             dispatch({
                 type: FETCH_COMPANIES_ERROR,
                 message: error.message || 'Something went wrong.'
-            })
+            });
         }
     );
 };
@@ -59,13 +69,15 @@ export const fetchLocCommon = () => (dispatch) => {
             dispatch({
                 type: FETCH_LOC_COMMON_SUCCESS,
                 data: fromJS(response),
-            })
+            });
+
+            dispatchIncLc(dispatch);            
         },
         error => {
             dispatch({
                 type: FETCH_LOC_COMMON_ERROR,
                 message: error.message || 'Something went wrong.'
-            })
+            });
         }
     );
 };
@@ -93,7 +105,7 @@ export const fetchJobs = () => (dispatch) => {
             dispatch({
                 type: FETCH_JOBS_ERROR,
                 message: error.message || 'Something went wrong.'
-            })
+            });
         }
     );
 };

@@ -7,7 +7,7 @@ import { combineReducers } from 'redux';
 
 // import * as fetchData from './fetchData';
 import * as fetchData from './fetchData';
-import { reducerLc } from '../utils/loadCtrl';
+import { reducerLc, finishedLc } from '../utils/loadCtrl';
 import fetch from '../containers/fetch';
 
 console.log('fetchData', fetchData)
@@ -39,3 +39,7 @@ console.log('reducers', reducers)
 // });
 
 export default reducers;
+
+// this necessary??
+// export const getAllLoaded = (state) => finishedLc(state.loadCtrl);
+
