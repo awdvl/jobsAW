@@ -10,8 +10,8 @@
                 "3": "Interim"
             }
         },
-        "companies": {
-            "industries": {
+        "company": {
+            "industry": {
                 "1": "Automotive",
                 "2": "Software Development",
                 "3": "Bank"
@@ -26,7 +26,7 @@
             }
 
         },
-        "cities": {
+        "city": {
             "pop": {
                 "4": "> 3 Mio",
                 "5": "1 Mio - 3 Mio",
@@ -57,7 +57,7 @@
                 "15": "Sachsen-Anhalt",
                 "16": "Thüringen"
             },
-            "loc": {
+            "geo": {
                 "N": "Nord",
                 "S": "Süd",
                 "W": "West",
@@ -73,11 +73,11 @@
             }
     
         },
-        "countries": {
+        "country": {
             "name": {
                 "DE": "Deutschland"
             },
-            "loc": {
+            "geo": {
                 "_": "here as North/South_Europe etc."
             },
             "continent": {

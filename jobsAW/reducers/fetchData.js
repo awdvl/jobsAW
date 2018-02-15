@@ -26,7 +26,7 @@ export const jobs = (state=initState, action) => {
 
 export const cities = buildDumbDataReducer(FETCH_CITIES_SUCCESS);
 export const companies = buildDumbDataReducer(FETCH_COMPANIES_SUCCESS);
-export const Loc_common = buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
+export const locCommon = buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
 
 // export default fromJS({
 //     data: {
@@ -40,6 +40,6 @@ export const Loc_common = buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_L
 export default combineReducers({
     cities,
     companies,
-    Loc_common,
+    locCommon,
     jobs
 });
