@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import bug from '../../../_libs/bug';
 
-import ResultsList from './ResultsList';
+import RList from './RList';
 
 const Wrapper = styled.div`
     background: aliceblue;
@@ -27,20 +27,12 @@ const Results = styled.div`
     overflow: auto; 
 `;
 
-// const ResultsList = styled.div`
-//     background: white;
-//     border-top: 1px solid #000000;
-//     border-bottom: 1px solid #000000;
-//     width: 500px;
-// `;
-
 export default (props) => {
     bug.rt('Results.jsx props', props)
 
     return (
         <Wrapper>
-            <ResultsList {...props} />
-            {/* <ResultsList /> */}
+            <RList {...props} />
             <Results>
                 Hurz
             </Results>

@@ -1,6 +1,6 @@
 // import React from 'react';
 import React, { Component } from 'react';
-import '../../base.css';
+import '../../styles/base.css';
 import styled from 'styled-components';
 
 import bug from '../../../_libs/bug';

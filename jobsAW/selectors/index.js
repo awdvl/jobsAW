@@ -39,7 +39,7 @@ const combineJobData = (state, id) => {
 
 
     return id ?
-        getJobData(jobDetails[id + '']) :
+        [getJobData(jobDetails[id + ''])] :
         jobDetails.map(getJobData).toArray();
 
 }

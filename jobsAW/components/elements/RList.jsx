@@ -1,14 +1,15 @@
 import React from 'react';
+import '../../styles/rlist.css';
 import styled from 'styled-components';
 
 import bug from '../../../_libs/bug';
 
-import ResultsListItems from './ResultsListItems';
+import RListItems from './RListItems';
 
 
-// export default ResultsList;
+// export default RList;
 export default  (props) => {
-    bug('ResultsList.jsx props', props)
+    bug('RList.jsx props', props)
     // alert('props', props)
     // bug('props.jobs', props.jobs, props.cities, props.allLoaded)
 
@@ -22,8 +23,8 @@ export default  (props) => {
         width: 500px;
     `;
 
-    const ResultsListHeader = styled.div`
-        padding: 0 1.25em;
+    const RListHeader = styled.div`
+        /* padding: 0 1.25em; */
         border-bottom: 1px solid grey;
         display: flex;
     `;
@@ -39,7 +40,7 @@ export default  (props) => {
         background: aliceblue;
     `;
 
-    const ResultsListItemsWrapper = styled.ul`
+    const RListItemsWrapper = styled.ul`
         display: flex;
         flex-direction: column;
     `;
@@ -48,23 +49,23 @@ export default  (props) => {
 
     const LoadedList = ({jobs}) => (
         <div>
-            <ResultsListHeader>
+            <RListHeader className='listElemW'>
                 <HeaderHeading>
                     {heading}
                 </HeaderHeading>
                 <HeaderJobNumers>
                     {numberOfJobs}
                 </HeaderJobNumers>
-            </ResultsListHeader>   
-            <ResultsListItemsWrapper>
+            </RListHeader>   
+            <RListItemsWrapper className='listElemW'>
                 {/* {bug('inside props.jobs', props.get('jobs'))} */}
                 {bug('inside props.state.jobs', jobs)}
                 {jobs.map((job) => (
-                    <ResultsListItems key={job.id}
+                    <RListItems key={job.id}
                         job={job}
                     />
                 ))}
-            </ResultsListItemsWrapper>
+            </RListItemsWrapper>
         </div>
     );
     
