@@ -7,7 +7,9 @@ const ResultsListItem = styled.div`
 
 const Item = ({job}) => (
     <ResultsListItem>
+        {job.text.title}
         {job.company}
+
     </ResultsListItem>
 );
 
