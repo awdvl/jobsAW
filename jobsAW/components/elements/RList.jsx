@@ -24,20 +24,25 @@ export default  (props) => {
     `;
 
     const RListHeader = styled.div`
-        /* padding: 0 1.25em; */
+        color: #363738;
+
         border-bottom: 1px solid grey;
         display: flex;
     `;
 
     const HeaderHeading = styled.h3`
+        font-size: 1.75em;
+        margin: .75em 0;
         flex: 1;
     `;
 
     const HeaderJobNumers = styled.span`
+        color: #9994a2;
+        font-size: 1.75em;
+        font-weight: bold;
         width: 60px;
-        line-height: 3.75em;
+        line-height: 2.75em;
         text-align: right;
-        background: aliceblue;
     `;
 
     const RListItemsWrapper = styled.ul`

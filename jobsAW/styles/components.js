@@ -9,6 +9,11 @@ export const ListElem = styled.li`
     padding: .5em 0;
 `;
 
-
+export const SoftButton = styled.button`
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+`;
 
 

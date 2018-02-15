@@ -1,13 +1,16 @@
 import React from 'react';
 import '../../styles/rlist.css';
 import styled from 'styled-components';
-import { ListElem } from '../../styles/components';
+import { ListElem, SoftButton } from '../../styles/components';
 
 // const RListItem = styled.div`
 //     display: flex;
 // `;
 const RListItem = ListElem.extend`
     /* display: flex; */
+    &:hover {
+        background: aliceblue;
+    }
 `;
 
 const Left = styled.div`
@@ -31,23 +34,26 @@ const Right = styled.div`
 `;
 
 const MainLines = styled.div`
+    color: #363738;
     display: flex;
 `;
 
 const ItemTitle = MainLines.extend`
-    color: #363738;
     font-size: 1.5em;
 `;
 
-const SoftButton = styled.button`
-    background: none;
-    border: none;
-    padding: 0;
-`;
+// const SoftButton = styled.button`
+//     background: none;
+//     border: none;
+//     padding: 0;
+// `;
 
 const CompanyButton = SoftButton.extend`
-    color: red;
-    padding-right: .5em;    
+    /* color: red; */
+    /* padding-right: .5em; */
+    &:hover {
+        color: #878a8a;
+    }
 `;
 
 const Item = ({job}) => (
@@ -63,6 +69,7 @@ const Item = ({job}) => (
                 <CompanyButton>
                     {job.text.company}
                 </CompanyButton>
+                    &nbsp; &middot; &nbsp;
                 <CompanyButton>
                     {job.text.city}
                 </CompanyButton>
