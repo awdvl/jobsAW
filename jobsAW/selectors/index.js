@@ -1,65 +1,29 @@
 import { createSelector } from 'reselect';
 import bug from '../../_libs/bug';
 
-import { finishedLc } from '../utils/loadCtrl';
-import { companies } from '../reducers/fetchData';
+// import getRichJobData from './getRichJobData';
+import { getRichJobData } from './getRichJobData';
 
+                                                                            // bug('selectors::state', state)
+                                                                bug('selectors::getRichJobData', getRichJobData)
+// const getSelectedCities = (state) => state.ui.filter.city.sel;
+const getSelectedCities = (state) => state.ui.filter;
 
-// -->> this in a user/(ui?)state
-const lang = 'de';
+export const getJobData = createSelector(
+    getRichJobData,
+    getSelectedCities,
 
-
-const combineJobData = (state, id) => {
-    const jobDetails = state.jobs.get('details');
-    const jobsLoc = state.jobs.getIn(['loc', lang]);
-
-    const companies = state.companies;
-    const langCommon = state.locCommon.get(lang);
-    const cityName = langCommon.getIn([ 'city', 'name']);
-    const countryName = langCommon.getIn([ 'country', 'name']);
-    const jobType = langCommon.getIn([ 'job', 'type']);
-                                                // bug('loopToCombineJobData::langCommon', langCommon)
-                                                // bug('loopToCombineJobData::state', state)
-                                                // bug('loopToCombineJobData::state.cities', state.cities)
-                                                // bug('loopToCombineJobData::state.locCommon', state.locCommon)
-    const getJobData = (job) => {
-        const jobLoc = jobsLoc.get(job.id +'');
-            
-        job.text = {
-            city: cityName.get(job.city),
-            country: countryName.get(job.country),
-            company: companies.getIn([ job.company, 'name' ]),
-            type: jobType.get(job.type +''),
-            title: jobLoc.get('title'),
-            intro: jobLoc.get('intro'),
-        };
-
-        return job;
-    };
-
-
-    return id ?
-        [getJobData(jobDetails[id + ''])] :
-        jobDetails.map(getJobData).toArray();
-
-}
-
-
-const getJobsDetails = (state, props) => {
-    if (finishedLc(state)) {
-                                                                // bug.rt('===>> selector fired state', state)
-        return combineJobData(state);
-    }
-
-    return null;
-
-}
-
-export const getJobs = createSelector(
-    getJobsDetails,
-
-    (jobDetails) => {
-                                // bug.rt('+++++++++++ selectore called -> jobDetails', jobDetails)
-        return jobDetails;
+    (richJobData, selectedCities) => {
+                                                                        bug('selectors::richJobData', richJobData)
+        const filteredJobData = richJobData.filter((record) => {
+            bug('record', record.city, selectedCities)  // --->> city is Map!! -> better transform to Record??
+            // return selectedCities.includes(record.city);
+            return true;
+        });
+                                                            bug('selectors::filteredJobData', filteredJobData);
+        return filteredJobData;
+        // return richJobData;
     }
 );
+
+// export const getJobData = getRichJobData;

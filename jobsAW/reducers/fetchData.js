@@ -12,7 +12,7 @@ import {
 
 const initState = fromJS({details:{}, loc:{}});
 
-export const jobs = (state=initState, action) => {
+const jobs = (state=initState, action) => {
     switch (action.type) {
         case FETCH_JOBS_SUCCESS:
             return action.data ?
@@ -24,20 +24,11 @@ export const jobs = (state=initState, action) => {
     }
 };
 
-export const cities = buildDumbDataReducer(FETCH_CITIES_SUCCESS);
-export const companies = buildDumbDataReducer(FETCH_COMPANIES_SUCCESS);
-export const locCommon = buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
+const cities = buildDumbDataReducer(FETCH_CITIES_SUCCESS);
+const companies = buildDumbDataReducer(FETCH_COMPANIES_SUCCESS);
+const locCommon = buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
 
-// export default fromJS({
-//     data: {
-//         cities,
-//         companies,
-//         Loc_common,
-//         jobs
-//     }
-// })
-
-export default combineReducers({
+export const data = combineReducers({
     cities,
     companies,
     locCommon,

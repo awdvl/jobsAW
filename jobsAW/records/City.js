@@ -3,7 +3,7 @@ import { Record } from 'immutable';
 const CityRecord = Record({
     pop: 0,
     state: 0,
-    loc: ''
+    geo: ''
 })
 
 // const test = new Record({loc: 'W'})

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 // import { createSelector } from 'reselect';
 
-import { getJobs } from '../selectors';
+import { getJobData } from '../selectors';
 import * as actions from '../actions/fetch';
-// import JobsList from '../components/elements/App'
+
 import App from '../components/elements/App';
 
 // --> ownProps comes from the props passed from the presentational component
@@ -15,12 +15,8 @@ const mapStateToProps = (state, props) => {
 
     return {
         state,
-        jobs: getJobs(state)
+        jobs: getJobData(state)
     };
-    // return {
-    //     state: state,
-    //     ownProps,
-    // };
 };
 
 // const mapDispatchToProps = dispatch => {

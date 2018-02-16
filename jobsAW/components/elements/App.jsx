@@ -1,9 +1,9 @@
-// import React from 'react';
 import React, { Component } from 'react';
+import bug from '../../../_libs/bug';
+
 import '../../styles/base.css';
 import styled from 'styled-components';
 
-import bug from '../../../_libs/bug';
 import { finishedLc } from '../../utils/loadCtrl';
 
 import Head from './Head';
@@ -27,14 +27,6 @@ const Site = styled.div`
     background: rgba(255, 255, 255, .1);
 `;
 
-// const JobsList = (props) => {
-//     bug(props);
-//     return (
-//         <div>
-//             HURZ
-//         </div>
-//     );
-// }
 
 class JobsList extends Component {
     componentDidMount() {
@@ -42,9 +34,8 @@ class JobsList extends Component {
     }
 
     getData() {
-                                                            bug.rt('App.jsx::getData, this.props', this.props);
         const { loadCtrl, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
-
+                                                            bug.rt('App.jsx::getData, this.props', this.props);
         // init load control for fetch actions - pass number of async fetch actions
         loadCtrl(4);
 
@@ -52,7 +43,6 @@ class JobsList extends Component {
         fetchCompanies();
         fetchLocCommon();
         fetchJobs();
-
     }
 
 
@@ -60,17 +50,13 @@ class JobsList extends Component {
                                                             bug('App.jsx -> this.props', this.props)
         const { state } = this.props;
 
-        
         return (
             <Site>
                 <Head></Head>
                 <Filter />
                 <Results 
-                    // allLoaded={checkStatusLc(state.loadCtrl)}
-                    // allLoaded={finishedLc(state.loadCtrl)}  // here or reducers.getAllLoaded(state)
-                    allLoaded={finishedLc(state)}  // here or reducers.getAllLoaded(state)
+                    allLoaded={finishedLc(state)}  // or reducers.getAllLoaded(state)
                     {...this.props} 
-                    // props={...this.props} 
                 />
                 <Footer />
             </Site>

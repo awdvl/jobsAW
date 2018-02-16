@@ -28,8 +28,7 @@ const Results = styled.div`
 `;
 
 export default (props) => {
-    bug.rt('Results.jsx props', props)
-
+                                                            // bug.rt('Results.jsx props', props)
     return (
         <Wrapper>
             <RList {...props} />

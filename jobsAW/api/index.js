@@ -3,8 +3,7 @@ import cities from '../_data/cities';
 import companies from '../_data/companies';
 import jobs from '../_data/jobs';
 import locCommon from '../_loc/common';
-// import { resolve } from 'path';
-// import { setTimeout } from 'core-js/library/web/timers';
+
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 

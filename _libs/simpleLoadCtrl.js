@@ -63,8 +63,6 @@ export default (
         
                 case incActionConst:
                     return updateState(state);
-
-                    // return state.update('i', i => i + 1);
         
                 default: 
                     return state;

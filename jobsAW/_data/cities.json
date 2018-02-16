@@ -2,32 +2,32 @@
     "B": {
         "pop": 4,
         "state": 11,
-        "loc": "E"
+        "geo": "E"
     },
     "HH": {
         "pop": 5,
         "state": 2,
-        "loc": "N"
+        "geo": "N"
     },
     "M": {
         "pop": 5,
         "state": 9,
-        "loc": "S"
+        "geo": "S"
     },
     "K": {
         "pop": 5,
         "state": 5,
-        "loc": "W"
+        "geo": "W"
     },
     "F": {
         "pop": 6,
         "state": 6,
-        "loc": "S"
+        "geo": "S"
     },
     "S": {
         "pop": 6,
         "state": 8,
-        "loc": "S"
+        "geo": "S"
     }
 }
 
