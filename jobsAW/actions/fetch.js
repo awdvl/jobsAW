@@ -26,7 +26,7 @@ export const fetchCities = (fetched) => (dispatch, getState) => {
             dispatch({
                 type: FETCH_CITIES_SUCCESS,
                 fetched,
-                data: fromJS(response, reviverFor(City)),
+                payload: fromJS(response, reviverFor(City)),
             });
 
             dispatchIncLc(dispatch);            
@@ -47,7 +47,7 @@ export const fetchCompanies = () => (dispatch) => {
         response => {
             dispatch({
                 type: FETCH_COMPANIES_SUCCESS,
-                data: fromJS(response, reviverFor(Company)),
+                payload: fromJS(response, reviverFor(Company)),
             });
 
             dispatchIncLc(dispatch);            
@@ -68,7 +68,7 @@ export const fetchLocCommon = () => (dispatch) => {
         response => {
             dispatch({
                 type: FETCH_LOC_COMMON_SUCCESS,
-                data: fromJS(response),
+                payload: fromJS(response),
             });
 
             dispatchIncLc(dispatch);            
@@ -89,10 +89,9 @@ export const fetchJobs = () => (dispatch) => {
         response => {
             const recordCondition = key => key.length > 3;
 
-            // ---> data in payload??
             dispatch({
                 type: FETCH_JOBS_SUCCESS,
-                data: Map({
+                payload: Map({
                     details: fromJS(response.details, reviverFor(Jobs, recordCondition)),
                     loc: fromJS(response.loc, reviverFor(JobsLoc, recordCondition))
                 }),

@@ -6,8 +6,8 @@ export default (successActionType, errorActionType, mergeMode = 'merge') => {
     return (state=initState, action) => {
         switch(action.type) {
             case successActionType:
-                return action.data ?
-                    state[mergeMode](action.data) :
+                return action.payload ?
+                    state[mergeMode](action.payload) :
                     state;
 
             case errorActionType:

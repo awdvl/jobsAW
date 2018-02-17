@@ -15,8 +15,8 @@ const initState = fromJS({details:{}, loc:{}});
 const jobs = (state=initState, action) => {
     switch (action.type) {
         case FETCH_JOBS_SUCCESS:
-            return action.data ?
-                state.mergeDeep(action.data) :
+            return action.payload ?
+                state.mergeDeep(action.payload) :
                 state;
 
         default:
