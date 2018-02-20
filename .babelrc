@@ -13,6 +13,7 @@
   },
   "plugins": [
     "babel-plugin-styled-components",
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "ramda"
   ]
 }
