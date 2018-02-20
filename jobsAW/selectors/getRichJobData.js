@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import bug from '../../_libs/bug';
 
-import combineRichJobData from './combineRichJobData';
+import transformToRichJobData from './transformToRichJobData';
 import { finishedLc } from '../utils/loadCtrl';
                                                                             // bug('selectors::state', state)
 
@@ -14,7 +14,6 @@ const getId = (state) => state.id;
 
 
 export const getRichJobData = createSelector(
-// export default createSelector(
     getLoadingFinished,
     getLanguage,
     getData,
@@ -23,36 +22,9 @@ export const getRichJobData = createSelector(
     (loadingFinished, language, data, id) => {
         if (loadingFinished) {
                                                                         // bug.rt('===>> selector fired state', state)
-            return combineRichJobData(language, data, id);
+            return transformToRichJobData(language, data, id);
         }
         
         return [];
-        // return null;
     }
 );
-
-// export const getRichJobData2 = createSelector(
-// // export default createSelector(
-//     getLoadingFinished,
-//     getLanguage,
-//     getData,
-//     getId,
-
-//     (loadingFinished, language, data, id) => {
-//         if (loadingFinished) {
-//                                                                         // bug.rt('===>> selector fired state', state)
-//             return combineRichJobData(language, data, id);
-//         }
-        
-//         return null;
-//     }
-// );
-
-// export const getRichJobData = createSelector(
-//     getRichJobData2,
-
-//     (richJobData3) => (richJobData3.filter((elem) => {
-//             // bug('record', record)
-//             return true;
-//     }))
-// );

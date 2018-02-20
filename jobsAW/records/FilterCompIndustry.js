@@ -8,7 +8,7 @@ import { Record } from 'immutable';
  *  sortRest: true/[]  true: same sort order as in sortOrder,  []: define a different sort order
  *  excl: []  excluded items
 */
-const FilterCityRecord = Record({
+const FilterCompIndustryRecord = Record({
     sel: [],
     sortOrder: [],
     sortByOrder: false,
@@ -17,10 +17,10 @@ const FilterCityRecord = Record({
     excl: []
 });
 
-const FilterCity = FilterCityRecord;
+const FilterCompIndustry = FilterCompIndustryRecord;
 
-// class FilterCity extends FilterCityRecord {
+// class FilterCompIndustry extends FilterCompIndustryRecord {
 
 // }
 
-export default FilterCity;
+export default FilterCompIndustry;

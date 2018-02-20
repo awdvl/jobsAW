@@ -8,19 +8,14 @@ import { Record } from 'immutable';
  *  sortRest: true/[]  true: same sort order as in sortOrder,  []: define a different sort order
  *  excl: []  excluded items
 */
-const FilterCityRecord = Record({
-    sel: [],
-    sortOrder: [],
-    sortByOrder: false,
-    inclRest: false,
-    sortRest: true,
-    excl: []
+const FilterJobTypeRecord = Record({
+    sel: []
 });
 
-const FilterCity = FilterCityRecord;
+const FilterJobType = FilterJobTypeRecord;
 
-// class FilterCity extends FilterCityRecord {
+// class FilterJobType extends FilterJobTypeRecord {
 
 // }
 
-export default FilterCity;
+export default FilterJobType;

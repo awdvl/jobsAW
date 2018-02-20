@@ -4,6 +4,11 @@
         "industry": 1,
         "empl": 9
     },
+    "Porsche_DIG": {
+        "name": "Porsche Digital GmbH",
+        "industry": 2,
+        "empl": 6
+    },
     "BMW": {
         "name": "BMW AG",
         "industry": 1,
