@@ -11,7 +11,8 @@ import {
 } from './prepareFilter';
 
 import makePredicate from './makePredicate';
-import getFilterPredicateCity from './getFilterPredicateCity';
+import { getPredicateCity, getPredicateJobType } from './getFilterPredicates';
+import { groupByFn } from './groupData';
 
 const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
 
@@ -37,15 +38,6 @@ const getElemByKey = elemKey => elem => elem[elemKey];
 //         bug('inBucket::filteredJobData', filteredJobData)
 // }
 
-// var byGrade = R.groupBy((elem) => {
-//     var score = student.score;
-//     return score < 65 ? 'F' :
-//            score < 70 ? 'D' :
-//            score < 80 ? 'C' :
-//            score < 90 ? 'B' : 'A';
-// });
-
-
 // const getCity = R.prop('city');
 // const otherProp = '_';
 
@@ -57,12 +49,6 @@ const getElemByKey = elemKey => elem => elem[elemKey];
 // });
 // const shortGroup = R.groupBy(getCity);
 
-// const groupByCities = selectedProps => R.groupBy((elem) => {
-//     const key = getCity(elem);
-
-//     return selectedProps.includes(key) ? 
-//         key : otherProp
-// });
 
 const selectedCities = ['M', 'S']
 // const groupIt = groupByCities(selectedCities);
@@ -107,30 +93,21 @@ const selectedPredicates = [predicateA, predicateB];
 // const multiFilterP = multiFilter(selectedPredicates);
 // const multiFilterP = R.filter(R.allPass(selectedPredicates))
 
-const getCities = (state) => state.ui.filter.city;
+// const getCities = (state) => state.ui.filter.city;
 
 const getSelectedCities = (state) => state.ui.filter.city.sel;
 const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
 
 
-// const predicateCity = createSelector(
-//     state => state.ui.filter.city.sel,
-//     state => state.ui.filter.city.inclRest,
-//     state => state.ui.filter.city.excl,
-
-//     (sel, inclRest, excl) => {
-//         return makePredicate(sel, inclRest, excl, 'city');
-//     }
-// );
-
 export const getJobData = createSelector(
     getRichJobData,
     getSelectedCities,
     getSelectedJobType,
-        getCities,
-        getFilterPredicateCity,
+        // getCities,
+        getPredicateCity,
+        getPredicateJobType,
 
-    (richJobData, selectedCities, selectedJobType, cities, predicateCity) => {
+    (richJobData, selectedCities, selectedJobType, predicateCity, predicateJobType) => {
                                                                     bug('------------------------- selectors ---')
                                                                     bug('selectors::richJobData', richJobData)
                                                                     bug('selectedCities', selectedCities)
@@ -150,11 +127,9 @@ export const getJobData = createSelector(
 
             const predicates = [
                 // makePredicate(cities, 'city'),
-                predicateCity
+                predicateCity,
+                predicateJobType
                 
-                // getPredicate('city', comparatorSelection(selectedCities)),
-                // getPredicate2(comparatorSelection(selectedJobType), 'type'),
-                // getPredicate('type', comparatorSelection(selectedJobType)),
             ];
             // const multiFilterP = multiFilter(predicates);
             // const multiFilterP = multiFilter(selectedPredicates);
@@ -163,6 +138,11 @@ export const getJobData = createSelector(
             const multiFiltered = multiFilter(predicates, richJobData);
             bug('multiFiltered', multiFiltered)
 
+            // const groupeByFnCity = groupByFn('city', selectedCities, false)
+            // const groupeByFnCity = groupByFn('city', selectedCities, true)
+            const groupeByFnCity = groupByFn('city', selectedCities)
+            const groupedByFnCity = groupeByFnCity(multiFiltered);
+            bug('==== groupedByFnCity', groupedByFnCity)
 
             const groupByCity = groupBy('city');
 
@@ -186,20 +166,22 @@ export const getJobData = createSelector(
 
                 // bug('tRes', tRes)
 
+            return multiFiltered;
+
         }
                        
+        return [];
 
-        const filteredJobData = richJobData.filter((record) => {
-            // bug('record', record.city, selectedCities)
-            return selectedCities.includes(record.city);
-            // return true;
-        });
+        // const filteredJobData = richJobData.filter((record) => {
+        //     // bug('record', record.city, selectedCities)
+        //     return selectedCities.includes(record.city);
+        //     // return true;
+        // });
 
-        bug('selectors::filteredJobData', filteredJobData)
+        // bug('selectors::filteredJobData', filteredJobData)
 
-
-        return filteredJobData;
-        // return richJobData;
+        // return filteredJobData;
+        // // return richJobData;
     }
 );
 

@@ -10,8 +10,8 @@ const initStateCity = new FilterCity({
     sel: ['S', 'M'],
     sortOrder: ['pop', 'name'],
     sortByOrder: false,
-    inclRest: false,
-    // inclRest: true,
+    // inclRest: false,
+    inclRest: true,
     sortRest: true,
     // excl: []
     excl: ['K']
