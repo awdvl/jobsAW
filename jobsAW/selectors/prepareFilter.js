@@ -8,6 +8,11 @@ export const getProp = (prop) => R.prop(prop);
 export const groupBy = R.pipe(getProp, R.groupBy);
 
 export const comparatorSelection = R.curry((selectedItems, x) => selectedItems.includes(x));
+export const comparatorSelection2 = R.curry((selectedItems, key, x) => selectedItems.includes(x));
+
+// R.contains
+// R.filter(R.where({tags: R.contains('fun')}))
+
 // export const comparatorSelection3 = R.curry((selectedItems, key, x) => selectedItems.includes(x));
 
 
@@ -25,11 +30,16 @@ export const getPredicate = R.curry((key, comparator) => (
 ));
 
 // export const getPredicateAlt = R.curry((comparator, key) => (
-//     R.propSatisfies(comparator, key)
-// ));
+export const getPredicate2 = R.curry((comparator, key) => (
+    R.propSatisfies(comparator, key)
+));
 
 // export const getPredicate2 = R.curry(R.pipe(comparatorSelection3, getPredicateAlt));
 
+// export const getPredicate3 = R.pipe(comparatorSelection2, getPredicate2);
+export const getPredicate3 = R.curry((comparison, key, data) => (
+    R.propSatisfies(comparatorSelection2(comparison, key, data))
+));
 
 
 export const multiFilter = R.curry((predicates, data) => R.filter(R.allPass(predicates), data));

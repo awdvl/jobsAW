@@ -6,7 +6,8 @@ import { getRichJobData } from './getRichJobData';
 import { 
     groupBy,
     comparatorSelection, getPredicate, multiFilter, 
-    // getPredicate2 
+    getPredicate2, 
+    getPredicate3, 
 } from './prepareFilter';
 
 const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
@@ -132,7 +133,9 @@ export const getJobData = createSelector(
 
             const predicates = [
                 getPredicate('city', comparatorSelection(selectedCities)),
-                getPredicate('type', comparatorSelection(selectedJobType)),
+                // getPredicate('type', comparatorSelection(selectedJobType)),
+                getPredicate2(comparatorSelection(selectedJobType), 'type'),
+                // getPredicate3(selectedJobType, 'type'),
                 // getPredicate2(selectedJobType, 'type')
             ];
             // const multiFilterP = multiFilter(predicates);
