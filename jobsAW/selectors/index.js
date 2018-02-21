@@ -10,6 +10,9 @@ import {
     getPredicate3, 
 } from './prepareFilter';
 
+import makePredicate from './makePredicate';
+import getFilterPredicateCity from './getFilterPredicateCity';
+
 const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
 
                                                                             // bug('selectors::state', state)
@@ -104,16 +107,30 @@ const selectedPredicates = [predicateA, predicateB];
 // const multiFilterP = multiFilter(selectedPredicates);
 // const multiFilterP = R.filter(R.allPass(selectedPredicates))
 
+const getCities = (state) => state.ui.filter.city;
+
 const getSelectedCities = (state) => state.ui.filter.city.sel;
 const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
 
+
+// const predicateCity = createSelector(
+//     state => state.ui.filter.city.sel,
+//     state => state.ui.filter.city.inclRest,
+//     state => state.ui.filter.city.excl,
+
+//     (sel, inclRest, excl) => {
+//         return makePredicate(sel, inclRest, excl, 'city');
+//     }
+// );
 
 export const getJobData = createSelector(
     getRichJobData,
     getSelectedCities,
     getSelectedJobType,
+        getCities,
+        getFilterPredicateCity,
 
-    (richJobData, selectedCities, selectedJobType) => {
+    (richJobData, selectedCities, selectedJobType, cities, predicateCity) => {
                                                                     bug('------------------------- selectors ---')
                                                                     bug('selectors::richJobData', richJobData)
                                                                     bug('selectedCities', selectedCities)
@@ -132,11 +149,12 @@ export const getJobData = createSelector(
 
 
             const predicates = [
-                getPredicate('city', comparatorSelection(selectedCities)),
+                // makePredicate(cities, 'city'),
+                predicateCity
+                
+                // getPredicate('city', comparatorSelection(selectedCities)),
+                // getPredicate2(comparatorSelection(selectedJobType), 'type'),
                 // getPredicate('type', comparatorSelection(selectedJobType)),
-                getPredicate2(comparatorSelection(selectedJobType), 'type'),
-                // getPredicate3(selectedJobType, 'type'),
-                // getPredicate2(selectedJobType, 'type')
             ];
             // const multiFilterP = multiFilter(predicates);
             // const multiFilterP = multiFilter(selectedPredicates);
@@ -154,6 +172,8 @@ export const getJobData = createSelector(
             bug('============ mf')
             multiFiltered.map(record => bug('Record', record.id, record.text.city, record.type))
             bug('============')
+
+
 
         // inBucket(richJobData, selectedCities, elemKey);
         // inBucket(richJobData, selectedCities, elemKeyFn);

@@ -11,8 +11,10 @@ const initStateCity = new FilterCity({
     sortOrder: ['pop', 'name'],
     sortByOrder: false,
     inclRest: false,
+    // inclRest: true,
     sortRest: true,
-    excl: []
+    // excl: []
+    excl: ['K']
 });
 
 const city = (state=initStateCity, action) => {
