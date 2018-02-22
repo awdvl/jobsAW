@@ -40,6 +40,7 @@ const grouper = R.curry((prop, selection, elem) => {
     const value = elem[prop]
 
     return selection.includes(value) ? value : '_';
+    // return value;
 
 });
 
@@ -55,3 +56,53 @@ export const flatten = (selection, data) => {
 
     return flattened;
 };
+
+
+const testData = {
+    S: {
+        1: {
+            id: 'S1'
+        },
+        3: {
+            id: 'S3'
+        }
+    },
+    M: {
+        1: {
+            id: 'M1'
+        },
+        3: {
+            id: 'M3'
+        }
+    },
+    _: {
+        F: {
+            1: {
+                id: 'F1'
+            },
+            3: {
+                id: 'F3'
+            }
+        },
+    }
+
+};
+
+// test, better check flattenTEst.js
+const flattenRec = (selection, data) => {
+    const reducer = (acc, elem) => {
+
+    };
+
+    const flattener = R.reduce(reducer, [], selection)
+
+    let flattened = selection.reduce((acc, elem) => acc.concat(data[elem]), []);
+
+    if (data._) {
+        flattened = flattened.concat(data._);
+    }
+
+    return flattened;
+};
+
+

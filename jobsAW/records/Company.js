@@ -2,7 +2,7 @@ import { Record } from 'immutable';
 
 const CompanyRecord = Record({
     name: '',
-    industry: 0,
+    indy: 0,
     emply: 0
 })
 

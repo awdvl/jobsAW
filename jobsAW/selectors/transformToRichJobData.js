@@ -20,7 +20,6 @@ export default (language, data, id) => {
         job.text = {
             city: cityName.get(job.city),
             country: countryName.get(job.country),
-            // company: companies.getIn([job.company, 'name']),
             company: jobCompany.get('name'),
             type: jobType.get(job.type + ''),
             title: jobLoc.get('title'),
@@ -28,7 +27,7 @@ export default (language, data, id) => {
         };
 
         job.param = {
-            industry: jobCompany.get('industry'),
+            indy: jobCompany.get('indy'),
             empl: jobCompany.get('empl'),
         };
 

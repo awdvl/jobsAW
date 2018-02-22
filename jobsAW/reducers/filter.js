@@ -1,9 +1,20 @@
 import { combineReducers } from 'redux';
-import { Map, fromJS } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 import FilterCity from '../records/FilterCity';
 import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmpl from '../records/FilterCompEmpl';
+
+
+const initStateOrder = List(['city', 'compIndy']);
+
+const order = (state=initStateOrder, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+};
+
 
 /** 
  *  sel: []  selected items
@@ -14,8 +25,8 @@ import FilterCompEmpl from '../records/FilterCompEmpl';
  *  excl: []  excluded items
 */
 const initStateCity = new FilterCity({
-    sel: ['S', 'M'],
-    // sel: [],
+    // sel: ['S', 'M'],
+    sel: [],
     sortOrder: ['pop', 'name'],
     sortByOrder: false,
     // inclRest: false,
@@ -33,7 +44,7 @@ const city = (state=initStateCity, action) => {
 };
 
 
-const initStateCompIndustry = new FilterCompIndustry({
+const initStateCompIndy = new FilterCompIndustry({
     sel: [],
     sortOrder: [1,2],
     sortByOrder: true,
@@ -42,7 +53,7 @@ const initStateCompIndustry = new FilterCompIndustry({
     excl: [3]
 });
 
-const compIndustry = (state=initStateCompIndustry, action) => {
+const compIndy = (state=initStateCompIndy, action) => {
     switch (action.type) {
         default:
             return state;
@@ -80,8 +91,9 @@ const jobType = (state=initStateJobType, action) => {
 
 
 export const filter = combineReducers({
+    order,
     city,
-    compIndustry,
+    compIndy,
     compEmpl,
     jobType,
 });

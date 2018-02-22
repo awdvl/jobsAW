@@ -1,52 +1,52 @@
 {
     "Porsche": {
         "name": "Porsche AG",
-        "industry": 1,
+        "indy": 1,
         "empl": 9
     },
     "Porsche_DIG": {
         "name": "Porsche Digital GmbH",
-        "industry": 2,
+        "indy": 2,
         "empl": 6
     },
     "BMW": {
         "name": "BMW AG",
-        "industry": 1,
+        "indy": 1,
         "empl": 9
     },
     "Daimler": {
         "name": "Daimler AG",
-        "industry": 1,
+        "indy": 1,
         "empl": 9
     },
     "Ford": {
         "name": "Ford AG",
-        "industry": 1,
+        "indy": 1,
         "empl": 9
     },
     "VW": {
         "name": "Volkswagen AG",
-        "industry": 1,
+        "indy": 1,
         "empl": 9
     },
     "Lilt": {
         "name": "Lilt",
-        "industry": 2,
+        "indy": 2,
         "empl": 4
     },
     "Arithnea": {
         "name": "Arithnea",
-        "industry": 2,
+        "indy": 2,
         "empl": 5
     },
     "Iteratec": {
         "name": "Iteratec",
-        "industry": 2,
+        "indy": 2,
         "empl": 6
     },
     "Deutsche_Bank": {
         "name": "Deutsche Bank AG",
-        "industry": 3,
+        "indy": 3,
         "empl": 9
     }
 }

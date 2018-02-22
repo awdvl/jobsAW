@@ -17,21 +17,34 @@ import { groupBySelection, flatten } from './groupData';
 
 const getSelectedCities = (state) => state.ui.filter.city.sel;
 const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
+const getSelectedCompIndy = (state) => state.ui.filter.compIndy.sel;
 
 
 export const getJobData = createSelector(
     getRichJobData,
+
     getSelectedCities,
     getSelectedJobType,
+    getSelectedCompIndy,
 
     getPredicateCity,
     getPredicateJobType,
 
-    (richJobData, selectedCities, selectedJobType, predicateCity, predicateJobType) => {
+    (
+        richJobData, 
+
+        selectedCities, 
+        selectedJobType, 
+        selectedCompIndy, 
+
+        predicateCity, 
+        predicateJobType
+    ) => {
                                                                     bug('------------------------- selectors ---')
                                                                     bug('selectors::richJobData', richJobData)
                                                                     bug('selectedCities', selectedCities)
                                                                     bug('selectedJobType', selectedJobType)
+                                                                    bug('selectedCompIndy', selectedCompIndy)
         if (!R.isEmpty(richJobData)) {
 
             const predicates = [
@@ -40,26 +53,30 @@ export const getJobData = createSelector(
                 
             ];
 
+            // basic predicate filtering
             const multiFiltered = filterByPredicates(predicates, richJobData);
             bug('multiFiltered', multiFiltered)
 
 
-            // ===== 
+            // ===== group on first layer
             const groupBySelectionCity = groupBySelection('city', selectedCities)
             const groupedBySelectionCity = groupBySelectionCity(multiFiltered);
             bug('==== groupedBySelectionCity', groupedBySelectionCity)
+
+
 
             const flattened = flatten(selectedCities, groupedBySelectionCity);
             bug('==== flattened', flattened)
 
 
 
-            bug('============ mf')
+            // view-in
+            bug('============ mf')  // this is the ungrouped, unsorted list
             multiFiltered.map(record => bug('Record', record.id, record.text.city, record.type))
             bug('============')
 
-            bug('============ flattened')
-            flattened.map(record => bug('Record', record.id, record.text.city, record.type, record.param.industry))
+            bug('============ flattened')  // this is the grouped list
+            flattened.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
             bug('============')
 
                                                              

@@ -11,7 +11,7 @@
             }
         },
         "company": {
-            "industry": {
+            "indy": {
                 "1": "Automotive",
                 "2": "Software Development",
                 "3": "Bank"
