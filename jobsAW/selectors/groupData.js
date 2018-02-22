@@ -35,40 +35,23 @@ export const getProp = (prop) => R.prop(prop);
 // use: groupByProp = groupBy(prop);  grouped = groupByProp(data);
 export const groupBy = R.pipe(getProp, R.groupBy);
 
-
-
-// const grouper = R.curry((prop, selection, inclRest, elem) => {
+// group by selection;  if inclRest, collect elems in the '_' key
 const grouper = R.curry((prop, selection, elem) => {
     const value = elem[prop]
 
-    if (selection.includes(value)) {
-        return value;
-
-    // } else if (inclRest) {
-    //     return '_';
-
-    } else {
-        // return '';
-        return '_';
-    }
+    return selection.includes(value) ? value : '_';
 
 });
 
-// var byGrade = R.groupBy(function(student) {
-//     var score = student.score;
-//     return score < 65 ? 'F' :
-//            score < 70 ? 'D' :
-//            score < 80 ? 'C' :
-//            score < 90 ? 'B' : 'A';
-//   });
 
-export const groupByFn = R.pipe(grouper, R.groupBy);
+export const groupBySelection = R.pipe(grouper, R.groupBy);
 
 export const flatten = (selection, data) => {
-    const ret = [];
+    let flattened = selection.reduce((acc, elem) => acc.concat(data[elem]), []);
 
-    return data.reduce(elem => {
+    if (data._) {
+        flattened = flattened.concat(data._);
+    }
 
-    });
-
-}
+    return flattened;
+};

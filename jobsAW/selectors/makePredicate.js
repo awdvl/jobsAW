@@ -30,7 +30,8 @@ const sayX = x => console.log('x is ' + x);
 const comparator = R.curry((sel, inclRest, excl, x) => {
 
     // only sel
-    if (!inclRest) {
+    // if (!inclRest) {
+    if (!inclRest && !R.isEmpty(sel)) {
         return R.contains(x, sel);
 
     // all without excl

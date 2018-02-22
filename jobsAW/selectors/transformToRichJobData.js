@@ -15,14 +15,21 @@ export default (language, data, id) => {
                                                         // bug('loopToCombineJobData::state', state)
     const getJobData = (job) => {
         const jobLoc = jobsLoc.get(job.id + '');
+        const jobCompany = companies.get(job.company);
 
         job.text = {
             city: cityName.get(job.city),
             country: countryName.get(job.country),
-            company: companies.getIn([job.company, 'name']),
+            // company: companies.getIn([job.company, 'name']),
+            company: jobCompany.get('name'),
             type: jobType.get(job.type + ''),
             title: jobLoc.get('title'),
             intro: jobLoc.get('intro'),
+        };
+
+        job.param = {
+            industry: jobCompany.get('industry'),
+            empl: jobCompany.get('empl'),
         };
 
         return job;

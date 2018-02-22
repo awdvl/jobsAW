@@ -5,9 +5,17 @@ import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmpl from '../records/FilterCompEmpl';
 
-
+/** 
+ *  sel: []  selected items
+ *  sortOrder: []  sort by a predefined order concept, e.g. by name, population, ...
+ *  sortByOrder: boolean  true: use the sortOrder,  false: use the order of the sel array
+ *  inclRest: boolean  include other items (except excluded values)
+ *  sortRest: true/[]  true: same sort order as in sortOrder,  []: define a different sort order
+ *  excl: []  excluded items
+*/
 const initStateCity = new FilterCity({
     sel: ['S', 'M'],
+    // sel: [],
     sortOrder: ['pop', 'name'],
     sortByOrder: false,
     // inclRest: false,
@@ -26,10 +34,10 @@ const city = (state=initStateCity, action) => {
 
 
 const initStateCompIndustry = new FilterCompIndustry({
-    sel: [1],
-    sortOrder: [],
-    sortByOrder: false,
-    inclRest: true,
+    sel: [],
+    sortOrder: [1,2],
+    sortByOrder: true,
+    inclRest: false,
     sortRest: true,
     excl: [3]
 });

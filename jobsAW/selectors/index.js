@@ -3,16 +3,10 @@ import R from 'ramda';
 import bug from '../../_libs/bug';
 
 import { getRichJobData } from './getRichJobData';
-import { 
-    groupBy,
-    comparatorSelection, getPredicate, multiFilter, 
-    getPredicate2, 
-    getPredicate3, 
-} from './prepareFilter';
-
-import makePredicate from './makePredicate';
 import { getPredicateCity, getPredicateJobType } from './getFilterPredicates';
-import { groupByFn } from './groupData';
+
+import { filterByPredicates } from './filterData';
+import { groupBySelection, flatten } from './groupData';
 
 const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
 
@@ -37,17 +31,6 @@ const getElemByKey = elemKey => elem => elem[elemKey];
 
 //         bug('inBucket::filteredJobData', filteredJobData)
 // }
-
-// const getCity = R.prop('city');
-// const otherProp = '_';
-
-// const groupByCities = selectedProps => R.groupBy((elem) => {
-//     const key = getCity(elem);
-
-//     return selectedProps.includes(key) ? 
-//         key : otherProp
-// });
-// const shortGroup = R.groupBy(getCity);
 
 
 const selectedCities = ['M', 'S']
@@ -103,9 +86,9 @@ export const getJobData = createSelector(
     getRichJobData,
     getSelectedCities,
     getSelectedJobType,
-        // getCities,
-        getPredicateCity,
-        getPredicateJobType,
+    
+    getPredicateCity,
+    getPredicateJobType,
 
     (richJobData, selectedCities, selectedJobType, predicateCity, predicateJobType) => {
                                                                     bug('------------------------- selectors ---')
@@ -126,7 +109,6 @@ export const getJobData = createSelector(
 
 
             const predicates = [
-                // makePredicate(cities, 'city'),
                 predicateCity,
                 predicateJobType
                 
@@ -135,22 +117,30 @@ export const getJobData = createSelector(
             // const multiFilterP = multiFilter(selectedPredicates);
 
             // const multiFiltered = multiFilterP(richJobData);
-            const multiFiltered = multiFilter(predicates, richJobData);
+            const multiFiltered = filterByPredicates(predicates, richJobData);
             bug('multiFiltered', multiFiltered)
 
-            // const groupeByFnCity = groupByFn('city', selectedCities, false)
-            // const groupeByFnCity = groupByFn('city', selectedCities, true)
-            const groupeByFnCity = groupByFn('city', selectedCities)
-            const groupedByFnCity = groupeByFnCity(multiFiltered);
-            bug('==== groupedByFnCity', groupedByFnCity)
 
-            const groupByCity = groupBy('city');
+            // ===== 
+            const groupBySelectionCity = groupBySelection('city', selectedCities)
+            const groupedBySelectionCity = groupBySelectionCity(multiFiltered);
+            bug('==== groupedBySelectionCity', groupedBySelectionCity)
 
-            const grouped = groupByCity(multiFiltered);
-            bug('grouped', grouped)
+            const flattened = flatten(selectedCities, groupedBySelectionCity);
+            bug('==== flattened', flattened)
+
+
+            // const groupByCity = groupBy('city');
+
+            // const grouped = groupByCity(multiFiltered);
+            // bug('grouped', grouped)
 
             bug('============ mf')
             multiFiltered.map(record => bug('Record', record.id, record.text.city, record.type))
+            bug('============')
+
+            bug('============ flattened')
+            flattened.map(record => bug('Record', record.id, record.text.city, record.type, record.param.industry))
             bug('============')
 
 
