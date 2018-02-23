@@ -35,7 +35,7 @@ const comparator = R.curry((sel, inclRest, excl, x) => {
         return R.contains(x, sel);
 
     // all without excl
-    } else if (!R.isEmpty(excl)) {
+    } else if (excl && !R.isEmpty(excl)) {
         return !R.contains(x, excl);
 
     // all

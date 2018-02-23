@@ -25,8 +25,8 @@ const order = (state=initStateOrder, action) => {
  *  excl: []  excluded items
 */
 const initStateCity = new FilterCity({
-    // sel: ['S', 'M'],
-    sel: [],
+    sel: ['S', 'M'],
+    // sel: [],
     sortOrder: ['pop', 'name'],
     sortByOrder: false,
     // inclRest: false,
@@ -45,12 +45,14 @@ const city = (state=initStateCity, action) => {
 
 
 const initStateCompIndy = new FilterCompIndustry({
-    sel: [],
+    sel: [1],
+    // sel: [],
     sortOrder: [1,2],
-    sortByOrder: true,
-    inclRest: false,
+    sortByOrder: false,
+    inclRest: true,
     sortRest: true,
-    excl: [3]
+    // excl: [3]
+    excl: []
 });
 
 const compIndy = (state=initStateCompIndy, action) => {
@@ -79,7 +81,8 @@ const compEmpl = (state=initStateCompEmpl, action) => {
 
 
 const initStateJobType = new FilterJobType({
-    sel: [3]
+    // sel: [3]
+    sel: []
 });
 
 const jobType = (state=initStateJobType, action) => {

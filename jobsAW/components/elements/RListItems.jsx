@@ -39,7 +39,7 @@ const MainLines = styled.div`
 `;
 
 const ItemTitle = MainLines.extend`
-    font-size: 1.5em;
+    font-size: 1.25em;
 `;
 
 // const SoftButton = styled.button`
