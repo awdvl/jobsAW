@@ -8,6 +8,7 @@ import { getPredicateCity, getPredicateJobType } from './getFilterPredicates';
 import { filterByPredicates } from './filterData';
 import { groupBySelection, flatten } from './groupData';
 
+import prepareFilterState from './prepareFilterState';
 import multiSort from './multiSort';
 
 // const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
@@ -21,9 +22,11 @@ const getSelectedCities = (state) => state.ui.filter.city.sel;
 const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
 const getSelectedCompIndy = (state) => state.ui.filter.compIndy.sel;
 
+const getFilters = (state) => state.ui.filter;
 
 export const getJobData = createSelector(
     getRichJobData,
+    getFilters,
 
     getSelectedCities,
     getSelectedJobType,
@@ -33,7 +36,8 @@ export const getJobData = createSelector(
     getPredicateJobType,
 
     (
-        richJobData, 
+        richJobData,
+        filters,
 
         selectedCities, 
         selectedJobType, 
@@ -59,6 +63,8 @@ export const getJobData = createSelector(
             const multiFiltered = filterByPredicates(predicates, richJobData);
             bug('multiFiltered', multiFiltered)
 
+            const preparedFilter = prepareFilterState(filters);
+            bug('preparedFilter', preparedFilter)
             // multiSort()
 
             // ===== group on first layer

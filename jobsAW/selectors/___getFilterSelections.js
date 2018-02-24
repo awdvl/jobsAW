@@ -23,24 +23,24 @@ const getFilterCompIndy = getFilterProp('compIndy');
 // const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
 // const getSelectedCompIndy = (state) => state.ui.filter.compIndy.sel;
 
-export const getFilterSelection = createSelector (
-    getFilterOrder,
-    getSelectedCities,
-    getSelectedJobType,
-    getSelectedCompIndy,
+// export const getFilterSelection = createSelector (
+//     getFilterOrder,
+//     getSelectedCities,
+//     getSelectedJobType,
+//     getSelectedCompIndy,
 
-    (
-        filterOrder,
-        selectedCities, 
-        selectedJobType, 
-        selectedCompIndy
-    ) => {
-        const filterProps = filterOrder.map((filterProp) => {
+//     (
+//         filterOrder,
+//         selectedCities, 
+//         selectedJobType, 
+//         selectedCompIndy
+//     ) => {
+//         const filterProps = filterOrder.map((filterProp) => {
 
-        });
+//         });
 
-        return filterProps;
-    }
+//         return filterProps;
+//     }
 
-);
+// );
 
