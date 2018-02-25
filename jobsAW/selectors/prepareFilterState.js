@@ -21,20 +21,21 @@ const makeIndex = (ary) => reduceIndexed ( (acc, value, index) => {
     return acc;
 }, {})(ary);
 
-
+// this better as transform
 const prepareFilterState = (filterState) => {
     bug('+++++ filterState', filterState)
-    bug('++ filterState.order', filterState.order)
+    bug('++ filterState.__order', filterState.__order)
     bug('++ filterState.city', filterState.city)
 
     // filter.map()
-    const filterProps = filterState.order.map((filterName) => {
+    const filterProps = filterState.__order.map((filterName) => {
         const filter = filterState[filterName];
         let preparedProp;
                                     bug('>>> prepareFilterState::filterProps filterName', filterName, filter);
                                                 bug('>> this', filter.sel, filter.sortByOrder)
         if (filter.sel && !filter.sortByOrder) {
-            preparedProp = [filterName];
+            // preparedProp = [filterName];
+            preparedProp = [filterState.__convNames.get(filterName) || filterName];
 
             // -->> to push also sortOrder, sortRest, if inclRest
             const selIndex = makeIndex (filter.sel);

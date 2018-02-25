@@ -13,7 +13,9 @@ const variadicEither = (head, ...tail) =>
 
 // use a provided property map
 const byPropMap = (propSelection, obj) => {
-    const newProp = (propSelection[1][ obj[propSelection[0]] ]);
+    // const newProp = (propSelection[1][ obj[propSelection[0]] ]);  // here a path
+    // const newProp = (propSelection[1][ R.path(propSelection[0]) || obj[propSelection[0]] ]);  // here a path
+    const newProp = (propSelection[1][ R.pathOr(obj[propSelection[0]], propSelection[0], obj) ]);  // here a path
     return newProp !== undefined ? newProp : Infinity;
 }
 
@@ -23,7 +25,7 @@ const makeComparatorIx = (prop) => {
     if (typeof prop === 'string') {
         getProp = R.prop;
 
-    } else if (Array.isArray(prop)) {
+    } else if (Array.isArray (prop)) {
         getProp = byPropMap;
     }
 

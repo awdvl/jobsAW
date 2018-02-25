@@ -9,7 +9,9 @@ import { Record } from 'immutable';
  *  excl: []  excluded items
 */
 const FilterJobTypeRecord = Record({
-    sel: []
+    sel: [],
+    sortOrder: [],
+    sortByOrder: false
 });
 
 const FilterJobType = FilterJobTypeRecord;

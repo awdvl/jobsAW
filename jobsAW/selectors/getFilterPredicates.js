@@ -25,6 +25,6 @@ const makePredicateSelector = (filterProp, prop=filterProp) => (
 
 export const getPredicateCity = makePredicateSelector('city');
 export const getPredicateJobType = makePredicateSelector('jobType', 'type');
-export const getPredicateCompIndy = makePredicateSelector('compIndy', 'type');
+export const getPredicateCompIndy = makePredicateSelector('compIndy', 'indy');
 
 export default makePredicateSelector;

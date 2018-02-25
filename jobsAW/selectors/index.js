@@ -65,7 +65,9 @@ export const getJobData = createSelector(
 
             const preparedFilter = prepareFilterState(filters);
             bug('preparedFilter', preparedFilter)
-            // multiSort()
+            
+            const multiSorted = multiSort(preparedFilter, multiFiltered);
+            bug('multiSorted', multiSorted)
 
             // ===== group on first layer
             const groupBySelectionCity = groupBySelection('city', selectedCities)
@@ -81,7 +83,11 @@ export const getJobData = createSelector(
 
             // view-in
             bug('============ mf')  // this is the ungrouped, unsorted list
-            multiFiltered.map(record => bug('Record', record.id, record.text.city, record.type))
+            multiFiltered.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
+            bug('============')
+
+            bug('============ multiSorted')  // this is the multi sorted
+            multiSorted.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
             bug('============')
 
             bug('============ flattened')  // this is the grouped list

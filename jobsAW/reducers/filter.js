@@ -6,9 +6,25 @@ import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmpl from '../records/FilterCompEmpl';
 
 
-const initStateOrder = List(['city', 'compIndy']);
+// const initStateOrder = List(['city', 'compIndy']);
+const initStateOrder = List(['city', 'compIndy', 'jobType']);
 
-const order = (state=initStateOrder, action) => {
+const __order = (state=initStateOrder, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+};
+
+
+const initStateConvNames = Map({
+    jobType: 'type',
+    // compIndy: 'indy'
+    compIndy: ['param', 'indy']
+});
+
+//  necessary for the different object keys in state.ui.filter and the jobs.json  ->  used in prepareFilterState
+const __convNames = (state=initStateConvNames, action) => {
     switch (action.type) {
         default:
             return state;
@@ -82,7 +98,8 @@ const compEmpl = (state=initStateCompEmpl, action) => {
 
 const initStateJobType = new FilterJobType({
     // sel: [3]
-    sel: []
+    // sel: []
+    sel: [1,2,3]
 });
 
 const jobType = (state=initStateJobType, action) => {
@@ -94,7 +111,8 @@ const jobType = (state=initStateJobType, action) => {
 
 
 export const filter = combineReducers({
-    order,
+    __order,
+    __convNames,
     city,
     compIndy,
     compEmpl,
