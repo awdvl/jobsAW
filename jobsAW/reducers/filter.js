@@ -19,12 +19,11 @@ const __order = (state=initStateOrder, action) => {
 
 const initStateConvNames = Map({
     jobType: 'type',
-    // compIndy: 'indy'
     compIndy: ['param', 'indy']
 });
 
 //  necessary for the different object keys in state.ui.filter and the jobs.json  ->  used in prepareFilterState
-const __convNames = (state=initStateConvNames, action) => {
+const __mapToPath = (state=initStateConvNames, action) => {
     switch (action.type) {
         default:
             return state;
@@ -99,7 +98,9 @@ const compEmpl = (state=initStateCompEmpl, action) => {
 const initStateJobType = new FilterJobType({
     // sel: [3]
     // sel: []
-    sel: [1,2,3]
+    sel: [1,2,3],
+    // sortOrder: ['name'],
+    // sortByOrder: true
 });
 
 const jobType = (state=initStateJobType, action) => {
@@ -112,7 +113,7 @@ const jobType = (state=initStateJobType, action) => {
 
 export const filter = combineReducers({
     __order,
-    __convNames,
+    __mapToPath,
     city,
     compIndy,
     compEmpl,

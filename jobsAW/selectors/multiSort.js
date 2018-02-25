@@ -21,7 +21,11 @@ const byPropMap = (propSelection, obj) => {
 
 const makeComparatorIx = (prop) => {
     let getProp;
-    
+
+    // if (!prop) {
+    //     R.comparator (R.T);
+    // }
+
     if (typeof prop === 'string') {
         getProp = R.prop;
 
@@ -33,21 +37,7 @@ const makeComparatorIx = (prop) => {
         return R.lt (getProp (prop, a), getProp (prop, b));
     });
 
-    // if (typeof prop === 'string') {
-    //     comparator = R.comparator ((a,b) => {
-    //         return R.lt (R.prop (prop, a), R.prop (prop, b));
-    //     });
-    // }
-    
-    // if (Array.isArray(prop)) {
-
-    //     comparator = R.comparator ((a,b) => {
-    //         return R.lt (
-    //             byPropMap (prop, a), 
-    //             byPropMap (prop, b)
-    //         );
-    //     });
-    // }
+bug('|||||| comparator', comparator)
 
     return comparator;
 };

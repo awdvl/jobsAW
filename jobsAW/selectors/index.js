@@ -8,7 +8,7 @@ import { getPredicateCity, getPredicateJobType } from './getFilterPredicates';
 import { filterByPredicates } from './filterData';
 import { groupBySelection, flatten } from './groupData';
 
-import prepareFilterState from './prepareFilterState';
+import transformSortProps from './transformSortProps';
 import multiSort from './multiSort';
 
 // const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
@@ -63,21 +63,19 @@ export const getJobData = createSelector(
             const multiFiltered = filterByPredicates(predicates, richJobData);
             bug('multiFiltered', multiFiltered)
 
-            const preparedFilter = prepareFilterState(filters);
-            bug('preparedFilter', preparedFilter)
+            const sortProps = transformSortProps(filters);
+            bug('sortProps', sortProps)
             
-            const multiSorted = multiSort(preparedFilter, multiFiltered);
+            const multiSorted = multiSort(sortProps, multiFiltered);
             bug('multiSorted', multiSorted)
 
             // ===== group on first layer
-            const groupBySelectionCity = groupBySelection('city', selectedCities)
-            const groupedBySelectionCity = groupBySelectionCity(multiFiltered);
-            bug('==== groupedBySelectionCity', groupedBySelectionCity)
+            // const groupBySelectionCity = groupBySelection('city', selectedCities)
+            // const groupedBySelectionCity = groupBySelectionCity(multiFiltered);
+            // bug('==== groupedBySelectionCity', groupedBySelectionCity)
 
-
-
-            const flattened = flatten(selectedCities, groupedBySelectionCity);
-            bug('==== flattened', flattened)
+            // const flattened = flatten(selectedCities, groupedBySelectionCity);
+            // bug('==== flattened', flattened)
 
 
 
@@ -90,9 +88,9 @@ export const getJobData = createSelector(
             multiSorted.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
             bug('============')
 
-            bug('============ flattened')  // this is the grouped list
-            flattened.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
-            bug('============')
+            // bug('============ flattened')  // this is the grouped list
+            // flattened.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
+            // bug('============')
 
                                                              
                 // var numbers = [1, 2, 3, 4];
@@ -101,7 +99,8 @@ export const getJobData = createSelector(
 
                 // bug('tRes', tRes)
 
-            return multiFiltered;
+            return multiSorted;
+            // return multiFiltered;
 
         }
                        
