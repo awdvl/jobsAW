@@ -63,7 +63,7 @@ export const getJobData = createSelector(
             const multiFiltered = filterByPredicates(predicates, richJobData);
             bug('multiFiltered', multiFiltered)
 
-            const sortProps = transformSortProps(filters);
+            const sortProps = transformSortProps(filters, multiFiltered);
             bug('sortProps', sortProps)
             
             const multiSorted = multiSort(sortProps, multiFiltered);

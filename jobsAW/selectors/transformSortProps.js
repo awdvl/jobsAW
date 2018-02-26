@@ -26,7 +26,7 @@ const makePropAccessFor = (filterState) => (type) => (filterName) =>
 
 
 // this better as transform
-const transformSortProps = (filterState) => {
+const transformSortProps = (filterState, filteredRecords) => {
                                                             // bug('+++++ filterState', filterState)
                                                             // bug('++ filterState.__order', filterState.__order)
                                                             // bug('++ filterState.city', filterState.city)
@@ -61,6 +61,10 @@ const transformSortProps = (filterState) => {
             // -->> to push also sortOrder, sortRest, if inclRest
             const selIndex = makeIndex (filter.sel);
                                                                                 bug('>>> selIndex', selIndex)
+            if (filter.sortRest) {
+                // get possible values, sort them here and add to selIndex
+            }
+
             preparedProp.push(selIndex);
 
         // ->> this currently a special case for a one element array with 'text' 
@@ -76,6 +80,10 @@ const transformSortProps = (filterState) => {
 
             } else {
                 preparedProp = getPropNameMapped (filterName);
+            }
+
+            if (R.contains ('DSC', filter.sortOrder)) {
+                preparedProp.push('DSC');
             }
 
         }

@@ -14,15 +14,27 @@ const variadicEither = (head, ...tail) =>
 // use a provided property map [1], look-up for values on a prop or following a path array
 // compare prop value to index map
 const byPropMap = (propSelection, obj) => {
-    // const newProp = (propSelection[1][ obj[propSelection[0]] ]);  // here a path
-    // const newProp = (propSelection[1][ R.path(propSelection[0]) || obj[propSelection[0]] ]);  // here a path
     const newProp = propSelection[1][ R.pathOr (obj[propSelection[0]], propSelection[0], obj) ];  // here a path
+
     return newProp !== undefined ? newProp : Infinity;
 }
 
 // -->> here maybe as last prop a possible DSC -> if DSC, change R.lt to R.gt
 const makeComparatorIx = (prop) => {
+
+    const comparatorLt = (a,b) => {
+        // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
+        return R.lt (getProp (prop, a), getProp (prop, b));
+    }
+    const comparatorGt = (a,b) => {
+        // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
+        // return R.gt (getProp (prop, a), getProp (prop, b));
+        return R.gt (getProp (prop, a), getProp (prop, b));
+    }
+
     let getProp;
+    let comparator = comparatorLt;
+
                                                                                 // bug('prop', prop)
     if (R.isEmpty(prop)) {
         return R.comparator (R.T);
@@ -33,8 +45,14 @@ const makeComparatorIx = (prop) => {
         getProp = R.prop;
 
     } else if (Array.isArray (prop)) {
+
         // a path instead of a prop, but no map
         if (typeof prop[1] === 'string') {
+            if (R.last(prop) === 'DSC') {
+                prop = prop.slice(0,-1);
+                comparator = comparatorGt;
+            }
+    
             getProp = R.path;
 
         } else {
@@ -43,13 +61,9 @@ const makeComparatorIx = (prop) => {
 
     }
 
-    const comparator = R.comparator ((a,b) => {
-        // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
-        return R.lt (getProp (prop, a), getProp (prop, b));
-    });
+    
+    return R.comparator (comparator);
 
-
-    return comparator;
 };
 
 

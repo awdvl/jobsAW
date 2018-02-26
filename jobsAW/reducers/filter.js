@@ -65,8 +65,8 @@ const initStateCity = new FilterCity({
     // inclRest: false,
     inclRest: true,
     sortRest: true,
-    // excl: []
-    excl: ['K']
+    excl: []
+    // excl: ['K']
 });
 
 const city = (state=initStateCity, action) => {
@@ -102,7 +102,8 @@ const initStateCompEmply = new FilterCompEmply({
     // sel: [],
     // sel: [4,5,6,9],
     sel: [9,6,5,4],
-    sortOrder: ['emply'],
+    // sortOrder: ['emply'],
+    sortOrder: ['DSC'],
     sortByOrder: true,
     // sortByOrder: false,
     inclRest: false,
