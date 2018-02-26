@@ -16,10 +16,16 @@ import bug from '../../_libs/bug';
 
 
 const reduceIndexed = R.addIndex(R.reduce);
-const makeIndex = (ary) => reduceIndexed ( (acc, value, index) => {
-    acc[value] = index;
+const makeIndex = (ary, indexObj = {}, n = 0) => reduceIndexed ( (acc, value, index) => {
+    acc[value] = index + n;
     return acc;
-}, {})(ary);
+}, indexObj)(ary, indexObj, n);
+
+// const makeIndex = (ary) => reduceIndexed ( (acc, value, index) => {
+//     acc[value] = index;
+//     return acc;
+// }, {})(ary);
+
 
 const makePropAccessFor = (filterState) => (type) => (filterName) =>
     (filterState[type].get(filterName) || filterName);
@@ -36,15 +42,41 @@ const transformSortProps = (filterState, filteredRecords) => {
     const getPropAccess = makePropAccess('__mapToPath');
 
     const getPropNameMapped = R.pipe (getPropName, getPropAccess)
-    // const makePropAccess = (type) => (filterState, filterName) =>
-    //         (filterState[type].get(filterName) || filterName);
+
+
+    const getAllRestOccurences = (filter, filterName, selIndex) => {
+                                                    bug('======= getAllRestOccurences', filter, filterName)
+        const bucket = {};
+
+        const unique = filteredRecords.reduce((acc, record) => {
+            const propValue = R.prop (filterName, record); 
+
+            if (selIndex[propValue] === undefined) {
+                bucket[propValue] = bucket[propValue] || acc.push (propValue) && propValue;
+            }
+                                                                            // bug('record', record, propValue)
+            return acc;
+        }, []);
+                                                                            bug('== unique', unique)
+        return unique;
+    };
+    
+    const preSort = (list) => {
+        const comparatorLt = (a,b) => {
+            // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
+            // return R.lt (getProp (prop, a), getProp (prop, b));
+            return R.gt (a, b);
+        }
+
         
-    // const getPropName = makePropAccess('__pointToPath');
-    // const getPropAccess = makePropAccess('__mapToPath');
-    
-    // const getPropAccess = (filterState, filterName) =>
-    //     (filterState.__mapToPath.get(filterName) || filterName);
-    
+        const sorted = R.sort(comparatorLt, list);
+
+        bug('sorted', sorted)
+
+        return sorted;
+
+    };
+
     const filterProps = filterState.__order.map((filterName) => {
         const filter = filterState[filterName];
         let preparedProp = [];
@@ -59,10 +91,20 @@ const transformSortProps = (filterState, filteredRecords) => {
             preparedProp = [ getPropNameMapped (filterName) ];
 
             // -->> to push also sortOrder, sortRest, if inclRest
-            const selIndex = makeIndex (filter.sel);
+            let selIndex = makeIndex (filter.sel);
                                                                                 bug('>>> selIndex', selIndex)
             if (filter.sortRest) {
                 // get possible values, sort them here and add to selIndex
+                const allOtherValues = getAllRestOccurences(filter, getPropNameMapped(filterName), selIndex)
+
+                bug('allOtherValues', allOtherValues)
+
+                const sorted = preSort(allOtherValues);
+// bug('ssorted', sorted)
+                selIndex = makeIndex (sorted, selIndex, filter.sel.length);
+                // selIndex = makeIndex (sorted);
+
+                bug('--> selIndex', selIndex)
             }
 
             preparedProp.push(selIndex);
