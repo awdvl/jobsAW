@@ -11,33 +11,43 @@ const variadicEither = (head, ...tail) =>
 //     R.comparator ((a,b) => R.gt (R.prop (prop, a), R.prop (prop, b)));
 
 
-// use a provided property map
+// use a provided property map [1], look-up for values on a prop or following a path array
+// compare prop value to index map
 const byPropMap = (propSelection, obj) => {
     // const newProp = (propSelection[1][ obj[propSelection[0]] ]);  // here a path
     // const newProp = (propSelection[1][ R.path(propSelection[0]) || obj[propSelection[0]] ]);  // here a path
-    const newProp = (propSelection[1][ R.pathOr(obj[propSelection[0]], propSelection[0], obj) ]);  // here a path
+    const newProp = propSelection[1][ R.pathOr (obj[propSelection[0]], propSelection[0], obj) ];  // here a path
     return newProp !== undefined ? newProp : Infinity;
 }
 
+// -->> here maybe as last prop a possible DSC -> if DSC, change R.lt to R.gt
 const makeComparatorIx = (prop) => {
     let getProp;
+                                                                                // bug('prop', prop)
+    if (R.isEmpty(prop)) {
+        return R.comparator (R.T);
+    }
 
-    // if (!prop) {
-    //     R.comparator (R.T);
-    // }
 
     if (typeof prop === 'string') {
         getProp = R.prop;
 
     } else if (Array.isArray (prop)) {
-        getProp = byPropMap;
+        // a path instead of a prop, but no map
+        if (typeof prop[1] === 'string') {
+            getProp = R.path;
+
+        } else {
+            getProp = byPropMap;
+        }
+
     }
 
     const comparator = R.comparator ((a,b) => {
+        // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
         return R.lt (getProp (prop, a), getProp (prop, b));
     });
 
-bug('|||||| comparator', comparator)
 
     return comparator;
 };

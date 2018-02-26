@@ -8,7 +8,7 @@ import { Record } from 'immutable';
  *  sortRest: true/[]  true: same sort order as in sortOrder,  []: define a different sort order
  *  excl: []  excluded items
 */
-const FilterCompEmplRecord = Record({
+const FilterCompEmplyRecord = Record({
     sel: [],
     sortOrder: [],
     sortByOrder: false,
@@ -17,10 +17,10 @@ const FilterCompEmplRecord = Record({
     excl: []
 });
 
-const FilterCompEmpl = FilterCompEmplRecord;
+const FilterCompEmply = FilterCompEmplyRecord;
 
-// class FilterCompEmpl extends FilterCompEmplRecord {
+// class FilterCompEmply extends FilterCompEmplyRecord {
 
 // }
 
-export default FilterCompEmpl;
+export default FilterCompEmply;

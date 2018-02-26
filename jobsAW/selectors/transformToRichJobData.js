@@ -11,6 +11,7 @@ export default (language, data, id) => {
     const cityName = langCommon.getIn(['city', 'name']);
     const countryName = langCommon.getIn(['country', 'name']);
     const jobType = langCommon.getIn(['job', 'type']);
+    const compIndy = langCommon.getIn(['company', 'indy']);
                                                         // bug('loopToCombineJobData::langCommon', langCommon)
                                                         // bug('loopToCombineJobData::state', state)
     const getJobData = (job) => {
@@ -21,6 +22,7 @@ export default (language, data, id) => {
             city: cityName.get(job.city),
             country: countryName.get(job.country),
             company: jobCompany.get('name'),
+            indy: compIndy.get(jobCompany.get('indy') + ''),
             type: jobType.get(job.type + ''),
             title: jobLoc.get('title'),
             intro: jobLoc.get('intro'),
@@ -28,7 +30,7 @@ export default (language, data, id) => {
 
         job.param = {
             indy: jobCompany.get('indy'),
-            empl: jobCompany.get('empl'),
+            emply: jobCompany.get('emply'),
         };
 
         return job;

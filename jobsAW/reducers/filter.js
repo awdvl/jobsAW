@@ -3,11 +3,12 @@ import { List, Map, fromJS } from 'immutable';
 import FilterCity from '../records/FilterCity';
 import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
-import FilterCompEmpl from '../records/FilterCompEmpl';
+import FilterCompEmply from '../records/FilterCompEmply';
 
 
 // const initStateOrder = List(['city', 'compIndy']);
-const initStateOrder = List(['city', 'compIndy', 'jobType']);
+// const initStateOrder = List(['city', 'compIndy', 'jobType']);
+const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
 
 const __order = (state=initStateOrder, action) => {
     switch (action.type) {
@@ -17,13 +18,30 @@ const __order = (state=initStateOrder, action) => {
 };
 
 
-const initStateConvNames = Map({
+const initPointToPath = Map({
     jobType: 'type',
-    compIndy: ['param', 'indy']
+    compIndy: 'indy',
+    compEmply: 'emply',
 });
 
 //  necessary for the different object keys in state.ui.filter and the jobs.json  ->  used in prepareFilterState
-const __mapToPath = (state=initStateConvNames, action) => {
+const __pointToPath = (state=initPointToPath, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+};
+
+const initMapToPath = Map({
+    // jobType: 'type',
+    // compIndy: 'indy'
+    // compIndy: ['param', 'indy']
+    indy: ['param', 'indy'],
+    emply: ['param', 'emply']
+});
+
+//  necessary for entering a path in the multiFiltered records
+const __mapToPath = (state=initMapToPath, action) => {
     switch (action.type) {
         default:
             return state;
@@ -60,10 +78,12 @@ const city = (state=initStateCity, action) => {
 
 
 const initStateCompIndy = new FilterCompIndustry({
-    sel: [1],
+    sel: [2,1],
     // sel: [],
-    sortOrder: [1,2],
-    sortByOrder: false,
+    // sortOrder: [1,2],
+    sortOrder: ['text'],
+    // sortByOrder: false,
+    sortByOrder: true,
     inclRest: true,
     sortRest: true,
     // excl: [3]
@@ -78,16 +98,19 @@ const compIndy = (state=initStateCompIndy, action) => {
 };
 
 
-const initStateCompEmpl = new FilterCompEmpl({
-    sel: [],
-    sortOrder: [],
-    sortByOrder: false,
+const initStateCompEmply = new FilterCompEmply({
+    // sel: [],
+    // sel: [4,5,6,9],
+    sel: [9,6,5,4],
+    sortOrder: ['emply'],
+    sortByOrder: true,
+    // sortByOrder: false,
     inclRest: false,
     sortRest: true,
     excl: []
 });
 
-const compEmpl = (state=initStateCompEmpl, action) => {
+const compEmply = (state=initStateCompEmply, action) => {
     switch (action.type) {
         default:
             return state;
@@ -99,8 +122,8 @@ const initStateJobType = new FilterJobType({
     // sel: [3]
     // sel: []
     sel: [1,2,3],
-    // sortOrder: ['name'],
-    // sortByOrder: true
+    sortOrder: ['text'],
+    sortByOrder: true
 });
 
 const jobType = (state=initStateJobType, action) => {
@@ -113,9 +136,10 @@ const jobType = (state=initStateJobType, action) => {
 
 export const filter = combineReducers({
     __order,
+    __pointToPath,
     __mapToPath,
     city,
     compIndy,
-    compEmpl,
+    compEmply,
     jobType,
 });

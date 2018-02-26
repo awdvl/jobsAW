@@ -81,11 +81,13 @@ export const getJobData = createSelector(
 
             // view-in
             bug('============ mf')  // this is the ungrouped, unsorted list
-            multiFiltered.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
+            multiFiltered.map(record => bug('Record type, indy, emply', record.id, 
+                    record.text.city, record.type, record.param.indy, record.param.emply))
             bug('============')
 
             bug('============ multiSorted')  // this is the multi sorted
-            multiSorted.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))
+            multiSorted.map(record => bug('Record type, indy, emply', record.id, 
+                    record.text.city, record.type, record.param.indy, record.param.emply))
             bug('============')
 
             // bug('============ flattened')  // this is the grouped list
