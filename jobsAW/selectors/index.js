@@ -23,6 +23,10 @@ const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
 const getSelectedCompIndy = (state) => state.ui.filter.compIndy.sel;
 
 const getFilters = (state) => state.ui.filter;
+// const getFilters = (state) => {
+//             bug('----->>> filters state', state);bug('----->>> filters state2', JSON.stringify(state))
+//     return state.ui.filter;
+// }
 
 export const getJobData = createSelector(
     getRichJobData,
@@ -81,8 +85,11 @@ export const getJobData = createSelector(
 
             // view-in
             bug('============ mf')  // this is the ungrouped, unsorted list
-            multiFiltered.map(record => bug('Record type, indy, emply', record.id, 
-                    record.text.city, record.type, record.param.indy, record.param.emply))
+            multiFiltered.map(record => bug(
+                'Record type, indy, emply', 
+                record.id, record.text.city, record.type, record.param.indy, record.param.emply, 
+                // record.toString(), JSON.stringify(record.text), JSON.stringify(record.param)
+            ))
             bug('============')
 
             bug('============ multiSorted')  // this is the multi sorted

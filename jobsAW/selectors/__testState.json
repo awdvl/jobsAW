@@ -1,0 +1,583 @@
+{
+    "settings": {
+        "language":"de"
+    },
+    "loadCtrl": {
+        "n":4,
+        "i":4,
+        "finished":true
+    },
+    "data": {
+        "cities": {
+            "B": {
+                "pop":4,
+                "state":11,
+                "geo":"E"
+            },
+            "HH": {
+                "pop":5,
+                "state":2,
+                "geo":"N"
+            },
+            "M": {
+                "pop":5,
+                "state":9,
+                "geo":"S"
+            },
+            "K": {
+                "pop":5,
+                "state":5,
+                "geo":"W"
+            },
+            "F": {
+                "pop":6,
+                "state":6,
+                "geo":"S"
+            },
+            "S": {
+                "pop":6,
+                "state":8,
+                "geo":"S"
+            }
+        },
+        "companies": {
+            "Porsche": {
+                "name":"Porsche AG",
+                "indy":1,
+                "emply":9
+            },
+            "VW":{
+                "name":"Volkswagen AG",
+                "indy":1,
+                "emply":9
+            },
+            "Porsche_DIG":{
+                "name":"Porsche Digital GmbH",
+                "indy":2,
+                "emply":6
+            },
+            "Lilt": {
+                "name":"Lilt",
+                "indy":2,
+                "emply":4
+            },
+            "Iteratec": {
+                "name":"Iteratec",
+                "indy":2,
+                "emply":6
+            },
+            "BMW": {
+                "name":"BMW AG",
+                "indy":1,
+                "emply":9
+            },
+            "Deutsche_Bank": {
+                "name":"Deutsche Bank AG",
+                "indy":3,
+                "emply":9
+            },
+            "Daimler": {
+                "name":"Daimler AG",
+                "indy":1,
+                "emply":9
+            },
+            "Ford": {
+                "name":"Ford AG",
+                "indy":1,
+                "emply":9
+            },
+            "Arithnea": {
+                "name":"Arithnea",
+                "indy":2,
+                "emply":5
+            }
+        },
+        "locCommon": {
+            "en":{},
+            "de": {
+                "job": {
+                    "type": {
+                        "1":"Vollzeit",
+                        "2":"Teilzeit",
+                        "3":"Interim"
+                    }
+                },
+                "company": {
+                    "indy": {
+                        "1":"Automotive",
+                        "2":"Software Development",
+                        "3":"Bank"
+                    },
+                    "empl": {
+                        "4":"< 50",
+                        "5":"50 - 200",
+                        "6":"200 - 500",
+                        "7":"500 - 1000",
+                        "8":"1000 - 5000",
+                        "9":"> 5000"
+                    }
+                },
+                "city": {
+                    "pop": {
+                        "4":"> 3 Mio",
+                        "5":"1 Mio - 3 Mio",
+                        "6":"500 Tsd - 1 Mio",
+                        "7":"250 Tsd - 500 Tsd",
+                        "8":"100 Tsd - 250 Tsd",
+                        "9":"50 Tsd - 100 Tsd",
+                        "10":"20 Tsd - 50 Tsd",
+                        "11":"5 Tsd - 20 Tsd",
+                        "12":"1 Tsd - 5 Tsd",
+                        "13":"< 1 Tsd"
+                    },
+                    "state": {
+                        "1":"Schleswig-Holstein",
+                        "2":"Freie und Hansestadt Hamburg",
+                        "3":"Niedersachsen",
+                        "4":"Freie Hansestadt Bremen",
+                        "5":"Nordrhein-Westfalen",
+                        "6":"Hessen",
+                        "7":"Rheinland-Pfalz",
+                        "8":"Baden-Württemberg",
+                        "9":"Bayern",
+                        "10":"Saarland",
+                        "11":"Berlin",
+                        "12":"Brandenburg",
+                        "13":"Mecklenburg-Vorpommern",
+                        "14":"Freistaat Sachsen",
+                        "15":"Sachsen-Anhalt",
+                        "16":"Thüringen"
+                    },
+                    "geo": {
+                        "N":"Nord",
+                        "S":"Süd",
+                        "W":"West",
+                        "E":"Ost"
+                    },
+                    "name": {
+                        "B":"Berlin",
+                        "HH":"Hamburg",
+                        "M":"München",
+                        "K":"Köln",
+                        "F":"Frankfurt am Main",
+                        "S":"Stuttgart"
+                    }
+                },
+                "country": {
+                    "name": {"DE":"Deutschland"},
+                    "geo": {"_":"here as North/South_Europe etc."},
+                    "continent": {
+                        "_":"this connected to a continent table",
+                        "EU":"Europe"
+                    }
+                }
+            }
+        },
+        
+        "jobs": {
+            "details": {
+                "1234567890": {
+                    "id":1234567890,
+                    "company":"Porsche",
+                    "country":"DE",
+                    "city":"S",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "1234567891": {
+                    "id":1234567891,
+                    "company":"Porsche",
+                    "country":"DE",
+                    "city":"S",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "1234567892": {
+                    "id":1234567892,
+                    "company":"Porsche",
+                    "country":"DE",
+                    "city":"S",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "2234567890": {
+                    "id":2234567890,
+                    "company":"BMW",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "2234567891":{
+                    "id":2234567891,
+                    "company":"BMW",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "3234567890": {
+                    "id":3234567890,
+                    "company":"Daimler",
+                    "country":"DE",
+                    "city":"S",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "3234567891": {
+                    "id":3234567891,
+                    "company":"Daimler",
+                    "country":"DE",
+                    "city":"S",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":2,
+                    "duration":null
+                },
+                "3234567892": {
+                    "id":3234567892,
+                    "company":"Daimler",
+                    "country":"DE",
+                    "city":"S",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "3234567893": {
+                    "id":3234567893,
+                    "company":"Daimler",
+                    "country":"DE",
+                    "city":"S",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "4234567890": {
+                    "id":4234567890,
+                    "company":"Deutsche_Bank",
+                    "country":"DE",
+                    "city":"F",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "6234567890": {
+                    "id":6234567890,
+                    "company":"Lilt",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "6234567891": {
+                    "id":6234567891,
+                    "company":"Lilt",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "5234567890": {
+                    "id":5234567890,
+                    "company":"Ford",
+                    "country":"DE",
+                    "city":"K",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "6234567892": {
+                    "id":6234567892,
+                    "company":"Lilt",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "5234567891": {
+                    "id":5234567891,
+                    "company":"Ford",
+                    "country":"DE",
+                    "city":"K",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "6234567893": {
+                    "id":6234567893,
+                    "company":"Arithnea",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                },
+                "6234567894": {
+                    "id":6234567894,
+                    "company":"Arithnea",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "6234567895": {
+                    "id":6234567895,
+                    "company":"Arithnea",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "6234567896": {
+                    "id":6234567896,
+                    "company":"Iteratec",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "6234567897": {
+                    "id":6234567897,
+                    "company":"Iteratec",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":3,
+                    "duration":null
+                },
+                "6234567898": {
+                    "id":6234567898,
+                    "company":"Porsche",
+                    "country":"DE",
+                    "city":"M",
+                    "smin":null,
+                    "smax":null,
+                    "url":"",
+                    "pubDate":null,
+                    "startDate":null,
+                    "type":1,
+                    "duration":null
+                }
+            },
+            "loc": {
+                "de": {
+                    "1234567890": {
+                        "title":"Senior Frontend Engineer",
+                        "intro":"Senior Frontend Engineer is aweravas 1234567890...."
+                    },
+                    "1234567891": {
+                        "title":"Senior Backend Engineer",
+                        "intro":"Senior Backend Engineer is aweravas 1234567891...."
+                    },
+                    "1234567892":{
+                        "title":"Data Analyst",
+                        "intro":"Data Analyst is aweravas 1234567892...."
+                    },
+                    "2234567890":{
+                        "title":"Senior Backend Engineer",
+                        "intro":"Senior Backend Engineer is aweravas 2234567890...."
+                    },
+                    "2234567891":{
+                        "title":"Data Analyst",
+                        "intro":"Data Analyst is aweravas 2234567891...."
+                    },
+                    "3234567890":{
+                        "title":"Frontend Engineer",
+                        "intro":"Frontend Engineer is aweravas 3234567890...."
+                    },
+                    "3234567891":{
+                        "title":"Senior Frontend Engineer",
+                        "intro":"Senior Frontend Engineer is aweravas 3234567891...."
+                    },
+                    "3234567892":{
+                        "title":"Senior Backend Engineer",
+                        "intro":"Senior Backend Engineer is aweravas 3234567892...."
+                    },
+                    "3234567893":{
+                        "title":"Data Analyst",
+                        "intro":"Data Analyst is aweravas 3234567893...."
+                    },
+                    "4234567890":{
+                        "title":"Senior Data Analyst",
+                        "intro":"Data Analyst is aweravas 4234567890...."
+                    },
+                    "6234567890":{
+                        "title":"Senior Frontend Engineer",
+                        "intro":"Senior Frontend Engineer is aweravas 6234567890...."
+                    },
+                    "6234567891":{
+                        "title":"Senior Backend Engineer",
+                        "intro":"Senior Backend Engineer is aweravas 6234567891...."
+                    },
+                    "5234567890":{
+                        "title":"Frontend Engineer",
+                        "intro":"Frontend Engineer is aweravas 5234567890...."
+                    },
+                    "6234567892":{
+                        "title":"Senior Fullstack Engineer",
+                        "intro":"Senior Fullstack Engineer is aweravas 6234567892...."
+                    },
+                    "5234567891":{
+                        "title":"Senior Frontend Engineer",
+                        "intro":"Senior Frontend Engineer is aweravas 5234567891...."
+                    },
+                    "6234567893":{
+                        "title":"Frontend Engineer",
+                        "intro":"Frontend Engineer is aweravas 6234567893...."
+                    },
+                    "6234567894":{
+                        "title":"Senior Frontend Engineer",
+                        "intro":"Senior Frontend Engineer is aweravas 6234567894...."
+                    },
+                    "6234567895":{
+                        "title":"Senior Fullstack Engineer",
+                        "intro":"Senior Fullstack Engineer is aweravas 6234567895...."
+                    },
+                    "6234567896":{
+                        "title":"Senior Frontend Engineer",
+                        "intro":"Senior Frontend Engineer is aweravas 6234567896...."
+                    },
+                    "6234567897":{
+                        "title":"Senior Backend Engineer",
+                        "intro":"Senior Backend Engineer is aweravas 6234567897...."
+                    },
+                    "6234567898":{
+                        "title":"Senior Frontend Engineer",
+                        "intro":"Senior Frontend Engineer is aweravas 6234567898...."
+                    }
+                }
+            }
+        }
+    },
+    "ui":{
+        "filter":{
+            "__order":["city", "compIndy", "jobType", "compEmply"],
+            "__pointToPath":{
+                "jobType":"type",
+                "compIndy":"indy",
+                "compEmply":"emply"
+            },
+            "__mapToPath":{
+                "indy":["param", "indy"],
+                "emply":["param", "emply"]},
+                "city":{"sel":["S", "M"],
+                "sortOrder":["pop", "name"],
+                "sortByOrder":false,
+                "inclRest":true,
+                "sortRest":true,
+                "excl":[]
+            },
+            "compIndy":{
+                "sel":[2,1],
+                "sortOrder":["text"],
+                "sortByOrder":true,
+                "inclRest":true,
+                "sortRest":true,
+                "excl":[]
+            },
+            "compEmply":{"sel":[9,6,5,4],
+                "sortOrder":["DSC"],
+                "sortByOrder":true,
+                "inclRest":false,
+                "sortRest":true,
+                "excl":[]
+            },
+            "jobType":{
+                "sel":[1,2,3],
+                "sortOrder":["text"],
+                "sortByOrder":true
+            }
+        }
+    }
+}
