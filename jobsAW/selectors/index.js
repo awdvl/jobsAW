@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import R from 'ramda';
+import R, { sort } from 'ramda';
 import bug from '../../_libs/bug';
 
 import { getRichJobData } from './getRichJobData';
@@ -10,6 +10,10 @@ import { groupBySelection, flatten } from './groupData';
 
 import transformSortProps from './transformSortProps';
 import multiSort from './multiSort';
+
+// simple tests  -  docs see: https://facebook.github.io/jest/docs/en/using-matchers.html
+import expect from 'expect';
+import { sortedTC } from './__testData';
 
 // const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
 
@@ -96,6 +100,14 @@ export const getJobData = createSelector(
             multiSorted.map(record => bug('Record type, indy, emply', record.id, 
                     record.text.city, record.type, record.param.indy, record.param.emply))
             bug('============')
+
+            // // a test for restSort
+            // const indexAry = multiSorted.map(record => {
+            //     return record.id
+            // });
+            // bug('indexAry', indexAry)
+            // expect(sortedTC).toEqual(indexAry);
+            
 
             // bug('============ flattened')  // this is the grouped list
             // flattened.map(record => bug('Record', record.id, record.text.city, record.type, record.param.indy))

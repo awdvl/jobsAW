@@ -1,3 +1,4 @@
+// needs sortPRops!!
 export const basic = [
     {
         'record': { 'id': 6234567890, 'company': 'Lilt', 'country': 'DE', 'city': 'M', 'smin': null, 'smax': null, 'url': '', 'pubDate': null, 'startDate': null, 'type': 1, 'duration': null },

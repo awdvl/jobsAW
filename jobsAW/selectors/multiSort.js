@@ -20,7 +20,7 @@ const byPropMap = (propSelection, obj) => {
 }
 
 // -->> here maybe as last prop a possible DSC -> if DSC, change R.lt to R.gt
-const makeComparatorIx = (prop) => {
+export const makeComparatorIx = (prop) => {
 
     const comparatorLt = (a,b) => {
         // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))

@@ -1,6 +1,8 @@
 import R from 'ramda';
 import bug from '../../_libs/bug';
 
+import sortByProps, { makeComparatorIx } from './multiSort';
+
 // const citySel = ['city', {
 //     S: 0,
 //     M: 1,
@@ -61,21 +63,57 @@ const transformSortProps = (filterState, filteredRecords) => {
         return unique;
     };
     
-    const preSort = (list) => {
-        const comparatorLt = (a,b) => {
-            // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
-            // return R.lt (getProp (prop, a), getProp (prop, b));
-            return R.gt (a, b);
-        }
+    const preSort = (filterName, filter, list) => {
+        // const comparatorLt = (a,b) => {
+        //     // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
+        //     // return R.lt (getProp (prop, a), getProp (prop, b));
+        //     return R.gt (a, b);
+        // }
 
         
-        const sorted = R.sort(comparatorLt, list);
+        // const sorted = R.sort(comparatorLt, list);
 
-        bug('sorted', sorted)
+//         const prop = filter.sortRest === true ?
+//             'city':
+//             getPropNameMapped (filter.sortRest[0]);
+// bug('========>>> prop', prop, filter.sortRest, getPropAccess('pop'))
+
+        const props = filter.sortRest === true ?
+            prepareProp(filterName, filter.sortRest): // to adapt
+            // prepareProp(filterName, filter.sortRest);
+            filter.sortRest.map(filterKey => prepareProp(filterName, filterKey));
+                                                                            bug('prop for sorted', props)
+        const sorted = sortByProps(props, list);
+
+        // const sorted = R.sort(makeComparatorIx(prop), list);
+
+                                                                            bug('sorted', sorted)
 
         return sorted;
 
     };
+
+    const prepareProp = (filterName, sortOrder) => {
+        let preparedProp;
+
+        if (sortOrder[0] === 'text') {
+            // preparedProp = [filter.sortOrder[0], getPropAccess (filterState, filterName)];
+            // preparedProp = [filter.sortOrder[0], getPropName (filterState, filterName)];
+            preparedProp = [sortOrder[0], getPropName (filterName)];
+                                                    bug('text filter.sortOrder preparedProp ', preparedProp)
+
+        // this only fallback                                            
+        } else {
+            preparedProp = getPropNameMapped (filterName);
+                                                    bug('with filter.sortOrder preparedProp ', preparedProp)
+        }
+
+        if (R.contains ('DSC', sortOrder)) {
+            preparedProp.push('DSC');
+        }
+    
+        return preparedProp;
+    }
 
     const filterProps = filterState.__order.map((filterName) => {
         const filter = filterState[filterName];
@@ -99,7 +137,7 @@ const transformSortProps = (filterState, filteredRecords) => {
 
                 bug('allOtherValues', allOtherValues)
 
-                const sorted = preSort(allOtherValues);
+                const sorted = preSort(filterName, filter, allOtherValues);
 // bug('ssorted', sorted)
                 selIndex = makeIndex (sorted, selIndex, filter.sel.length);
                 // selIndex = makeIndex (sorted);
@@ -115,18 +153,21 @@ const transformSortProps = (filterState, filteredRecords) => {
         //      reduce to apply the different subsorts to the first acc array layer!!
         } else if (!R.isEmpty(filter.sortOrder) && filter.sortByOrder) {
                                                         bug('sortByOrder -> filter.sortOrder', filter.sortOrder)
-            if (filter.sortOrder[0] === 'text') {
-                // preparedProp = [filter.sortOrder[0], getPropAccess (filterState, filterName)];
-                // preparedProp = [filter.sortOrder[0], getPropName (filterState, filterName)];
-                preparedProp = [filter.sortOrder[0], getPropName (filterName)];
+            // if (filter.sortOrder[0] === 'text') {
+            //     // preparedProp = [filter.sortOrder[0], getPropAccess (filterState, filterName)];
+            //     // preparedProp = [filter.sortOrder[0], getPropName (filterState, filterName)];
+            //     preparedProp = [filter.sortOrder[0], getPropName (filterName)];
 
-            } else {
-                preparedProp = getPropNameMapped (filterName);
-            }
+            // } else {
+            //     preparedProp = getPropNameMapped (filterName);
+            //                                             bug('with filter.sortOrder preparedProp ', preparedProp)
+            // }
 
-            if (R.contains ('DSC', filter.sortOrder)) {
-                preparedProp.push('DSC');
-            }
+            // if (R.contains ('DSC', filter.sortOrder)) {
+            //     preparedProp.push('DSC');
+            // }
+
+            preparedProp = prepareProp(filterName, filter.sortOrder);
 
         }
                                                                             bug('>>> preparedProp', preparedProp)

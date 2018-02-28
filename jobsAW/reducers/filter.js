@@ -33,11 +33,9 @@ const __pointToPath = (state=initPointToPath, action) => {
 };
 
 const initMapToPath = Map({
-    // jobType: 'type',
-    // compIndy: 'indy'
-    // compIndy: ['param', 'indy']
     indy: ['param', 'indy'],
-    emply: ['param', 'emply']
+    emply: ['param', 'emply'],
+    pop: ['param', 'pop'],
 });
 
 //  necessary for entering a path in the multiFiltered records
@@ -60,11 +58,17 @@ const __mapToPath = (state=initMapToPath, action) => {
 const initStateCity = new FilterCity({
     sel: ['S', 'M'],
     // sel: [],
-    sortOrder: ['pop', 'name'],
+    // sortOrder: ['pop', 'name'],
+    sortOrder: ['pop'],
+    // sortOrder: ['pop', 'name','DSC'],
     sortByOrder: false,
+    // sortByOrder: true,
     // inclRest: false,
     inclRest: true,
-    sortRest: true,
+    // sortRest: true,
+    // sortRest: ['pop', 'DSC'],
+    // sortRest: ['text', 'DSC'],
+    sortRest: ['text'],
     excl: []
     // excl: ['K']
 });
