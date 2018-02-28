@@ -13,7 +13,7 @@ import multiSort from './multiSort';
 
 // simple tests  -  docs see: https://facebook.github.io/jest/docs/en/using-matchers.html
 import expect from 'expect';
-import { sortedTC } from './__testData';
+import { sortedRestByName, sortedRestByNumber } from './__testData';
 
 // const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
 
@@ -90,15 +90,16 @@ export const getJobData = createSelector(
             // view-in
             bug('============ mf')  // this is the ungrouped, unsorted list
             multiFiltered.map(record => bug(
-                'Record type, indy, emply', 
-                record.id, record.text.city, record.type, record.param.indy, record.param.emply, 
+                'Record  indy, type, emply', 
+                record.id, record.text.city, record.param.indy, record.type, record.param.emply, 
                 // record.toString(), JSON.stringify(record.text), JSON.stringify(record.param)
             ))
             bug('============')
 
-            bug('============ multiSorted')  // this is the multi sorted
-            multiSorted.map(record => bug('Record type, indy, emply', record.id, 
-                    record.text.city, record.type, record.param.indy, record.param.emply))
+            // bug('============ multiSorted')  // this is the multi sorted
+            bug('============ multiSorted  1,2  -  3,2,1  -  9,6,5,4 ')  // this is the multi sorted
+            multiSorted.map(record => bug('Record  indy, type, emply', 
+                record.id, record.text.city, record.param.indy, record.type, record.param.emply))
             bug('============')
 
             // // a test for restSort
@@ -106,7 +107,7 @@ export const getJobData = createSelector(
             //     return record.id
             // });
             // bug('indexAry', indexAry)
-            // expect(sortedTC).toEqual(indexAry);
+            // expect(sortedRestByNumber).toEqual(indexAry);
             
 
             // bug('============ flattened')  // this is the grouped list

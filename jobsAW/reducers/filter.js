@@ -52,11 +52,15 @@ const __mapToPath = (state=initMapToPath, action) => {
  *  sortOrder: []  sort by a predefined order concept, e.g. by name, population, ...
  *  sortByOrder: boolean  true: use the sortOrder,  false: use the order of the sel array
  *  inclRest: boolean  include other items (except excluded values)
- *  sortRest: true/[]  true: same sort order as in sortOrder,  []: define a different sort order
+ *  sortRest: true/[]  
+ *      - true: same sort order as in sortOrder, if no sortOrder, sort by filter value
+ *      - []: define a different sort order (can also be expressivly the filter value, if sortOrder is defined, 
+ *              but should not be the sorting for the rest, e.g. ['city'] for FilterCity)
  *  excl: []  excluded items
 */
 const initStateCity = new FilterCity({
     sel: ['S', 'M'],
+    // sel: ['F', 'M'],
     // sel: [],
     // sortOrder: ['pop', 'name'],
     sortOrder: ['pop'],
@@ -65,10 +69,13 @@ const initStateCity = new FilterCity({
     // sortByOrder: true,
     // inclRest: false,
     inclRest: true,
+    // sortRest: false,
     // sortRest: true,
+    sortRest: ['city'],
+    // sortRest: ['pop'],
     // sortRest: ['pop', 'DSC'],
     // sortRest: ['text', 'DSC'],
-    sortRest: ['text'],
+    // sortRest: ['text'],
     excl: []
     // excl: ['K']
 });
@@ -89,7 +96,8 @@ const initStateCompIndy = new FilterCompIndustry({
     // sortByOrder: false,
     sortByOrder: true,
     inclRest: true,
-    sortRest: true,
+    // sortRest: true,
+    sortRest: false,
     // excl: [3]
     excl: []
 });
@@ -104,8 +112,8 @@ const compIndy = (state=initStateCompIndy, action) => {
 
 const initStateCompEmply = new FilterCompEmply({
     // sel: [],
-    // sel: [4,5,6,9],
-    sel: [9,6,5,4],
+    sel: [4,5,6,9],
+    // sel: [9,6,5,4],
     // sortOrder: ['emply'],
     sortOrder: ['DSC'],
     sortByOrder: true,

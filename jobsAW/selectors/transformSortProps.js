@@ -43,9 +43,32 @@ const transformSortProps = (filterState, filteredRecords) => {
     const getPropName = makePropAccess('__pointToPath');
     const getPropAccess = makePropAccess('__mapToPath');
 
+    const wrappedInArray = (value) => Array.isArray(value) ? value: [value];
+
     const getPropNameMapped = R.pipe (getPropName, getPropAccess)
+    // const getPropNameMapped = R.pipe (getPropName, getPropAccess, wrappedInArray)
 
 
+    // const getAllRestOccurences = (filter, filterName, selIndex) => {
+    //                                                 bug('======= getAllRestOccurences', filter, filterName)
+    //     const bucket = {};
+
+    //     const unique = filteredRecords.reduce((acc, record) => {
+    //         const propValue = R.prop (filterName, record); 
+
+    //         // not in sel array
+    //         if (selIndex[propValue] === undefined) {
+    //             bucket[propValue] = bucket[propValue] || acc.push (propValue) && propValue;
+                
+    //             // acc.push (record);
+    //         }
+    //                                                                         // bug('record', record, propValue)
+    //         return acc;
+    //     }, []);
+    //                                                                         bug('== unique', unique)
+    //     return unique;
+    // };
+    
     const getAllRestOccurences = (filter, filterName, selIndex) => {
                                                     bug('======= getAllRestOccurences', filter, filterName)
         const bucket = {};
@@ -53,38 +76,45 @@ const transformSortProps = (filterState, filteredRecords) => {
         const unique = filteredRecords.reduce((acc, record) => {
             const propValue = R.prop (filterName, record); 
 
+            // not in sel array
             if (selIndex[propValue] === undefined) {
-                bucket[propValue] = bucket[propValue] || acc.push (propValue) && propValue;
+                bucket[propValue] = bucket[propValue] || 
+                    (acc.index[record.id] = propValue) && acc.list.push (record) && propValue;
+                
+                // acc.push (record);
             }
                                                                             // bug('record', record, propValue)
             return acc;
-        }, []);
+        }, {index: {}, list: []});
                                                                             bug('== unique', unique)
         return unique;
     };
     
+    
+    const getSortOrder = (filter) => {
+        const order = filter.sortRest === true ?
+            !R.isEmpty (filter.sortOrder) ?
+                filter.sortOrder:
+                undefined:
+            filter.sortRest;
+
+        return order;
+    };
+
     const preSort = (filterName, filter, list) => {
-        // const comparatorLt = (a,b) => {
-        //     // bug('prop', prop, getProp (prop, a), ' - ', getProp (prop, b))
-        //     // return R.lt (getProp (prop, a), getProp (prop, b));
-        //     return R.gt (a, b);
-        // }
 
-        
-        // const sorted = R.sort(comparatorLt, list);
+                                                                        bug('-- filter.sortRest',filter.sortRest)
+        const props = [prepareProp(filterName, getSortOrder(filter))];
+        // const props = [filter.sortRest === true ?
+        //     prepareProp(filterName): // to adapt
+        //     prepareProp(filterName, filter.sortRest)];
+                                                                bug('** props for sorted', props)
+                                                    bug('** list0', list.list, list.list[0].id, list.list[0].city)
+                                                    bug('** list1', list.list, list.list[1].id, list.list[1].city)
+        const sortedList = sortByProps(props, list.list);
+                                                    bug('** sortedList', sortedList, list.index, sortedList[0].id)
 
-//         const prop = filter.sortRest === true ?
-//             'city':
-//             getPropNameMapped (filter.sortRest[0]);
-// bug('========>>> prop', prop, filter.sortRest, getPropAccess('pop'))
-
-        const props = filter.sortRest === true ?
-            prepareProp(filterName, filter.sortRest): // to adapt
-            // prepareProp(filterName, filter.sortRest);
-            filter.sortRest.map(filterKey => prepareProp(filterName, filterKey));
-                                                                            bug('prop for sorted', props)
-        const sorted = sortByProps(props, list);
-
+        const sorted = sortedList.map(item => list.index[item.id]);
         // const sorted = R.sort(makeComparatorIx(prop), list);
 
                                                                             bug('sorted', sorted)
@@ -93,14 +123,18 @@ const transformSortProps = (filterState, filteredRecords) => {
 
     };
 
-    const prepareProp = (filterName, sortOrder) => {
+    // const prepareProp = (filterName, sortOrder) => {
+    const prepareProp = (filterName, sortOrder = [filterName]) => {
         let preparedProp;
-
+                                                bug('prepareProp::filterName, sortOrder', filterName, sortOrder)
         if (sortOrder[0] === 'text') {
             // preparedProp = [filter.sortOrder[0], getPropAccess (filterState, filterName)];
             // preparedProp = [filter.sortOrder[0], getPropName (filterState, filterName)];
             preparedProp = [sortOrder[0], getPropName (filterName)];
                                                     bug('text filter.sortOrder preparedProp ', preparedProp)
+        // e.g. 'pop'
+        } else if (!R.isEmpty(sortOrder) && sortOrder[0] !== 'DSC') {
+            preparedProp = getPropNameMapped (sortOrder[0]);
 
         // this only fallback                                            
         } else {
@@ -121,12 +155,8 @@ const transformSortProps = (filterState, filteredRecords) => {
                                     bug('>>> transformSortProps::filterProps filterName', filterName, filter);
                                                 bug('>> this', filter.sel, filter.sortByOrder)
         if (filter.sel && !filter.sortByOrder) {
-            // preparedProp = [filterName];
-            // preparedProp = [filterState.__mapToPath.get(filterName) || filterName];
-            // preparedProp = [ getPropAccess (filterState, filterName) ];
-            // preparedProp = [ getPropAccess (filterState, getPropName(filterState, filterName)) ];
-            // preparedProp = [ getPropAccess (getPropName (filterName)) ];
             preparedProp = [ getPropNameMapped (filterName) ];
+            // preparedProp = getPropNameMapped (filterName);
 
             // -->> to push also sortOrder, sortRest, if inclRest
             let selIndex = makeIndex (filter.sel);
