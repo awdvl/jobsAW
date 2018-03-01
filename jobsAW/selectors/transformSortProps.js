@@ -1,7 +1,8 @@
 import R from 'ramda';
 import bug from '../../_libs/bug';
 
-import sortByProps, { makeComparatorIx } from './multiSort';
+import multiSort from './multiSort';
+
 
 // const citySel = ['city', {
 //     S: 0,
@@ -16,17 +17,19 @@ import sortByProps, { makeComparatorIx } from './multiSort';
 // sortRest: true,
 // excl: []
 
+// const wrappedInArray = (value) => Array.isArray(value) ? value: [value];
 
 const reduceIndexed = R.addIndex(R.reduce);
-const makeIndex = (ary, indexObj = {}, n = 0) => reduceIndexed ( (acc, value, index) => {
-    acc[value] = index + n;
-    return acc;
-}, indexObj)(ary, indexObj, n);
 
-// const makeIndex = (ary) => reduceIndexed ( (acc, value, index) => {
-//     acc[value] = index;
-//     return acc;
-// }, {})(ary);
+/**
+ *  @param ary {Array} -  the array for which the index will be made
+ *  @param indexObj {Object} -  an index object, to which the index will be added  -  default: {} (new index)
+ *  @param i {Number} -  array index from which on the index will be added  -  default: 0 (new index)
+ */
+const makeIndex = (ary, indexObj = {}, i = 0) => (reduceIndexed ( (acc, value, index) => {
+    acc[value] = index + i;
+    return acc;
+}, indexObj) (ary, indexObj, i));
 
 
 const makePropAccessFor = (filterState) => (type) => (filterName) =>
@@ -43,9 +46,8 @@ const transformSortProps = (filterState, filteredRecords) => {
     const getPropName = makePropAccess('__pointToPath');
     const getPropAccess = makePropAccess('__mapToPath');
 
-    // const wrappedInArray = (value) => Array.isArray(value) ? value: [value];
-
     const getPropNameMapped = R.pipe (getPropName, getPropAccess)
+
 
     // here R.prop has to be changeable to R.path, if filterName would be an array (test, if not city)
     const getAllRestOccurences = (filter, filterName, selIndex) => {
@@ -73,15 +75,56 @@ const transformSortProps = (filterState, filteredRecords) => {
             filter.sortRest;
 
 
+    // const preSort = (filterName, filter, otherOptions) => {
+    //                                                                     bug('** filter.sortRest',filter.sortRest)
+    //     const props = [prepareProp(filterName, getSortOrder(filter))];
+    //                                                                     bug('** props for sorted', props)
+    //     const sortedList = multiSort(props, otherOptions.list);
+    //                                         bug('** sortedList', sortedList, otherOptions.index, sortedList[0].id)
+
+    //     const sorted = sortedList.map(item => otherOptions.index[item.id]);
+    //                                                                     bug('** sorted', sorted)
+
+    //     // FP version
+    //     const getIndexValues = (index) => (item) => index[item.id];
+
+
+    //     const mapForIndex = R.map ( getIndexValues (otherOptions.index));
+
+    //     const sortedFP = mapForIndex (sortedList);
+
+    //     const sortPipe = R.pipe(multiSort, mapForIndex);
+    //     const sortedFP2 = sortPipe(props, otherOptions.list);
+
+
+    //     const sortPipe3 = R.pipe(multiSort(props), mapForIndex);
+    //     const sortedFP3 = sortPipe3(otherOptions.list);
+
+
+    //     const getProps = R.curry ((prepareProp, filterName, sortOrder) => [prepareProp(filterName, sortOrder)]);
+
+    //     const sortByPropsLoader = R.pipe(getProps, multiSort);
+    //     const sortByPropsLoaded = sortByPropsLoader(prepareProp, filterName, getSortOrder(filter));
+        
+    //     const sortPipe4 = R.pipe(sortByPropsLoaded, mapForIndex);
+    //     const sortedFP4 = sortPipe4(otherOptions.list);
+    //                                                                     bug('** sortedFP', sortedFP)
+    //                                                                     bug('** sortedFP2', sortedFP2)
+    //                                                                     bug('** sortedFP3', sortedFP3)
+    //                                                                     bug('** sortedFP4', sortedFP4)
+    //     return sorted;
+
+    // };
+
     const preSort = (filterName, filter, otherOptions) => {
                                                                         bug('** filter.sortRest',filter.sortRest)
-        const props = [prepareProp(filterName, getSortOrder(filter))];
-                                                                        bug('** props for sorted', props)
-        const sortedList = sortByProps(props, otherOptions.list);
-                                            bug('** sortedList', sortedList, otherOptions.index, sortedList[0].id)
+        // const props = [prepareProp(filterName, getSortOrder(filter))];
+        //                                                                 bug('** props for sorted', props)
+        // const sortedList = multiSort(props, otherOptions.list);
+        //                                     bug('** sortedList', sortedList, otherOptions.index, sortedList[0].id)
 
-        const sorted = sortedList.map(item => otherOptions.index[item.id]);
-                                                                        bug('** sorted', sorted)
+        // const sorted = sortedList.map(item => otherOptions.index[item.id]);
+        //                                                                 bug('** sorted', sorted)
 
         // FP version
         const getIndexValues = (index) => (item) => index[item.id];
@@ -89,48 +132,56 @@ const transformSortProps = (filterState, filteredRecords) => {
 
         const mapForIndex = R.map ( getIndexValues (otherOptions.index));
 
-        const sortedFP = mapForIndex (sortedList);
+        // const sortedFP = mapForIndex (sortedList);
 
-        const sortPipe = R.pipe(sortByProps, mapForIndex);
-        const sortedFP2 = sortPipe(props, otherOptions.list);
+        // const sortPipe = R.pipe(multiSort, mapForIndex);
+        // const sortedFP2 = sortPipe(props, otherOptions.list);
 
 
-        const sortByPropsCurried = (props) => (data) => sortByProps(props, data);
-        const sortPipe3 = R.pipe(sortByPropsCurried(props), mapForIndex);
-        const sortedFP3 = sortPipe3(otherOptions.list);
+        // const sortPipe3 = R.pipe(multiSort(props), mapForIndex);
+        // const sortedFP3 = sortPipe3(otherOptions.list);
 
+        const preparePropFor = (filterName) => (sortOrder) => prepareProp(filterName, sortOrder);
+        
+        const getPropForFilter = preparePropFor(filterName);
+
+        const wrapInArray = (propForFilter) => [propForFilter];
+        // const getProps2 = (sortOrder) => [getPropForFilter(sortOrder)];
+        // const getProps2 = (sortOrder) => [prepareProp(filterName, sortOrder)];
+                                                            // bug('** getProps2', getProps2(getSortOrder(filter)))
+
+        // const loader = R.pipe(getSortOrder, getProps2)
+                                                            // bug('** loaded', loader(filter));
+        const loader = R.pipe(getSortOrder, getPropForFilter, wrapInArray, multiSort)
+        // const loader = R.pipe(getSortOrder, getProps2, multiSort)
+        const loaded = loader(filter);
+
+        const sortPipe5 = R.pipe(loaded, mapForIndex);
+        const sortedFP5 = sortPipe5(otherOptions.list);
+        
 
         const getProps = R.curry ((prepareProp, filterName, sortOrder) => [prepareProp(filterName, sortOrder)]);
-        const sortByPropsLoader = R.pipe(getProps, sortByPropsCurried);
+
+        const sortByPropsLoader = R.pipe(getProps, multiSort);
         const sortByPropsLoaded = sortByPropsLoader(prepareProp, filterName, getSortOrder(filter));
         
         const sortPipe4 = R.pipe(sortByPropsLoaded, mapForIndex);
         const sortedFP4 = sortPipe4(otherOptions.list);
-        // const sortedFP = R.map( getIndexValues(otherOptions.index), sortedList);
-                                                                        bug('** sortedFP', sortedFP)
-                                                                        bug('** sortedFP2', sortedFP2)
-                                                                        bug('** sortedFP3', sortedFP3)
+                                                                        // bug('** sortedFP', sortedFP)
+                                                                        // bug('** sortedFP2', sortedFP2)
+                                                                        // bug('** sortedFP3', sortedFP3)
                                                                         bug('** sortedFP4', sortedFP4)
-        
-        // const sortItems = R.map()
-
-        // const curriedSort = (props) => (records) => sortByProps(props, records);
-        // // const sorted2 = R.pipe(R.flip, )
-        // const sorted2 = R.pipe(curriedSort, sorted);
-
-        // const preLoadedSorted
-                                                    // bug('sorted2', sorted2(props, otherOptions.list))
-        return sorted;
+                                                                        bug('** sortedFP5', sortedFP5)
+        return sortedFP4;
 
     };
 
-    // const prepareProp = (filterName, sortOrder) => {
+    //  for more elements, push them into an array of arrays and transform the map in multiSort to a
+    //      reduce to apply the different subsorts to the first acc array layer!!
     const prepareProp = (filterName, sortOrder = [filterName]) => {
         let preparedProp;
                                                 bug('prepareProp::filterName, sortOrder', filterName, sortOrder)
         if (sortOrder[0] === 'text') {
-            // preparedProp = [filter.sortOrder[0], getPropAccess (filterState, filterName)];
-            // preparedProp = [filter.sortOrder[0], getPropName (filterState, filterName)];
             preparedProp = [sortOrder[0], getPropName (filterName)];
                                                     bug('text filter.sortOrder preparedProp ', preparedProp)
         // e.g. 'pop'
@@ -184,7 +235,7 @@ const transformSortProps = (filterState, filteredRecords) => {
 
             // -->> to push also sortOrder, sortRest, if inclRest
             let selIndex = makeIndex (filter.sel);
-                                                                                bug('>>> selIndex', selIndex)
+                                                                                bug('>>>>> selIndex A', selIndex)
             if (filter.sortRest) {
                 // get possible values, sort them here and add to selIndex
                 const allOtherValues = getAllRestOccurences(filter, getPropNameMapped(filterName), selIndex)
@@ -200,36 +251,17 @@ const transformSortProps = (filterState, filteredRecords) => {
                                                                     bug('** rest', rest)
 
                 const sorted = preSort(filterName, filter, allOtherValues);
-// bug('ssorted', sorted)
+                                                                        // bug('ssorted', sorted)
                 selIndex = makeIndex (sorted, selIndex, filter.sel.length);
-                // selIndex = makeIndex (sorted);
-                                                                        bug('--> selIndex', selIndex)
+                                                                        bug('>>>>> selIndex B', selIndex)
             }
 
             preparedProp.push(selIndex);
 
-        // ->> this currently a special case for a one element array with 'text' 
-        //      that transfroms to prop of ['text', filtername] -> abstract 
-        //  for more elements, push them into an array of arrays and transform the map in multiSort to a
-        //      reduce to apply the different subsorts to the first acc array layer!!
+
         } else if (!R.isEmpty(filter.sortOrder) && filter.sortByOrder) {
                                                         bug('sortByOrder -> filter.sortOrder', filter.sortOrder)
-            // if (filter.sortOrder[0] === 'text') {
-            //     // preparedProp = [filter.sortOrder[0], getPropAccess (filterState, filterName)];
-            //     // preparedProp = [filter.sortOrder[0], getPropName (filterState, filterName)];
-            //     preparedProp = [filter.sortOrder[0], getPropName (filterName)];
-
-            // } else {
-            //     preparedProp = getPropNameMapped (filterName);
-            //                                             bug('with filter.sortOrder preparedProp ', preparedProp)
-            // }
-
-            // if (R.contains ('DSC', filter.sortOrder)) {
-            //     preparedProp.push('DSC');
-            // }
-
             preparedProp = prepareProp(filterName, filter.sortOrder);
-
         }
                                                                             bug('>>> preparedProp', preparedProp)
         return preparedProp;
