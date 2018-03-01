@@ -67,9 +67,15 @@ export const makeComparatorIx = (prop) => {
 };
 
 
-const sortByProps = (props, list) => 
-    // R.sort (variadicEither (...R.map (makeComparator, props)), list)
-    R.sort (variadicEither (...R.map (makeComparatorIx, props)), list)
+// const sortByProps = (props, list) => 
+//     // R.sort (variadicEither (...R.map (makeComparator, props)), list)
+//     R.sort (variadicEither (...R.map (makeComparatorIx, props)), list)
+
+
+const sortByProps = R.curry ((props, list) => 
+    R.sort (variadicEither (...R.map (makeComparatorIx, props)), list));
+
+
 
 // const sortResult = sortByProps(['a','b','c'], [{a:1,b:2,c:3}, {a:10,b:10,c:10}, 
 //     {a:10,b:6,c:0}, {a:1, b:2, c:1}, {a:100}])

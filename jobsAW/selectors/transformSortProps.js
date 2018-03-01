@@ -43,82 +43,83 @@ const transformSortProps = (filterState, filteredRecords) => {
     const getPropName = makePropAccess('__pointToPath');
     const getPropAccess = makePropAccess('__mapToPath');
 
-    const wrappedInArray = (value) => Array.isArray(value) ? value: [value];
+    // const wrappedInArray = (value) => Array.isArray(value) ? value: [value];
 
     const getPropNameMapped = R.pipe (getPropName, getPropAccess)
-    // const getPropNameMapped = R.pipe (getPropName, getPropAccess, wrappedInArray)
 
-
-    // const getAllRestOccurences = (filter, filterName, selIndex) => {
-    //                                                 bug('======= getAllRestOccurences', filter, filterName)
-    //     const bucket = {};
-
-    //     const unique = filteredRecords.reduce((acc, record) => {
-    //         const propValue = R.prop (filterName, record); 
-
-    //         // not in sel array
-    //         if (selIndex[propValue] === undefined) {
-    //             bucket[propValue] = bucket[propValue] || acc.push (propValue) && propValue;
-                
-    //             // acc.push (record);
-    //         }
-    //                                                                         // bug('record', record, propValue)
-    //         return acc;
-    //     }, []);
-    //                                                                         bug('== unique', unique)
-    //     return unique;
-    // };
-    
+    // here R.prop has to be changeable to R.path, if filterName would be an array (test, if not city)
     const getAllRestOccurences = (filter, filterName, selIndex) => {
-                                                    bug('======= getAllRestOccurences', filter, filterName)
-        const bucket = {};
-
-        const unique = filteredRecords.reduce((acc, record) => {
+        // const bucket = {};
+                                                        // bug('======= getAllRestOccurences', filter, filterName)
+        const occurences = filteredRecords.reduce((acc, record) => {
             const propValue = R.prop (filterName, record); 
 
             // not in sel array
             if (selIndex[propValue] === undefined) {
-                bucket[propValue] = bucket[propValue] || 
+                acc.bucket[propValue] = acc.bucket[propValue] || 
                     (acc.index[record.id] = propValue) && acc.list.push (record) && propValue;
-                
-                // acc.push (record);
             }
                                                                             // bug('record', record, propValue)
             return acc;
-        }, {index: {}, list: []});
-                                                                            bug('== unique', unique)
-        return unique;
+        // }, {index: {}, list: []});
+        }, {index: {}, list: [], bucket: {}});
+                                                                            bug('== occurences', occurences)
+        return occurences;
     };
     
-    
-    const getSortOrder = (filter) => {
-        const order = filter.sortRest === true ?
-            !R.isEmpty (filter.sortOrder) ?
-                filter.sortOrder:
-                undefined:
+
+    const getSortOrder = (filter) => filter.sortRest === true ?
+            !R.isEmpty (filter.sortOrder) ? filter.sortOrder : undefined :
             filter.sortRest;
 
-        return order;
-    };
 
-    const preSort = (filterName, filter, list) => {
-
-                                                                        bug('-- filter.sortRest',filter.sortRest)
+    const preSort = (filterName, filter, otherOptions) => {
+                                                                        bug('** filter.sortRest',filter.sortRest)
         const props = [prepareProp(filterName, getSortOrder(filter))];
-        // const props = [filter.sortRest === true ?
-        //     prepareProp(filterName): // to adapt
-        //     prepareProp(filterName, filter.sortRest)];
-                                                                bug('** props for sorted', props)
-                                                    bug('** list0', list.list, list.list[0].id, list.list[0].city)
-                                                    bug('** list1', list.list, list.list[1].id, list.list[1].city)
-        const sortedList = sortByProps(props, list.list);
-                                                    bug('** sortedList', sortedList, list.index, sortedList[0].id)
+                                                                        bug('** props for sorted', props)
+        const sortedList = sortByProps(props, otherOptions.list);
+                                            bug('** sortedList', sortedList, otherOptions.index, sortedList[0].id)
 
-        const sorted = sortedList.map(item => list.index[item.id]);
-        // const sorted = R.sort(makeComparatorIx(prop), list);
+        const sorted = sortedList.map(item => otherOptions.index[item.id]);
+                                                                        bug('** sorted', sorted)
 
-                                                                            bug('sorted', sorted)
+        // FP version
+        const getIndexValues = (index) => (item) => index[item.id];
 
+
+        const mapForIndex = R.map ( getIndexValues (otherOptions.index));
+
+        const sortedFP = mapForIndex (sortedList);
+
+        const sortPipe = R.pipe(sortByProps, mapForIndex);
+        const sortedFP2 = sortPipe(props, otherOptions.list);
+
+
+        const sortByPropsCurried = (props) => (data) => sortByProps(props, data);
+        const sortPipe3 = R.pipe(sortByPropsCurried(props), mapForIndex);
+        const sortedFP3 = sortPipe3(otherOptions.list);
+
+
+        const getProps = R.curry ((prepareProp, filterName, sortOrder) => [prepareProp(filterName, sortOrder)]);
+        const sortByPropsLoader = R.pipe(getProps, sortByPropsCurried);
+        const sortByPropsLoaded = sortByPropsLoader(prepareProp, filterName, getSortOrder(filter));
+        
+        const sortPipe4 = R.pipe(sortByPropsLoaded, mapForIndex);
+        const sortedFP4 = sortPipe4(otherOptions.list);
+        // const sortedFP = R.map( getIndexValues(otherOptions.index), sortedList);
+                                                                        bug('** sortedFP', sortedFP)
+                                                                        bug('** sortedFP2', sortedFP2)
+                                                                        bug('** sortedFP3', sortedFP3)
+                                                                        bug('** sortedFP4', sortedFP4)
+        
+        // const sortItems = R.map()
+
+        // const curriedSort = (props) => (records) => sortByProps(props, records);
+        // // const sorted2 = R.pipe(R.flip, )
+        // const sorted2 = R.pipe(curriedSort, sorted);
+
+        // const preLoadedSorted
+                                                    // bug('sorted2', sorted2(props, otherOptions.list))
         return sorted;
 
     };
@@ -149,6 +150,29 @@ const transformSortProps = (filterState, filteredRecords) => {
         return preparedProp;
     }
 
+    // -->> possible also for R.path with automatic switch
+    const getPropFor = filterName => obj => R.prop (filterName, obj);
+
+    const isUndefinedFor = (index) => (prop) => index[prop] === undefined;
+
+    
+    const getRestReducer = (getProp, indexIsUndefined) => {
+
+        const bucketReducer = (bucket) => (prev, curr) => {
+            const propValue = getProp (curr);
+
+            if (indexIsUndefined(propValue)) {
+                bucket[propValue] = bucket[propValue] ||
+                    (prev.index[curr.id] = propValue) && prev.list.push (curr) && propValue;
+            }
+
+            return prev;
+        };
+
+        return R.reduce (bucketReducer ({}), { index:{}, list:[] });
+
+    };
+
     const filterProps = filterState.__order.map((filterName) => {
         const filter = filterState[filterName];
         let preparedProp = [];
@@ -165,14 +189,21 @@ const transformSortProps = (filterState, filteredRecords) => {
                 // get possible values, sort them here and add to selIndex
                 const allOtherValues = getAllRestOccurences(filter, getPropNameMapped(filterName), selIndex)
 
-                bug('allOtherValues', allOtherValues)
+                                                                    bug('** allOtherValues', allOtherValues)
+                const getProp = getPropFor (getPropNameMapped(filterName));
+                const indexIsUndefined = isUndefinedFor (selIndex);
+                                                                         
+                // const rest = getRest(getProp, indexIsUndefined, filteredRecords);
+                const getRest = getRestReducer(getProp, indexIsUndefined)
+
+                const rest = getRest(filteredRecords);
+                                                                    bug('** rest', rest)
 
                 const sorted = preSort(filterName, filter, allOtherValues);
 // bug('ssorted', sorted)
                 selIndex = makeIndex (sorted, selIndex, filter.sel.length);
                 // selIndex = makeIndex (sorted);
-
-                bug('--> selIndex', selIndex)
+                                                                        bug('--> selIndex', selIndex)
             }
 
             preparedProp.push(selIndex);
