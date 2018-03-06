@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import R, { sort } from 'ramda';
 import bug from '../../_libs/bug';
 
-import { getRichJobData } from './getRichJobData';
+import { getRichJobData, getLoc } from './getRichJobData';
 import { getPredicateCity, getPredicateJobType } from './getFilterPredicates';
 
 import { filterByPredicates } from './filterData';
@@ -32,7 +32,8 @@ const getFilters = (state) => state.ui.filter;
 //     return state.ui.filter;
 // }
 
-export const getJobData = createSelector(
+// export const getJobData = createSelector(
+const getJobData = createSelector(
     getRichJobData,
     getFilters,
 
@@ -59,7 +60,7 @@ export const getJobData = createSelector(
                                                                     bug('selectedCities', selectedCities)
                                                                     bug('selectedJobType', selectedJobType)
                                                                     bug('selectedCompIndy', selectedCompIndy)
-        if (!R.isEmpty(richJobData)) {
+        if (!R.isEmpty (richJobData)) {
 
             const predicates = [
                 predicateCity,
@@ -68,14 +69,12 @@ export const getJobData = createSelector(
             ];
 
             // basic predicate filtering
-            const multiFiltered = filterByPredicates(predicates, richJobData);
-            bug('multiFiltered', multiFiltered)
-
-            const sortProps = transformSortProps(filters, multiFiltered);
-            bug('sortProps', sortProps)
-            
-            const multiSorted = multiSort(sortProps, multiFiltered);
-            bug('multiSorted', multiSorted)
+            const multiFiltered = filterByPredicates (predicates, richJobData);
+                                                                    bug('multiFiltered', multiFiltered)
+            const sortProps = transformSortProps (filters, multiFiltered);
+                                                                    bug('sortProps', sortProps)
+            const multiSorted = multiSort (sortProps, multiFiltered);
+                                                                    bug('multiSorted', multiSorted)
 
             // ===== group on first layer
             // const groupBySelectionCity = groupBySelection('city', selectedCities)
@@ -131,4 +130,5 @@ export const getJobData = createSelector(
     }
 );
 
-// export const getJobData = getRichJobData;
+export { getJobData, getLoc };
+

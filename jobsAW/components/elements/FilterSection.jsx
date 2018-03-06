@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
@@ -9,11 +12,16 @@ const Wrapper = styled.div`
     color: gray;
     /* background: darkseagreen; */
     padding: 1em 2.5em;
+    width: 100%;
+    position: fixed;
+    margin-top: 58.5px;
+    background: wheat;
+
     display: flex;
 
 `;
 
-const Filter = styled.div`
+const Header = styled.div`
     width: 5em;
     height: 1.25em;
     margin-right: 2em;
@@ -43,17 +51,83 @@ const clickFilterButton = (e) => {
     bug('button clicked!')
 };
 
-export default () => (
-    <Wrapper>
-        <Filter>
-            Filter
-        </Filter>
-        <FComp>
-            <FCompButton
-                onClick={clickFilterButton}
-            >
-                City
-            </FCompButton>
-        </FComp>
-    </Wrapper>
-);
+
+const makeFilterButton = (text) => {
+    return (
+        <FCompButton
+            onClick={clickFilterButton}
+        >
+            {text}
+        </FCompButton>
+    );
+
+};
+
+const FilterElems = (
+    state,
+    loc
+
+) => {
+    // bug('filterProps', filterProps)
+    const __order = state.__order
+    // bug('__order', __order)
+    // bug('loc', loc)
+
+    if (loc) {
+        return __order.map((elem) => {
+            // bug('orderedElem', elem, loc.get(elem))
+            const text = loc.get(elem);
+
+            return (
+                <FComp key={elem} >
+                    {makeFilterButton(text)}
+                </FComp>
+
+            );
+        });
+
+    }
+    // else Loading...??
+
+    return (
+        <span>Loading...</span>
+        // bug('             --->> return')
+    );
+};
+
+class Filters extends Component {
+
+    render() {
+                                                                    bug('Filters this.props', this.props)
+        const { state, loc } = this.props;
+
+        return (
+            <Wrapper>
+                <Header>
+                    Filter
+                </Header>
+
+                {FilterElems(state.ui.filter, loc.filter)}
+
+            </Wrapper>
+        );
+    }
+}
+
+export default DragDropContext(HTML5Backend)(Filters);
+// export default Filters;
+
+// export default () => (
+//     <Wrapper>
+//         <Header>
+//             Filter
+//         </Header>
+//         <FComp>
+//             <FCompButton
+//                 onClick={clickFilterButton}
+//             >
+//                 City
+//             </FCompButton>
+//         </FComp>
+//     </Wrapper>
+// );

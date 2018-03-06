@@ -13,7 +13,8 @@ html, body {
 }
 
 body {
-    background: #444444;
+    /* background: #444444; */
+    background: #cccccc;
     
     color: #cccccc;
     font-size: 14px;

@@ -3,6 +3,12 @@
 
     },
     "de": {
+        "filter": {
+            "city": "Stadt",
+            "jobType": "Vertrag",
+            "compIndy": "Branche",
+            "compEmply": "Mitarbeiter"
+        },
         "job": {
             "type": {
                 "1": "Vollzeit",

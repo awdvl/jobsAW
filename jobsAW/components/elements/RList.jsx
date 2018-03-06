@@ -19,7 +19,7 @@ export default  (props) => {
         background: white;
         border-top: 1px solid #000000;
         border-bottom: 1px solid #000000;
-        width: 500px;
+        /* width: 500px; */
     `;
 
     const RListHeader = styled.div`
@@ -73,7 +73,7 @@ export default  (props) => {
         </div>
     );
     
-
+    // -->> this not better via props.jobs??
     const List = () => (props.allLoaded ?
             <LoadedList jobs={props.jobs} /> :
             <p>Loading...</p>);

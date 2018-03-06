@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { finishedLc } from '../../utils/loadCtrl';
 
 import Head from './Head';
-import Filter from './FilterSection';
+import Filters from './FilterSection';
 import Results from './Results';
 import Footer from './Footer';
 
@@ -38,7 +38,7 @@ class JobsList extends Component {
                                                             bug.rt('App.jsx::getData, this.props', this.props);
         // init load control for fetch actions - pass number of async fetch actions
         loadCtrl(4);
-
+        // -->> these in loadCtrl instead of number?
         fetchCities();
         fetchCompanies();
         fetchLocCommon();
@@ -48,12 +48,17 @@ class JobsList extends Component {
 
     render () {
                                                             bug('App.jsx -> this.props', this.props)
-        const { state } = this.props;
+                                                            bug.rt('rt: App.jsx -> this.props', this.props)
+        const { state, loc } = this.props;
 
         return (
             <Site>
                 <Head></Head>
-                <Filter />
+                <Filters 
+                    state={state}
+                    loc={loc}
+                    // {...this.props}
+                />
                 <Results 
                     allLoaded={finishedLc(state)}  // or reducers.getAllLoaded(state)
                     {...this.props} 

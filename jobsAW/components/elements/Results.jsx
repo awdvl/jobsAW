@@ -15,6 +15,10 @@ const Wrapper = styled.div`
     justify-content: flex-start; /* align items in Main Axis */
     align-items: stretch; /* align items in Cross Axis */
     align-content: stretch; /* Extra space in Cross Axis */    
+
+    margin-top: 148.5px;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
 `;
 
 const Results = styled.div`
@@ -32,9 +36,9 @@ export default (props) => {
     return (
         <Wrapper>
             <RList {...props} />
-            <Results>
+            {/* <Results>
                 Hurz
-            </Results>
+            </Results> */}
         </Wrapper>
     );
 }

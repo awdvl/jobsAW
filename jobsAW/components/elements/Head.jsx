@@ -8,6 +8,8 @@ const Wrapper = styled.div`
     background: white;
     border-bottom: 1px solid saddlebrown;
     padding: .75em 3em;
+    position: fixed;
+    width: 100%;
 `;
 
 const Logo = styled.div`

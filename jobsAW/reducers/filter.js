@@ -8,7 +8,9 @@ import FilterCompEmply from '../records/FilterCompEmply';
 
 // const initStateOrder = List(['city', 'compIndy']);
 // const initStateOrder = List(['city', 'compIndy', 'jobType']);
-const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
+
+// const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
+const initStateOrder = List(['compIndy', 'city', 'jobType', 'compEmply']);
 
 const __order = (state=initStateOrder, action) => {
     switch (action.type) {

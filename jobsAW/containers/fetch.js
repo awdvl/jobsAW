@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 // import { createSelector } from 'reselect';
 
-import { getJobData } from '../selectors';
+import { getJobData, getLoc } from '../selectors';
 import * as actions from '../actions/fetch';
 
 import App from '../components/elements/App';
@@ -15,7 +15,8 @@ const mapStateToProps = (state, props) => {
 
     return {
         state,
-        jobs: getJobData(state)
+        jobs: getJobData(state),
+        loc: getLoc(state)
     };
 };
 

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import bug from '../../_libs/bug';
 
+import pickFilterLoc from './pickFilterLoc';
 import transformToRichJobData from './transformToRichJobData';
 import { finishedLc } from '../utils/loadCtrl';
                                                                             // bug('selectors::state', state)
@@ -26,5 +27,19 @@ export const getRichJobData = createSelector(
         }
         
         return [];
+    }
+);
+
+export const getLoc = createSelector(
+    getLoadingFinished,
+    getLanguage,
+    getData,
+
+    (loadingFinished, language, data) => {
+        if (loadingFinished) {
+            return pickFilterLoc(language, data);
+        }
+
+        return {};
     }
 );
