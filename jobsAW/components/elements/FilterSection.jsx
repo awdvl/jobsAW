@@ -5,6 +5,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
+import FElem from './FElem';
+
 import bug from '../../../_libs/bug';
 
 const Wrapper = styled.div`
@@ -29,39 +31,57 @@ const Header = styled.div`
     /* float: left; */
 `;
 
-const FComp = styled.div`
-    background: snow;
-    padding: .5em;
-    /* line-height: .75em; */
-`;
+// const FComp = styled.div`
+//     background: snow;
+//     padding: .5em;
+//     /* line-height: .75em; */
+// `;
 
-const FCompButton = SoftButton.extend`
-    padding: .25em;
-    border-radius: 3px;
+// const FCompButton = SoftButton.extend`
+//     padding: .25em;
+//     border-radius: 3px;
 
-    &:hover {
-        background: #d9e4e4;
-    }
-    /* &:focus {
-        border-color: red;
-    } */
-`;
+//     &:hover {
+//         background: #d9e4e4;
+//     }
+//     /* &:focus {
+//         border-color: red;
+//     } */
+// `;
 
-const clickFilterButton = (e) => {
-    bug('button clicked!')
-};
+// const clickFilterButton = (e) => {
+//     bug('button clicked!')
+// };
 
 
-const makeFilterButton = (text) => {
-    return (
-        <FCompButton
-            onClick={clickFilterButton}
-        >
-            {text}
-        </FCompButton>
-    );
+// const makeFilterButton = (text) => {
+//     return (
+//         <FCompButton
+//             onClick={clickFilterButton}
+//         >
+//             {text}
+//         </FCompButton>
+//     );
 
-};
+// };
+
+// class FilterElem extends Component {
+
+//     render() {
+//         // const { elem, text} = this.props;
+//         const { text } = this.props;
+
+//         const component = (
+//             // <FComp key={elem} >
+//             <FComp>
+//                 {makeFilterButton(text)}
+//             </FComp>
+//         );
+
+//         return component;
+
+//     }
+// }
 
 const FilterElems = (
     state,
@@ -79,11 +99,19 @@ const FilterElems = (
             const text = loc.get(elem);
 
             return (
-                <FComp key={elem} >
-                    {makeFilterButton(text)}
-                </FComp>
+                <FElem key={elem}
+                    id={elem}
+                    text={text}
+                />
 
             );
+
+            // return (
+            //     <FComp key={elem} >
+            //         {makeFilterButton(text)}
+            //     </FComp>
+
+            // );
         });
 
     }

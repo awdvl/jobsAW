@@ -1,11 +1,14 @@
 {
   "presets": [
     "env",
-    "react"
+    "react",
+    "stage-2"
   ],
   "env": {
     "start": {
-      "plugins": ["babel-plugin-styled-components"],
+      "plugins": [
+        "babel-plugin-styled-components"
+      ],
       "presets": [
         "react-hmre"
       ]
@@ -13,6 +16,7 @@
   },
   "plugins": [
     "babel-plugin-styled-components",
+    "transform-decorators-legacy",
     "transform-object-rest-spread",
     "ramda"
   ]
