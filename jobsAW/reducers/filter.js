@@ -5,6 +5,8 @@ import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmply from '../records/FilterCompEmply';
 
+import UPDATE_FILTER_ORDER from '../constants/dnd';
+
 
 // const initStateOrder = List(['city', 'compIndy']);
 // const initStateOrder = List(['city', 'compIndy', 'jobType']);
@@ -14,6 +16,9 @@ const initStateOrder = List(['compIndy', 'city', 'jobType', 'compEmply']);
 
 const __order = (state=initStateOrder, action) => {
     switch (action.type) {
+        case UPDATE_FILTER_ORDER:
+            return action.payload;  // or in LIST()
+
         default:
             return state;
     }

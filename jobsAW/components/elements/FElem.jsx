@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ItemTypes } from '../../constants/dnd';
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
@@ -27,6 +27,10 @@ const FCompButton = SoftButton.extend`
     } */
 `;
 
+const dndStyle = {
+    cursor: 'move'
+};
+
 const clickFilterButton = (e) => {
     bug('button clicked!')
 };
@@ -43,12 +47,38 @@ const makeFilterButton = (text) => {
 
 };
 
-const elemSource = {
+const filterSource = {
     beginDrag(props) {
         return {
-            elemId: props.id
+            id: props.id,
+            originalIndex: props.findFilter(props.id).index,
+        };
+    },
+
+    endDrag(props, monitor) {
+        const { id: droppedId, originalIndex } = monitor.getItem();
+        const didDrop = monitor.didDrop();
+
+        if (!didDrop) {
+            props.moveFilter(droppedId, originalIndex);
         }
     }
+};
+
+const filterTarget = {
+    canDrop() {
+        return false;
+    },
+
+    hover(props, monitor) {
+        const { id: draggedId } = monitor.getItem();
+        const { id: overId } = props;
+
+        if (draggedId !== overId) {
+            const { index: overIndex } = props.findFilter(overId);
+            props.moveFilter(draggedId, overIndex);
+        }
+    },
 };
 
 const collect = (connect, monitor) => {
@@ -58,45 +88,50 @@ const collect = (connect, monitor) => {
     }
 };
 
-@DragSource(ItemTypes.FILTER, elemSource, collect)
+@DropTarget(ItemTypes.FILTER, filterTarget, connect => ({
+    connectDropTarget: connect.dropTarget(),
+}))
+@DragSource(ItemTypes.FILTER, filterSource, collect)
 export default class FilterElem extends Component {
-// class FilterElem extends Component {
     static propTypes = {
         connectDragSource: PropTypes.func.isRequired,
-        isDragging: PropTypes.bool.isRequired
+        connectDropTarget: PropTypes.func.isRequired,
+        isDragging: PropTypes.bool.isRequired,
+        id: PropTypes.any.isRequired,
+        text: PropTypes.string.isRequired,
+        moveFilter: PropTypes.func.isRequired,
+        findFilter: PropTypes.func.isRequired,
     };
 
     render() {
-                                                                    bug('FilterElem::this.props', this.props)
-        // const { text } = this.props;
-        const { text, connectDragSource, isDragging } = this.props;
+        const { 
+            text, 
+            isDragging,
+            connectDragSource, 
+            connectDropTarget,
+        } = this.props;
+
+        const opacity = isDragging ? .5 : 1;
 
         return connectDragSource(
-            // div necessary, as "Only native element nodes can now be passed to React DnD connectors"
-            <div>
-                <FComp style={{
-                    opacity: isDragging ? .5 : 1,
-                    cursor: 'move'
-                }}>
-                    {makeFilterButton(text)}
-                </FComp>
-            </div>
+            connectDropTarget(
+                // div necessary, as "Only native element nodes can now be passed to React DnD connectors"
+                <div>
+                    <FComp 
+                        // style={{
+                        //     opacity: isDragging ? .5 : 1,
+                        //     cursor: 'move'
+                        // }}
+                        style={{
+                            ...dndStyle,
+                            opacity
+                        }}
+                    >
+                        {makeFilterButton(text)}
+                    </FComp>
+                </div>
+            )
         );
-
-        // return (
-        //     <FComp>
-        //         {makeFilterButton(text)}
-        //     </FComp>
-        // );
 
     }
 }
-
-// FilterElem.propTypes = {
-//     connectDragSource: PropTypes.func.isRequired,
-//     isDragging: PropTypes.bool.isRequired
-// };
-
-
-// export default DragSource(ItemTypes.FILTER, elemSource, collect)(FilterElem);
-// export default FilterElem;

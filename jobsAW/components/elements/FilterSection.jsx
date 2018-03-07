@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { DragDropContext } from 'react-dnd';
+import PropTypes from 'prop-types';
+import { ItemTypes } from '../../constants/dnd';
+import { DropTarget, DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import styled from 'styled-components';
@@ -12,7 +14,6 @@ import bug from '../../../_libs/bug';
 const Wrapper = styled.div`
     font-size: 1.5em;
     color: gray;
-    /* background: darkseagreen; */
     padding: 1em 2.5em;
     width: 100%;
     position: fixed;
@@ -31,61 +32,12 @@ const Header = styled.div`
     /* float: left; */
 `;
 
-// const FComp = styled.div`
-//     background: snow;
-//     padding: .5em;
-//     /* line-height: .75em; */
-// `;
-
-// const FCompButton = SoftButton.extend`
-//     padding: .25em;
-//     border-radius: 3px;
-
-//     &:hover {
-//         background: #d9e4e4;
-//     }
-//     /* &:focus {
-//         border-color: red;
-//     } */
-// `;
-
-// const clickFilterButton = (e) => {
-//     bug('button clicked!')
-// };
-
-
-// const makeFilterButton = (text) => {
-//     return (
-//         <FCompButton
-//             onClick={clickFilterButton}
-//         >
-//             {text}
-//         </FCompButton>
-//     );
-
-// };
-
-// class FilterElem extends Component {
-
-//     render() {
-//         // const { elem, text} = this.props;
-//         const { text } = this.props;
-
-//         const component = (
-//             // <FComp key={elem} >
-//             <FComp>
-//                 {makeFilterButton(text)}
-//             </FComp>
-//         );
-
-//         return component;
-
-//     }
-// }
 
 const FilterElems = (
     state,
-    loc
+    loc,
+    moveFilter,
+    findFilter,
 
 ) => {
     // bug('filterProps', filterProps)
@@ -99,63 +51,68 @@ const FilterElems = (
             const text = loc.get(elem);
 
             return (
-                <FElem key={elem}
+                <FElem 
+                    key={elem}
                     id={elem}
                     text={text}
+                    moveFilter={moveFilter}
+                    findFilter={findFilter}
                 />
 
             );
 
-            // return (
-            //     <FComp key={elem} >
-            //         {makeFilterButton(text)}
-            //     </FComp>
-
-            // );
         });
 
     }
-    // else Loading...??
 
-    return (
-        <span>Loading...</span>
-        // bug('             --->> return')
-    );
+    return <span>Loading...</span>;
 };
 
-class Filters extends Component {
+const filterTarget = {
+    drop() {},
+};
+
+const collect = (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+});
+
+
+@DragDropContext(HTML5Backend)
+@DropTarget(ItemTypes.FILTER, filterTarget, collect)
+export default class Filters extends Component {
+    static propTypes = {
+        connectDropTarget: PropTypes.func.isRequired,
+    }
+
+    moveFilter(id, atIndex) {
+
+    }
+
+    findFilter(id) {
+        // const filter = filters
+    }
 
     render() {
                                                                     bug('Filters this.props', this.props)
-        const { state, loc } = this.props;
+        const { connectDropTarget, state, loc } = this.props;
 
-        return (
-            <Wrapper>
-                <Header>
-                    Filter
-                </Header>
+        return connectDropTarget(
+            // div to transform into native componenet
+            <div>
+                <Wrapper>
+                    <Header>
+                        Filter
+                    </Header>
 
-                {FilterElems(state.ui.filter, loc.filter)}
+                    {FilterElems(
+                        state.ui.filter, 
+                        loc.filter,
+                        this.moveFilter,
+                        this.findFilter
+                    )}
 
-            </Wrapper>
+                </Wrapper>
+            </div>
         );
     }
 }
-
-export default DragDropContext(HTML5Backend)(Filters);
-// export default Filters;
-
-// export default () => (
-//     <Wrapper>
-//         <Header>
-//             Filter
-//         </Header>
-//         <FComp>
-//             <FCompButton
-//                 onClick={clickFilterButton}
-//             >
-//                 City
-//             </FCompButton>
-//         </FComp>
-//     </Wrapper>
-// );

@@ -7,7 +7,8 @@ import styled from 'styled-components';
 import { finishedLc } from '../../utils/loadCtrl';
 
 import Head from './Head';
-import Filters from './FilterSection';
+// import Filters from './FilterSection';
+import Filters from '../../containers/dnd';
 import Results from './Results';
 import Footer from './Footer';
 
@@ -55,7 +56,7 @@ class JobsList extends Component {
             <Site>
                 <Head></Head>
                 <Filters 
-                    state={state}
+                    // state={state}
                     loc={loc}
                     // {...this.props}
                 />
