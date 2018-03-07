@@ -84,17 +84,50 @@ export default class Filters extends Component {
         connectDropTarget: PropTypes.func.isRequired,
     }
 
-    moveFilter(id, atIndex) {
-
+    constructor (props) {
+        super(props);
+        this.moveFilter = this.moveFilter.bind(this);
     }
 
-    findFilter(id) {
-        // const filter = filters
+
+    moveFilter(state, onUpdateOrder) {
+        return (id, atIndex) => {
+            // const { filter, index } = this.findFilter(state)(id);
+            // const { index } = this.findFilter(state)(id);
+            const index = this.findFilterIndex(state)(id);
+
+            onUpdateOrder({
+                filter: id,
+                index,
+                atIndex
+            });
+
+        }
     }
+
+    findFilterIndex(state) {
+        const __order = state.ui.filter.__order;
+
+        return (filter) => {
+                                                    // bug('findFilterIndex', __order.findIndex(value => value === filter))
+            return __order.findIndex(value => value === filter);
+        }
+    }
+    // findFilter(state) {
+    //     const __order = state.ui.filter.__order;
+
+    //     return (filter) => {
+    //                                                 // bug('findFilterIndex', __order.findIndex(value => value === filter))
+    //         return {
+    //             filter,
+    //             index: __order.findIndex(value => value === filter),
+    //         };
+    //     }
+    // }
 
     render() {
                                                                     bug('Filters this.props', this.props)
-        const { connectDropTarget, state, loc } = this.props;
+        const { connectDropTarget, state, loc, onUpdateOrder } = this.props;
 
         return connectDropTarget(
             // div to transform into native componenet
@@ -107,8 +140,9 @@ export default class Filters extends Component {
                     {FilterElems(
                         state.ui.filter, 
                         loc.filter,
-                        this.moveFilter,
-                        this.findFilter
+                        this.moveFilter(state, onUpdateOrder),
+                        // this.findFilter(state)
+                        this.findFilterIndex(state)
                     )}
 
                 </Wrapper>

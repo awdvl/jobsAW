@@ -51,7 +51,8 @@ const filterSource = {
     beginDrag(props) {
         return {
             id: props.id,
-            originalIndex: props.findFilter(props.id).index,
+            // originalIndex: props.findFilter(props.id).index,
+            originalIndex: props.findFilter(props.id),
         };
     },
 
@@ -75,7 +76,8 @@ const filterTarget = {
         const { id: overId } = props;
 
         if (draggedId !== overId) {
-            const { index: overIndex } = props.findFilter(overId);
+            // const { index: overIndex } = props.findFilter(overId);
+            const overIndex = props.findFilter(overId);
             props.moveFilter(draggedId, overIndex);
         }
     },
@@ -118,10 +120,6 @@ export default class FilterElem extends Component {
                 // div necessary, as "Only native element nodes can now be passed to React DnD connectors"
                 <div>
                     <FComp 
-                        // style={{
-                        //     opacity: isDragging ? .5 : 1,
-                        //     cursor: 'move'
-                        // }}
                         style={{
                             ...dndStyle,
                             opacity
