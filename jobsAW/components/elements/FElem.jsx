@@ -51,7 +51,6 @@ const filterSource = {
     beginDrag(props) {
         return {
             id: props.id,
-            // originalIndex: props.findFilter(props.id).index,
             originalIndex: props.findFilter(props.id),
         };
     },
@@ -76,24 +75,24 @@ const filterTarget = {
         const { id: overId } = props;
 
         if (draggedId !== overId) {
-            // const { index: overIndex } = props.findFilter(overId);
             const overIndex = props.findFilter(overId);
             props.moveFilter(draggedId, overIndex);
         }
     },
 };
 
-const collect = (connect, monitor) => {
-    return {
-        connectDragSource: connect.dragSource(),
-        isDragging: monitor.isDragging()
-    }
-};
+// const collect = (connect, monitor) => ({
+//     connectDragSource: connect.dragSource(),
+//     isDragging: monitor.isDragging()
+// });
 
 @DropTarget(ItemTypes.FILTER, filterTarget, connect => ({
     connectDropTarget: connect.dropTarget(),
 }))
-@DragSource(ItemTypes.FILTER, filterSource, collect)
+@DragSource(ItemTypes.FILTER, filterSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+}))
 export default class FilterElem extends Component {
     static propTypes = {
         connectDragSource: PropTypes.func.isRequired,

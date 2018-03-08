@@ -17,7 +17,7 @@ const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
 export const __order = (state=initStateOrder, action) => {
     switch (action.type) {
         case UPDATE_FILTER_ORDER:
-            console.log('## action.payload', action.payload)
+            // console.log('## action.payload', action.payload)
             // console.log('## reducer',
             //     state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter))
             return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);

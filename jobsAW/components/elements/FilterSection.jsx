@@ -7,6 +7,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
+import R from 'ramda';
+
 import FElem from './FElem';
 
 import bug from '../../../_libs/bug';
@@ -34,27 +36,27 @@ const Header = styled.div`
 
 
 const FilterElems = (
-    state,
+    filterOrder,
     loc,
     moveFilter,
     findFilter,
 
 ) => {
     // bug('filterProps', filterProps)
-    const __order = state.__order
+    // const __order = state.__order
     // bug('__order', __order)
     // bug('loc', loc)
 
     if (loc) {
-        return __order.map((elem) => {
+        return filterOrder.map((elem) => {
             // bug('orderedElem', elem, loc.get(elem))
-            const text = loc.get(elem);
+            // const text = loc.get(elem);
 
             return (
                 <FElem 
                     key={elem}
                     id={elem}
-                    text={text}
+                    text={loc.get(elem)}
                     moveFilter={moveFilter}
                     findFilter={findFilter}
                 />
@@ -68,66 +70,70 @@ const FilterElems = (
     return <span>Loading...</span>;
 };
 
+
+
+// const findFilterIndex = R.curry ((filterOrder) => (filter) => filterOrder.findIndex(value => value === filter));
+const findFilterIndex = (filterOrder) => (filter) => filterOrder.findIndex(value => value === filter);
+
+const moveFilter = (filterOrder, onUpdateOrder) => (filter, atIndex) => {
+        const index = findFilterIndex(filterOrder)(filter);
+
+        onUpdateOrder({
+            filter,
+            index,
+            atIndex
+        });
+
+    }
+
+
 const filterTarget = {
     drop() {},
 };
 
-const collect = (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-});
 
 
 @DragDropContext(HTML5Backend)
-@DropTarget(ItemTypes.FILTER, filterTarget, collect)
+@DropTarget(ItemTypes.FILTER, filterTarget, (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+}))
 export default class Filters extends Component {
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
     }
 
-    constructor (props) {
-        super(props);
-        this.moveFilter = this.moveFilter.bind(this);
-    }
+    // constructor (props) {
+    //     super(props);
+    //     this.moveFilter = this.moveFilter.bind(this);
+    // }
 
 
-    moveFilter(state, onUpdateOrder) {
-        return (id, atIndex) => {
-            // const { filter, index } = this.findFilter(state)(id);
-            // const { index } = this.findFilter(state)(id);
-            const index = this.findFilterIndex(state)(id);
+    // moveFilter(filterOrder, onUpdateOrder) {
+    //     return (filter, atIndex) => {
+    //         const index = this.findFilterIndex(filterOrder)(filter);
 
-            onUpdateOrder({
-                filter: id,
-                index,
-                atIndex
-            });
+    //         onUpdateOrder({
+    //             filter,
+    //             index,
+    //             atIndex
+    //         });
 
-        }
-    }
+    //     }
+    // }
 
-    findFilterIndex(state) {
-        const __order = state.ui.filter.__order;
-
-        return (filter) => {
-                                                    // bug('findFilterIndex', __order.findIndex(value => value === filter))
-            return __order.findIndex(value => value === filter);
-        }
-    }
-    // findFilter(state) {
-    //     const __order = state.ui.filter.__order;
-
+    // findFilterIndex(filterOrder) {
     //     return (filter) => {
     //                                                 // bug('findFilterIndex', __order.findIndex(value => value === filter))
-    //         return {
-    //             filter,
-    //             index: __order.findIndex(value => value === filter),
-    //         };
+    //         return filterOrder.findIndex(value => value === filter);
     //     }
     // }
 
     render() {
-                                                                    bug('Filters this.props', this.props)
-        const { connectDropTarget, state, loc, onUpdateOrder } = this.props;
+                                                                    bug('*** Filters this.props', this.props)
+        // const { connectDropTarget, state, loc, onUpdateOrder } = this.props;
+        // const { connectDropTarget, state, loc, updateOrder } = this.props;
+        // const filterOrder = state.ui.filter.__order;
+        const { connectDropTarget, filterOrder, loc, updateOrder } = this.props;
 
         return connectDropTarget(
             // div to transform into native componenet
@@ -138,11 +144,13 @@ export default class Filters extends Component {
                     </Header>
 
                     {FilterElems(
-                        state.ui.filter, 
+                        filterOrder, 
                         loc.filter,
-                        this.moveFilter(state, onUpdateOrder),
-                        // this.findFilter(state)
-                        this.findFilterIndex(state)
+                        // this.moveFilter(state, onUpdateOrder),
+                        // this.moveFilter(filterOrder, updateOrder),
+                        moveFilter(filterOrder, updateOrder),
+                        // this.findFilterIndex(filterOrder)
+                        findFilterIndex(filterOrder)
                     )}
 
                 </Wrapper>
