@@ -5,7 +5,7 @@ import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmply from '../records/FilterCompEmply';
 
-import { UPDATE_FILTER_ORDER } from '../constants/dnd';
+import { UPDATE_FILTER_ORDER } from '../constants/filter';
 
 
 // const initStateOrder = List(['city', 'compIndy']);
@@ -14,9 +14,10 @@ import { UPDATE_FILTER_ORDER } from '../constants/dnd';
 const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
 // const initStateOrder = List(['compIndy', 'city', 'jobType', 'compEmply']);
 
-const __order = (state=initStateOrder, action) => {
+export const __order = (state=initStateOrder, action) => {
     switch (action.type) {
         case UPDATE_FILTER_ORDER:
+            console.log('## action.payload', action.payload)
             // console.log('## reducer',
             //     state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter))
             return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);

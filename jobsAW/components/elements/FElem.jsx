@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ItemTypes } from '../../constants/dnd';
+import { ItemTypes } from '../../constants/filter';
 import { DragSource, DropTarget } from 'react-dnd';
 
 import styled from 'styled-components';

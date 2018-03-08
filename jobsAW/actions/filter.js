@@ -1,4 +1,4 @@
-import { UPDATE_FILTER_ORDER } from '../constants/dnd';
+import { UPDATE_FILTER_ORDER } from '../constants/filter';
 
 export const updateOrder = payload => {
                 // console.log('payload', payload)

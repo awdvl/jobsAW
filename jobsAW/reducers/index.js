@@ -4,7 +4,7 @@ import { settings } from './settings';
 import { data } from './fetchData';
 import { ui } from './ui';
 import { reducerLc, finishedLc } from '../utils/loadCtrl';
-import fetch from '../containers/fetch';
+// import fetch from '../containers/fetch';
 
 const reducers = combineReducers({
     settings,

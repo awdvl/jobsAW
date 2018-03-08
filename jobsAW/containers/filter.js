@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updateOrder } from '../actions/dnd';
+import { updateOrder } from '../actions/filter';
 import filters from '../components/elements/FilterSection';
 
 const mapStateToProps = state => ({state});

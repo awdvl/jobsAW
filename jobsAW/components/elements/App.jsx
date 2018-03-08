@@ -8,7 +8,7 @@ import { finishedLc } from '../../utils/loadCtrl';
 
 import Head from './Head';
 // import Filters from './FilterSection';
-import Filters from '../../containers/dnd';
+import Filters from '../../containers/filter';
 import Results from './Results';
 import Footer from './Footer';
 
