@@ -6,3 +6,8 @@ export const updateOrder = payload => {
         payload: payload
     };
 };
+
+export const updateIsDragging = payload => ({
+    type: 'UPDATE_ISDRAGGING',
+    payload
+});

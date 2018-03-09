@@ -27,6 +27,17 @@ export const __order = (state=initStateOrder, action) => {
     }
 };
 
+export const __isDragging = (state=false, action) => {
+    switch (action.type) {
+        // case UPDATE_FILTER_ORDER:
+            // return action.payload.isDragging;
+        case 'UPDATE_ISDRAGGING':
+            return action.payload;
+
+        default:
+            return state;
+    }
+};
 
 const initPointToPath = Map({
     jobType: 'type',
@@ -159,6 +170,7 @@ const jobType = (state=initStateJobType, action) => {
 
 export const filter = combineReducers({
     __order,
+    __isDragging,
     __pointToPath,
     __mapToPath,
     city,

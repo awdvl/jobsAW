@@ -7,7 +7,8 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
-import R from 'ramda';
+import { is } from 'immutable';
+// import R from 'ramda';
 
 import FElem from './FElem';
 
@@ -40,17 +41,11 @@ const FilterElems = (
     loc,
     moveFilter,
     findFilter,
+    // updateOrder,
 
 ) => {
-    // bug('filterProps', filterProps)
-    // const __order = state.__order
-    // bug('__order', __order)
-    // bug('loc', loc)
-
     if (loc) {
         return filterOrder.map((elem) => {
-            // bug('orderedElem', elem, loc.get(elem))
-            // const text = loc.get(elem);
 
             return (
                 <FElem 
@@ -59,12 +54,10 @@ const FilterElems = (
                     text={loc.get(elem)}
                     moveFilter={moveFilter}
                     findFilter={findFilter}
+                    // updateOrder={updateOrder}
                 />
-
             );
-
         });
-
     }
 
     return <span>Loading...</span>;
@@ -75,20 +68,28 @@ const FilterElems = (
 // const findFilterIndex = R.curry ((filterOrder) => (filter) => filterOrder.findIndex(value => value === filter));
 const findFilterIndex = (filterOrder) => (filter) => filterOrder.findIndex(value => value === filter);
 
-const moveFilter = (filterOrder, onUpdateOrder) => (filter, atIndex) => {
+// const moveFilter = (filterOrder, onUpdateOrder) => (filter, atIndex, isDragging = false) => {
+const moveFilter = (filterOrder, onUpdateOrder, setIsDragging) => (filter, atIndex, isDragging = false) => {
         const index = findFilterIndex(filterOrder)(filter);
 
         onUpdateOrder({
             filter,
             index,
-            atIndex
+            atIndex,
+            isDragging  // not necessary
         });
+
+        setIsDragging(true);
 
     }
 
-
 const filterTarget = {
-    drop() {},
+    // drop() {},
+    drop (props, monitor, component) {
+        // bug('*** drop  props, monitor, component', props, monitor, component)
+
+        props.setIsDragging(false);
+    }    
 };
 
 
@@ -102,38 +103,22 @@ export default class Filters extends Component {
         connectDropTarget: PropTypes.func.isRequired,
     }
 
-    // constructor (props) {
-    //     super(props);
-    //     this.moveFilter = this.moveFilter.bind(this);
-    // }
+    shouldComponentUpdate(nextProps, nextState) {
+        bug('***', this.props, nextProps, nextState)
+        const notUpdated = is (this.props.filterOrder, nextProps.filterOrder)
 
+        bug('*** filterOrder updated', this.props.filterOrder.get(0), nextProps.filterOrder.get(0), !notUpdated)
 
-    // moveFilter(filterOrder, onUpdateOrder) {
-    //     return (filter, atIndex) => {
-    //         const index = this.findFilterIndex(filterOrder)(filter);
+        if (!notUpdated) {
+            bug('*** UPDATE in FILTER');
+        }
 
-    //         onUpdateOrder({
-    //             filter,
-    //             index,
-    //             atIndex
-    //         });
-
-    //     }
-    // }
-
-    // findFilterIndex(filterOrder) {
-    //     return (filter) => {
-    //                                                 // bug('findFilterIndex', __order.findIndex(value => value === filter))
-    //         return filterOrder.findIndex(value => value === filter);
-    //     }
-    // }
+        return true;
+    }
 
     render() {
-                                                                    bug('*** Filters this.props', this.props)
-        // const { connectDropTarget, state, loc, onUpdateOrder } = this.props;
-        // const { connectDropTarget, state, loc, updateOrder } = this.props;
-        // const filterOrder = state.ui.filter.__order;
-        const { connectDropTarget, filterOrder, loc, updateOrder } = this.props;
+                                                                    // bug('*** Filters this.props', this.props)
+        const { connectDropTarget, filterOrder, loc, updateOrder, setIsDragging } = this.props;
 
         return connectDropTarget(
             // div to transform into native componenet
@@ -146,11 +131,10 @@ export default class Filters extends Component {
                     {FilterElems(
                         filterOrder, 
                         loc.filter,
-                        // this.moveFilter(state, onUpdateOrder),
-                        // this.moveFilter(filterOrder, updateOrder),
-                        moveFilter(filterOrder, updateOrder),
-                        // this.findFilterIndex(filterOrder)
-                        findFilterIndex(filterOrder)
+                        // moveFilter(filterOrder, updateOrder),
+                        moveFilter(filterOrder, updateOrder, setIsDragging),
+                        findFilterIndex(filterOrder),
+                        // updateOrder,
                     )}
 
                 </Wrapper>

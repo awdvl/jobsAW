@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import bug from '../../../_libs/bug';
@@ -21,24 +21,54 @@ const Wrapper = styled.div`
     padding-bottom: 32px;
 `;
 
-const Results = styled.div`
-    background: rgba(0, 0, 0, .3);
-    border: 1px solid #000000;
+// const Results = styled.div`
+//     background: rgba(0, 0, 0, .3);
+//     border: 1px solid #000000;
 
-    flex: 1; /* same as flex: 1 1 auto; */
+//     flex: 1; /* same as flex: 1 1 auto; */
     
-    /* Needed for when the area gets squished too far and there is content that can't be displayed */
-    overflow: auto; 
-`;
+//     /* Needed for when the area gets squished too far and there is content that can't be displayed */
+//     overflow: auto; 
+// `;
 
-export default (props) => {
-                                                            // bug.rt('Results.jsx props', props)
-    return (
-        <Wrapper>
-            <RList {...props} />
-            {/* <Results>
-                Hurz
-            </Results> */}
-        </Wrapper>
-    );
+export default class Results extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        // const props = this.props;
+        const props = nextProps;
+
+        // bug.rt('*** Results.jsx props', props)
+        // bug.rt('*** Results.jsx __isDragging', props.state.ui.filter.__isDragging)
+
+        return !props.state.ui.filter.__isDragging;
+
+    }
+    render() {
+        const props = this.props;
+
+        return (
+            <Wrapper>
+                <RList {...props} />
+                {/* <Results>
+                    Hurz
+                </Results> */}
+            </Wrapper>
+        );
+    }
 }
+
+// export default (props) => {
+//                                                     bug.rt('*** Results.jsx props', props)
+//                                             bug.rt('*** Results.jsx __isDragging', props.state.ui.filter.__isDragging)
+//     if (props.state.ui.filter.__isDragging) {
+//         return false;
+//     }
+
+//     return (
+//         <Wrapper>
+//             <RList {...props} />
+//             {/* <Results>
+//                 Hurz
+//             </Results> */}
+//         </Wrapper>
+//     );
+// }
