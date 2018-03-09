@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { getFilterIsMoving } from '../../reducers/filter';
 
 import bug from '../../../_libs/bug';
 
@@ -32,16 +33,18 @@ const Wrapper = styled.div`
 // `;
 
 export default class Results extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        // const props = this.props;
-        const props = nextProps;
+    shouldComponentUpdate (nextProps, nextState) {
+        // // const props = this.props;
+        // const props = nextProps;
 
-        // bug.rt('*** Results.jsx props', props)
-        // bug.rt('*** Results.jsx __isDragging', props.state.ui.filter.__isDragging)
+        // // bug.rt('*** Results.jsx props', props)
+        // // bug.rt('*** Results.jsx __isMoving', props.state.ui.filter.__isMoving)
 
-        return !props.state.ui.filter.__isDragging;
+        bug('*** Results  should update', !getFilterIsMoving (nextProps.state));
 
+        return !getFilterIsMoving (nextProps.state);
     }
+
     render() {
         const props = this.props;
 
@@ -55,20 +58,3 @@ export default class Results extends Component {
         );
     }
 }
-
-// export default (props) => {
-//                                                     bug.rt('*** Results.jsx props', props)
-//                                             bug.rt('*** Results.jsx __isDragging', props.state.ui.filter.__isDragging)
-//     if (props.state.ui.filter.__isDragging) {
-//         return false;
-//     }
-
-//     return (
-//         <Wrapper>
-//             <RList {...props} />
-//             {/* <Results>
-//                 Hurz
-//             </Results> */}
-//         </Wrapper>
-//     );
-// }

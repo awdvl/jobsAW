@@ -57,6 +57,9 @@ const makeFilterButton = (text) => {
 
 const filterSource = {
     beginDrag (props) {
+                                                        // bug('*** beginDrag props', props)
+        props.setIsMoving(true);
+
         return {
             id: props.id,
             originalIndex: props.findFilter (props.id),
@@ -69,11 +72,7 @@ const filterSource = {
         const didDrop = monitor.didDrop ();
 
         if (!didDrop) {
-            // props.moveFilter (droppedId, originalIndex);
-            props.moveFilter (droppedId, originalIndex, true);
-
-        // } else {
-        //     return
+            props.moveFilter (droppedId, originalIndex);
         }
     }
 };
@@ -90,8 +89,7 @@ const filterTarget = {
 
         if (draggedId !== overId) {
             const overIndex = props.findFilter (overId);
-            // props.moveFilter (draggedId, overIndex);
-            props.moveFilter (draggedId, overIndex, true);
+            props.moveFilter (draggedId, overIndex);
         }
     },
 };

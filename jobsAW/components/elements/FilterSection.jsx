@@ -36,13 +36,13 @@ const Header = styled.div`
     /* float: left; */
 `;
 
-
+// ->> this better as props?? in {}
 const FilterElems = (
     filterOrder,
     loc,
     moveFilter,
     findFilter,
-    // updateOrder,
+    setIsMoving,
 
 ) => {
     if (loc) {
@@ -55,7 +55,8 @@ const FilterElems = (
                     text={loc.get(elem)}
                     moveFilter={moveFilter}
                     findFilter={findFilter}
-                    // updateOrder={updateOrder}
+                    setIsMoving={setIsMoving}
+                    // {...props}
                 />
             );
         });
@@ -69,28 +70,22 @@ const FilterElems = (
 // const findFilterIndex = R.curry ((filterOrder) => (filter) => filterOrder.findIndex(value => value === filter));
 const findFilterIndex = (filterOrder) => (filter) => filterOrder.findIndex(value => value === filter);
 
-// const moveFilter = (filterOrder, onUpdateOrder) => (filter, atIndex, isDragging = false) => {
-const moveFilter = (filterOrder, onUpdateOrder, setIsDragging) => (filter, atIndex, isDragging = false) => {
-        const index = findFilterIndex(filterOrder)(filter);
-                                    bug('*** filterOrder, filter, index, atIndex', filterOrder, filter, index, atIndex)
+const moveFilter = ({filterOrder, updateOrder, setIsMoving}) => (filter, atIndex) => {
+    const index = findFilterIndex(filterOrder)(filter);
+                            // bug('*** filterOrder, filter, index, atIndex', filterOrder, filter, index, atIndex)
+    updateOrder({
+        filter,
+        index,
+        atIndex,
+    });
 
-        onUpdateOrder({
-            filter,
-            index,
-            atIndex,
-            isDragging  // not necessary
-        });
-
-        setIsDragging(true);
-
-    }
+    setIsMoving(true);
+};
 
 const filterTarget = {
-    // drop() {},
     drop (props, monitor, component) {
         // bug('*** drop  props, monitor, component', props, monitor, component)
-
-        props.setIsDragging(false);
+        props.setIsMoving(false);
     }    
 };
 
@@ -103,6 +98,10 @@ const filterTarget = {
 export default class Filters extends Component {
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
+        updateOrder: PropTypes.func.isRequired,
+        setIsMoving: PropTypes.func.isRequired,
+        filterOrder: PropTypes.object.isRequired,
+        loc: PropTypes.object.isRequired,
     }
 
     // shouldComponentUpdate(nextProps, nextState) {
@@ -121,7 +120,7 @@ export default class Filters extends Component {
 
     render() {
                                                                     // bug('*** Filters this.props', this.props)
-        const { connectDropTarget, filterOrder, loc, updateOrder, setIsDragging } = this.props;
+        const { connectDropTarget, filterOrder, loc, updateOrder, setIsMoving } = this.props;
 
         return connectDropTarget(
             // div to transform into native componenet
@@ -134,10 +133,9 @@ export default class Filters extends Component {
                     {FilterElems(
                         filterOrder, 
                         loc.filter,
-                        // moveFilter(filterOrder, updateOrder),
-                        moveFilter(filterOrder, updateOrder, setIsDragging),
+                        moveFilter({filterOrder, updateOrder, setIsMoving}),
                         findFilterIndex(filterOrder),
-                        // updateOrder,
+                        setIsMoving,
                     )}
 
                 </Wrapper>

@@ -5,7 +5,7 @@ import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmply from '../records/FilterCompEmply';
 
-import { UPDATE_FILTER_ORDER } from '../constants/filter';
+import { UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING } from '../constants/filter';
 
 
 // const initStateOrder = List(['city', 'compIndy']);
@@ -27,11 +27,9 @@ export const __order = (state=initStateOrder, action) => {
     }
 };
 
-export const __isDragging = (state=false, action) => {
+export const __isMoving = (state=false, action) => {
     switch (action.type) {
-        // case UPDATE_FILTER_ORDER:
-            // return action.payload.isDragging;
-        case 'UPDATE_ISDRAGGING':
+        case UPDATE_FILTER_ISMOVING:
             return action.payload;
 
         default:
@@ -170,7 +168,7 @@ const jobType = (state=initStateJobType, action) => {
 
 export const filter = combineReducers({
     __order,
-    __isDragging,
+    __isMoving,
     __pointToPath,
     __mapToPath,
     city,
@@ -178,3 +176,8 @@ export const filter = combineReducers({
     compEmply,
     jobType,
 });
+
+
+// accessor functions
+export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
+export const getFilterOrder = (state) => state.ui.filter.__order;

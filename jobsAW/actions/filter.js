@@ -1,4 +1,4 @@
-import { UPDATE_FILTER_ORDER } from '../constants/filter';
+import { UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING } from '../constants/filter';
 
 export const updateOrder = payload => {
     return {
@@ -7,7 +7,7 @@ export const updateOrder = payload => {
     };
 };
 
-export const updateIsDragging = payload => ({
-    type: 'UPDATE_ISDRAGGING',
+export const setIsMoving = payload => ({
+    type: UPDATE_FILTER_ISMOVING,
     payload
 });

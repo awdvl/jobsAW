@@ -1,16 +1,14 @@
 import { connect } from 'react-redux';
-import { selectFilterOrder } from '../selectors/filter';
-// import { updateOrder } from '../actions/filter';
-import { updateOrder, updateIsDragging } from '../actions/filter';
+import { getFilterOrder } from '../reducers/filter';
+import { updateOrder, setIsMoving } from '../actions/filter';
 import filters from '../components/elements/FilterSection';
 
-// const mapStateToProps = state => ({state});
 const mapStateToProps = state => ({
-    filterOrder: selectFilterOrder (state)
+    filterOrder: getFilterOrder (state)
 });
 const mapDispatchToProps = dispatch => ({
     updateOrder: props => dispatch (updateOrder (props)),
-    setIsDragging: isDragging => dispatch (updateIsDragging (isDragging)),
+    setIsMoving: isMoving => dispatch (setIsMoving (isMoving)),
 });
 
 const enhance = connect(
@@ -19,6 +17,3 @@ const enhance = connect(
 );
 
 export default enhance (filters);
-
-// @connect(mapStateToProps, mapDispatchToProps)
-// export default filters;
