@@ -17,7 +17,6 @@ import { sortedRestByName, sortedRestByNumber } from './__testData';
 
 // const arrayEnter = (obj, key) => obj[key] || (obj[key]=[]);
 
-                                                                bug('selectors::getRichJobData', getRichJobData)
 // const selectedCities = ['M', 'S']
 // const pickSelectedCities = R.pick(selectedCities);
 
@@ -55,11 +54,11 @@ const getJobData = createSelector(
         predicateCity, 
         predicateJobType
     ) => {
-                                                                    bug('------------------------- selectors ---')
-                                                                    bug('selectors::richJobData', richJobData)
-                                                                    bug('selectedCities', selectedCities)
-                                                                    bug('selectedJobType', selectedJobType)
-                                                                    bug('selectedCompIndy', selectedCompIndy)
+                                                                    // bug('------------------------- selectors ---')
+                                                                    // bug('selectors::richJobData', richJobData)
+                                                                    // bug('selectedCities', selectedCities)
+                                                                    // bug('selectedJobType', selectedJobType)
+                                                                    // bug('selectedCompIndy', selectedCompIndy)
         if (!R.isEmpty (richJobData)) {
 
             const predicates = [
@@ -70,11 +69,11 @@ const getJobData = createSelector(
 
             // basic predicate filtering
             const multiFiltered = filterByPredicates (predicates, richJobData);
-                                                                    bug('multiFiltered', multiFiltered)
+                                                                    // bug('multiFiltered', multiFiltered)
             const sortProps = transformSortProps (filters, multiFiltered);
-                                                                    bug('sortProps', sortProps)
+                                                                    // bug('sortProps', sortProps)
             const multiSorted = multiSort (sortProps, multiFiltered);
-                                                                    bug('multiSorted', multiSorted)
+                                                                    // bug('multiSorted', multiSorted)
 
             // ===== group on first layer
             // const groupBySelectionCity = groupBySelection('city', selectedCities)
@@ -87,19 +86,19 @@ const getJobData = createSelector(
 
 
             // view-in
-            bug('============ mf')  // this is the ungrouped, unsorted list
-            multiFiltered.map(record => bug(
-                'Record  indy, type, emply', 
-                record.id, record.text.city, record.param.indy, record.type, record.param.emply, 
-                // record.toString(), JSON.stringify(record.text), JSON.stringify(record.param)
-            ))
-            bug('============')
+                    // bug('============ mf')  // this is the ungrouped, unsorted list
+                    // multiFiltered.map(record => bug(
+                    //     'Record  indy, type, emply', 
+                    //     record.id, record.text.city, record.param.indy, record.type, record.param.emply, 
+                    //     // record.toString(), JSON.stringify(record.text), JSON.stringify(record.param)
+                    // ))
+                    // bug('============')
 
-            // bug('============ multiSorted')  // this is the multi sorted
-            bug('============ multiSorted  1,2  -  3,2,1  -  9,6,5,4 ')  // this is the multi sorted
-            multiSorted.map(record => bug('Record  indy, type, emply', 
-                record.id, record.text.city, record.param.indy, record.type, record.param.emply))
-            bug('============')
+                    // // bug('============ multiSorted')  // this is the multi sorted
+                    // bug('============ multiSorted  1,2  -  3,2,1  -  9,6,5,4 ')  // this is the multi sorted
+                    // multiSorted.map(record => bug('Record  indy, type, emply', 
+                    //     record.id, record.text.city, record.param.indy, record.type, record.param.emply))
+                    // bug('============')
 
             // // a test for restSort
             // const indexAry = multiSorted.map(record => {

@@ -36,7 +36,7 @@ class JobsList extends Component {
 
     getData() {
         const { loadCtrl, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
-                                                            bug.rt('App.jsx::getData, this.props', this.props);
+                                                            // bug.rt('App.jsx::getData, this.props', this.props);
         // init load control for fetch actions - pass number of async fetch actions
         loadCtrl(4);
         // -->> these in loadCtrl instead of number?
@@ -48,8 +48,8 @@ class JobsList extends Component {
 
 
     render () {
-                                                            bug('App.jsx -> this.props', this.props)
-                                                            bug.rt('rt: App.jsx -> this.props', this.props)
+                                                            // bug('App.jsx -> this.props', this.props)
+                                                            // bug.rt('rt: App.jsx -> this.props', this.props)
         const { state, loc } = this.props;
 
         return (

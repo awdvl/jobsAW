@@ -10,18 +10,26 @@ import bug from '../../../_libs/bug';
 
 
 const FComp = styled.div`
+    width: 100px;
     background: snow;
+    border: 1px dotted firebrick;
     padding: .5em;
+    margin: 0 .5em;
+    text-align: center;
     /* line-height: .75em; */
+
+    &:hover {
+        background: #d9e4e4;
+    }
 `;
 
 const FCompButton = SoftButton.extend`
     padding: .25em;
     border-radius: 3px;
 
-    &:hover {
+    /* &:hover {
         background: #d9e4e4;
-    }
+    } */
     /* &:focus {
         border-color: red;
     } */
@@ -56,6 +64,7 @@ const filterSource = {
     },
 
     endDrag (props, monitor) {
+                                                                    // bug('*** endDrag item-props', monitor.getItem())
         const { id: droppedId, originalIndex } = monitor.getItem();
         const didDrop = monitor.didDrop ();
 
@@ -75,6 +84,7 @@ const filterTarget = {
     },
 
     hover (props, monitor) {
+                                                                // bug('*** hover item-props', monitor.getItem(), props)
         const { id: draggedId } = monitor.getItem ();
         const { id: overId } = props;
 
@@ -115,7 +125,7 @@ export default class FilterElem extends Component {
             connectDropTarget,
         } = this.props;
 
-        const opacity = isDragging ? .5 : 1;
+        const opacity = isDragging ? 0 : 1;
 
         return connectDragSource(
             connectDropTarget(

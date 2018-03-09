@@ -81,7 +81,7 @@ const transformSortProps = (filterState, filteredRecords) => {
         const sortSamplesFor = R.pipe (multiSorted, mapAsFilterValue);
         const sortedSamples = sortSamplesFor (samples.list);
         
-                                                                        bug('** sortedSamples', sortedSamples)
+                                                                        // bug('** sortedSamples', sortedSamples)
         return sortedSamples;
 
     };
@@ -93,10 +93,10 @@ const transformSortProps = (filterState, filteredRecords) => {
         sortOrder = sortOrder || [filterName];
 
         let preparedProp;
-                                                bug('getSortedFilterProps::filterName, sortOrder', filterName, sortOrder)
+                                                // bug('getSortedFilterProps::filterName, sortOrder', filterName, sortOrder)
         if (sortOrder[0] === 'text') {
             preparedProp = ['text', getPropName (filterName)];
-                                                    bug('text filter.sortOrder preparedProp ', preparedProp)
+                                                    // bug('text filter.sortOrder preparedProp ', preparedProp)
         // e.g. 'pop'
         } else if (!R.isEmpty(sortOrder) && sortOrder[0] !== 'DSC') {
             preparedProp = getPropNameMapped (sortOrder[0]);
@@ -104,7 +104,7 @@ const transformSortProps = (filterState, filteredRecords) => {
         // this only fallback                                            
         } else {
             preparedProp = getPropNameMapped (filterName);
-                                                    bug('with filter.sortOrder preparedProp ', preparedProp)
+                                                    // bug('with filter.sortOrder preparedProp ', preparedProp)
         }
 
         if (R.contains ('DSC', sortOrder)) {
@@ -139,11 +139,11 @@ const transformSortProps = (filterState, filteredRecords) => {
     const filterProps = filterState.__order.map((filterName) => {
         const filter = filterState[filterName];
         let preparedProp = [];
-                                    bug('>>> transformSortProps::filterProps filterName', filterName, filter);
-                                                bug('>> this', filter.sel, filter.sortByOrder)
+                                    // bug('>>> transformSortProps::filterProps filterName', filterName, filter);
+                                    //             bug('>> this', filter.sel, filter.sortByOrder)
         if (filter.sel && !filter.sortByOrder) {
             let selIndex = makeIndex (filter.sel);
-                                                                                bug('** selIndex A', selIndex)
+                                                                                // bug('** selIndex A', selIndex)
             preparedProp = [ getPropNameMapped (filterName) ];
 
             if (filter.sortRest) {
@@ -159,22 +159,22 @@ const transformSortProps = (filterState, filteredRecords) => {
                     getSortedFilterProps (filterName), 
                     getSamplesFromRest (filteredRecords)
                 );
-                                                                        bug('** sortedSamples', sortedSamples)
+                                                                        // bug('** sortedSamples', sortedSamples)
                 selIndex = {
                     ...selIndex, 
                     ...makeIndex (sortedSamples, filter.sel.length)
                 };
                 
             }
-                                                                        bug('** selIndexTot', selIndex)
+                                                                        // bug('** selIndexTot', selIndex)
             preparedProp.push(selIndex);
 
 
         } else if (!R.isEmpty(filter.sortOrder) && filter.sortByOrder) {
-                                                        bug('sortByOrder -> filter.sortOrder', filter.sortOrder)
+                                                        // bug('sortByOrder -> filter.sortOrder', filter.sortOrder)
             preparedProp = getSortedFilterProps (filterName, filter.sortOrder);
         }
-                                                                            bug('>>> preparedProp', preparedProp)
+                                                                            // bug('>>> preparedProp', preparedProp)
         return preparedProp;
 
 

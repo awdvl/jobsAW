@@ -9,7 +9,7 @@ import RListItems from './RListItems';
 
 // export default RList;
 export default  (props) => {
-                                                                        bug('RList.jsx props', props)
+                                                                        // bug('RList.jsx props', props)
     // bug('props.jobs', props.jobs, props.cities, props.allLoaded)
 
     const heading = 'Front-end Engineer';
@@ -63,7 +63,7 @@ export default  (props) => {
             </RListHeader>   
             <RListItemsWrapper className='listElemW'>
                 {/* {bug('inside props.jobs', props.get('jobs'))} */}
-                {bug('inside props.state.jobs', jobs)}
+                {/* {bug('inside props.state.jobs', jobs)} */}
                 {jobs.map((job) => (
                     <RListItems key={job.id}
                         job={job}

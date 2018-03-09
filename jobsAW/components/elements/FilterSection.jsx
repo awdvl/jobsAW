@@ -17,6 +17,7 @@ import bug from '../../../_libs/bug';
 const Wrapper = styled.div`
     font-size: 1.5em;
     color: gray;
+    background: seagreen;
     padding: 1em 2.5em;
     width: 100%;
     position: fixed;
@@ -71,6 +72,7 @@ const findFilterIndex = (filterOrder) => (filter) => filterOrder.findIndex(value
 // const moveFilter = (filterOrder, onUpdateOrder) => (filter, atIndex, isDragging = false) => {
 const moveFilter = (filterOrder, onUpdateOrder, setIsDragging) => (filter, atIndex, isDragging = false) => {
         const index = findFilterIndex(filterOrder)(filter);
+                                    bug('*** filterOrder, filter, index, atIndex', filterOrder, filter, index, atIndex)
 
         onUpdateOrder({
             filter,
@@ -103,18 +105,19 @@ export default class Filters extends Component {
         connectDropTarget: PropTypes.func.isRequired,
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        bug('***', this.props, nextProps, nextState)
-        const notUpdated = is (this.props.filterOrder, nextProps.filterOrder)
+    // shouldComponentUpdate(nextProps, nextState) {
+    //                                                             // bug('***', this.props, nextProps, nextState)
+    //     const notUpdated = is (this.props.filterOrder, nextProps.filterOrder)
 
-        bug('*** filterOrder updated', this.props.filterOrder.get(0), nextProps.filterOrder.get(0), !notUpdated)
+    //     // bug('*** filterOrder updated', this.props.filterOrder.get(0), nextProps.filterOrder.get(0), !notUpdated)
+    //     bug('*** filterOrder updated', this.props.filterOrder.toJSON(), nextProps.filterOrder.toJSON(), !notUpdated)
 
-        if (!notUpdated) {
-            bug('*** UPDATE in FILTER');
-        }
+    //     if (!notUpdated) {
+    //         bug('*** UPDATE in FILTER');
+    //     }
 
-        return true;
-    }
+    //     return true;
+    // }
 
     render() {
                                                                     // bug('*** Filters this.props', this.props)
