@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ItemTypes } from '../../constants/filter';
-import { DropTarget, DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import ItemTypes from '../../constants/itemTypes';
+import { DropTarget } from 'react-dnd';
+// import { DropTarget, DragDropContext } from 'react-dnd';
+// import HTML5Backend from 'react-dnd-html5-backend';
 
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
-
-// import { is } from 'immutable';
-// import R from 'ramda';
 
 import FElem from './FElem';
 import FModal from './FModal';
@@ -95,7 +93,7 @@ const filterTarget = {
 
 
 
-@DragDropContext(HTML5Backend)
+// @DragDropContext(HTML5Backend)
 @DropTarget(ItemTypes.FILTER, filterTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
 }))
@@ -152,9 +150,9 @@ export default class Filters extends Component {
                 </Wrapper>
                 <FModal
                     modalIsOpen={modalIsOpen}
-                >
+                    closeModal={() => setModalIsOpen(false)}
+                />
 
-                </FModal>
             </div>
         );
     }

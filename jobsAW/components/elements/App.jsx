@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import bug from '../../../_libs/bug';
 
 import '../../styles/base.css';
@@ -28,7 +30,7 @@ const Site = styled.div`
     background: rgba(255, 255, 255, .1);
 `;
 
-
+@DragDropContext(HTML5Backend)
 class JobsList extends Component {
     componentDidMount() {
         this.getData();

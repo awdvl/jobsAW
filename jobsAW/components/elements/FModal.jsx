@@ -3,6 +3,8 @@ import ReactModal from 'react-modal';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
+import FModalSelected from './FModalSelected';
+
 import bug from '../../../_libs/bug';
 
 
@@ -13,8 +15,21 @@ import bug from '../../../_libs/bug';
 
 const FMHeader = styled.div`
     width: 800px;
-    height: 80px;
-    background: blanchedalmond;
+    /* height: 80px; */
+    background: white;
+    border-bottom: 1px solid #7f8c89;
+    padding: 0 .5em;
+
+    display: flex;
+`;
+
+// color as  theme
+const FMHTitle = styled.div`
+    color: #1f2021;  
+    font-size: 1.5em;
+    padding: .5em 1.5em;
+
+    flex: 1;
 `;
 
 const ModalButton = SoftButton.extend`
@@ -24,31 +39,51 @@ const ModalButton = SoftButton.extend`
 `;
 
 const CloseModalButton = ModalButton.extend`
-    /* &:content: &times; */
+
+    color: #9dd0c6;
+
+    /* &:after {
+        content: '\00D7';
+        font-size: 3em;
+    } */
+    &:after {
+        content: '\\2713';
+        font-size: 2em;
+    }
 
     &:hover {
-        color: red;
+        color: #f35d5d;
     }
 `;
 
+
 const ReactModalAdapter = ({ className, modalClassName, ...props}) => {
     bug('REactModalAdapter props', props);
+
+    const modalTitle = 'City';  // from props
 
     return (
         <ReactModal
             className={modalClassName}
             portalClassName={className}
             isOpen={props.modalIsOpen}
+            onRequestClose={props.closeModal}
+            shouldCloseOnOverlayClick={true}
             {...props}
             // onAfterOpen={this.afterOpenModal}
-            // onRequestClose={this.closeModal}
             // style={customStyles}
             // contentLabel="Example Modal"            
         >
             <FMHeader>
-                City
-                <CloseModalButton />
+                <FMHTitle>
+                    {modalTitle}
+                </FMHTitle>
+                
+                <CloseModalButton onClick={props.closeModal} />
             </FMHeader>
+
+            <FModalSelected />
+
         </ReactModal>
     );
 };
@@ -58,7 +93,8 @@ const StyledModal = styled(ReactModalAdapter).attrs({
     modalClassName: 'Modal',
 })`
     .Modal {
-        width: 820px;
+        /* width: 820px; */
+        width: 800px;
         background: seagreen;
         position: absolute;
         top: 0px;
@@ -66,6 +102,7 @@ const StyledModal = styled(ReactModalAdapter).attrs({
     }
     .Overlay {
         background: silver;
+        opacity: .92;
         position: absolute;
         top: 130px;
         bottom: 0;
