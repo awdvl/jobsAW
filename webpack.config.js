@@ -35,8 +35,8 @@ const commonConfig = (env) => {
 		},  // end of merge first element
 		
 		parts.indexTemplate({
-			title: 'Test Environment',
-			appMountId: 'app'
+			title: 'AW React Showcase',
+			appMountId: 'root'
 		}),
 
 		parts.loadJSX({ include: PATHS.app, exclude: /(node_modules)/ }),  // exclude is new

@@ -44,10 +44,11 @@ const clickFilterButton = (e) => {
 };
 
 
-const makeFilterButton = (text) => {
+const makeFilterButton = (text, setModalIsOpen) => {
     return (
         <FCompButton
-            onClick={clickFilterButton}
+            // onClick={clickFilterButton}
+            onClick={() => setModalIsOpen(true)}
         >
             {text}
         </FCompButton>
@@ -112,7 +113,7 @@ export default class FilterElem extends Component {
         text: PropTypes.string.isRequired,
         moveFilter: PropTypes.func.isRequired,
         findFilter: PropTypes.func.isRequired,
-        // updateOrder: PropTypes.func.isRequired
+        setModalIsOpen: PropTypes.func.isRequired,
     };
 
     render() {
@@ -121,6 +122,7 @@ export default class FilterElem extends Component {
             isDragging,
             connectDragSource, 
             connectDropTarget,
+            setModalIsOpen,
         } = this.props;
 
         const opacity = isDragging ? 0 : 1;
@@ -135,7 +137,7 @@ export default class FilterElem extends Component {
                             opacity
                         }}
                     >
-                        {makeFilterButton(text)}
+                        {makeFilterButton(text, setModalIsOpen)}
                     </FComp>
                 </div>
             )

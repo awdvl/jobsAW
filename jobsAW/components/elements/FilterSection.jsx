@@ -7,12 +7,14 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
-import { is } from 'immutable';
+// import { is } from 'immutable';
 // import R from 'ramda';
 
 import FElem from './FElem';
+import FModal from './FModal';
 
 import bug from '../../../_libs/bug';
+
 
 const Wrapper = styled.div`
     font-size: 1.5em;
@@ -43,6 +45,7 @@ const FilterElems = (
     moveFilter,
     findFilter,
     setIsMoving,
+    setModalIsOpen,
 
 ) => {
     if (loc) {
@@ -56,6 +59,7 @@ const FilterElems = (
                     moveFilter={moveFilter}
                     findFilter={findFilter}
                     setIsMoving={setIsMoving}
+                    setModalIsOpen={setModalIsOpen}
                     // {...props}
                 />
             );
@@ -102,6 +106,7 @@ export default class Filters extends Component {
         setIsMoving: PropTypes.func.isRequired,
         filterOrder: PropTypes.object.isRequired,
         loc: PropTypes.object.isRequired,
+        setModalIsOpen: PropTypes.func.isRequired,
     }
 
     // shouldComponentUpdate(nextProps, nextState) {
@@ -120,7 +125,12 @@ export default class Filters extends Component {
 
     render() {
                                                                     // bug('*** Filters this.props', this.props)
-        const { connectDropTarget, filterOrder, loc, updateOrder, setIsMoving } = this.props;
+        const { connectDropTarget, filterOrder, loc, 
+            updateOrder, 
+            setIsMoving, 
+            modalIsOpen,
+            setModalIsOpen } = this.props;
+                                                                    bug('*** Filters modalIsOpen', modalIsOpen)
 
         return connectDropTarget(
             // div to transform into native componenet
@@ -136,9 +146,15 @@ export default class Filters extends Component {
                         moveFilter({filterOrder, updateOrder, setIsMoving}),
                         findFilterIndex(filterOrder),
                         setIsMoving,
+                        setModalIsOpen,
                     )}
 
                 </Wrapper>
+                <FModal
+                    modalIsOpen={modalIsOpen}
+                >
+
+                </FModal>
             </div>
         );
     }
