@@ -9,7 +9,8 @@ import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
 import FElem from './FElem';
-import FModal from './FModal';
+import FModal from '../../containers/filterModal';
+// import FModal from './FModal';
 
 import bug from '../../../_libs/bug';
 
@@ -36,16 +37,6 @@ const Header = styled.div`
     /* float: left; */
 `;
 
-// ->> this better as props?? in {}
-// const FilterElems = ({
-//     filterOrder,
-//     locFilter,
-//     moveFilter,
-//     findFilter,
-//     setIsMoving,
-//     setModalIsOpen,
-
-// }) => {
 const FilterElems = (props) => {
     if (props.locFilter) {
         return props.filterOrder.map((elem) => {
@@ -55,10 +46,6 @@ const FilterElems = (props) => {
                     key={elem}
                     id={elem}
                     text={props.locFilter.get(elem)}
-                    // moveFilter={moveFilter}
-                    // findFilter={findFilter}
-                    // setIsMoving={setIsMoving}
-                    // setModalIsOpen={setModalIsOpen}
                     {...props}
                 />
             );
@@ -107,7 +94,6 @@ export default class Filters extends Component {
         setIsMoving: PropTypes.func.isRequired,
         modalIsOpen: PropTypes.any.isRequired,
         modalType: PropTypes.string.isRequired,
-        setModalIsOpen: PropTypes.func.isRequired,
         setModalType: PropTypes.func.isRequired,
     }
 
@@ -135,7 +121,6 @@ export default class Filters extends Component {
             setIsMoving, 
             modalIsOpen,
             modalType,
-            setModalIsOpen,
             setModalType 
         } = this.props;
                                                                     bug('*** Filters modalIsOpen', modalIsOpen)
@@ -148,14 +133,6 @@ export default class Filters extends Component {
                         Filter
                     </Header>
 
-                    {/* {FilterElems(
-                        filterOrder, 
-                        loc.filter,
-                        moveFilterFor({filterOrder, updateOrder, setIsMoving}),
-                        findFilterFor(filterOrder),
-                        setIsMoving,
-                        setModalIsOpen,
-                    )} */}
                     {FilterElems({
                         // filterOrder, 
                         locFilter: loc.filter,
@@ -167,10 +144,8 @@ export default class Filters extends Component {
                     })}
 
                 </Wrapper>
-                <FModal
-                    modalIsOpen={modalIsOpen}
-                    closeModal={() => setModalIsOpen(false)}
-                />
+
+                <FModal/>
 
             </div>
         );

@@ -9,3 +9,6 @@ export const setModalType = typeName => ({
     type: SET_MODAL_TYPE,
     payload: typeName
 });
+
+
+export const closeModal = () => setModalIsOpen(false);

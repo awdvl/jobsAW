@@ -13,6 +13,7 @@ const language = (state='de', action) => {
     }
 };
 
+// export const getLanguage = (state) => state.settings.language;
 
 export const settings = combineReducers({
     language,

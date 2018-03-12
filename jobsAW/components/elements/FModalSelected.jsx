@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
+import PropTypes from 'prop-types';
 import ItemTypes from '../../constants/itemTypes';
 import styled from 'styled-components';
+
+import bug from '../../../_libs/bug';
 
 const Section = styled.div`
     background: aliceblue;
@@ -21,8 +24,16 @@ const filterTarget = {
     connectDropTarget: connect.dropTarget(),
 }))
 export default class FModalSelected extends Component {
-    
+    static propTypes = {
+        connectDropTarget: PropTypes.func.isRequired,
+        modalType: PropTypes.string.isRequired
+    }
+
     render() {
+                                                                        bug('FModalSelected this.props', this.props)
+
+        const { modalType } = this.props;
+
         return (
             <Section>
 

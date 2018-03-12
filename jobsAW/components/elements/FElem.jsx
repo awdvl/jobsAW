@@ -114,7 +114,6 @@ export default class FilterElem extends Component {
         text: PropTypes.string.isRequired,
         moveFilter: PropTypes.func.isRequired,
         findFilter: PropTypes.func.isRequired,
-        setModalIsOpen: PropTypes.func.isRequired,
         setModalType: PropTypes.func.isRequired,        
 
     };
@@ -126,10 +125,9 @@ export default class FilterElem extends Component {
             isDragging,
             connectDragSource, 
             connectDropTarget,
-            setModalIsOpen,
             setModalType
         } = this.props;
-
+                                                                            // bug('FElem.jsx this.props', this.props)
         const opacity = isDragging ? 0 : 1;
 
         return compose (connectDragSource, connectDropTarget)(

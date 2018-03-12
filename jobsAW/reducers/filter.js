@@ -182,4 +182,8 @@ export const filter = combineReducers({
 export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
 export const getFilterOrder = (state) => state.ui.filter.__order;
 
-export const getFilterCategory = (state) => (filter, type) => state.ui.filter[filter].get(type);
+export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get(zone);
+// export const getFilterZoneFor = (state) => (filter, zone) => {
+//     console.log('filter, zone', filter, zone, state.ui.filter)
+//     // state.ui.filter[filter].get(zone);
+// }

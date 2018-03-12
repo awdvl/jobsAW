@@ -57,41 +57,163 @@ const CloseModalButton = ModalButton.extend`
 `;
 
 
-const ReactModalAdapter = ({ className, modalClassName, ...props}) => {
-    bug('REactModalAdapter props', props);
+// const ReactModalAdapter = (props) => {
+// // const ReactModalAdapter = ({
+// //     className, 
+// //     modalClassName, 
 
-    const modalTitle = 'City';  // from props
+// //     modalIsOpen,
+// //     modalType,
+// //     getFilterZone,
+// //     // setModalIsOpen,
+// //     closeModal,
+// //     ...props}
+// // ) => {
 
-    return (
-        <ReactModal
-            className={modalClassName}
-            portalClassName={className}
-            isOpen={props.modalIsOpen}
-            onRequestClose={props.closeModal}
-            shouldCloseOnOverlayClick={true}
-            {...props}
+//     const {
+//     className, 
+//     modalClassName, 
+//         overlayClassName,
+
+//     modalIsOpen,
+//     modalType,
+//     getFilterZone,
+//     // setModalIsOpen,
+//     closeModal,
+//     } = props;
+//                                                                         bug('REactModalAdapter props', props);
+//                                                                         bug('REactModalAdapter ...props', {...props});
+
+//     const modalTitle = 'City';  // from props
+//     const filterZoneValues = getFilterZone(modalType, 'sel');
+//                                                                             bug('filterZoneValues', filterZoneValues)
+//     // const closeModal = () => setModalIsOpen(false);
+
+//     return (
+//         <ReactModal
+//             className={modalClassName}
+//             portalClassName={className}
+//             isOpen={modalIsOpen}
+//             onRequestClose={closeModal}
+//             shouldCloseOnOverlayClick={true}
+//             overlayClassName={overlayClassName}
+//             // modalClassName={modalClassName}
+//             // {...props}
+//             // {{...props}}
+//             // onAfterOpen={this.afterOpenModal}
+//             // style={customStyles}
+//             // contentLabel="Example Modal"            
+//         >
+//             <FMHeader>
+//                 <FMHTitle>
+//                     {modalTitle}
+//                 </FMHTitle>
+
+//                 <CloseModalButton onClick={closeModal} />
+//             </FMHeader>
+
+//             <FModalSelected 
+//                 modalType={modalType}
+//             />
+
+//         </ReactModal>
+//     );
+// };
+
+
+class ReactModalAdapter extends Component {
+
+    shouldComponentUpdate(nextProps) {
+        bug('ReactModalAdapter nextProps', nextProps, this.props)
+        // do not update if both flags are false
+        return nextProps.modalIsOpen || this.props.modalIsOpen;
+    }
+
+    render() {
+
+        const {
+            className,
+            modalClassName,
+            overlayClassName,
+
+            modalIsOpen,
+            modalType,
+            getFilterZone,
+            loc,
+            // setModalIsOpen,
+            closeModal,
+            // ...props 
+        } = this.props;
+                                                                bug('REactModalAdapter props', this.props);
+
+
+
+        const reactModalContent = ({
+            modalType,
+            closeModal,
+            getFilterZone,
+            loc,
+        }) => {
+            if (modalType !== '') {
+                const filterZoneValues = getFilterZone(modalType, 'sel');
+                const modalTitle = loc.filter.get(modalType);  // from props
+                
+                                                bug('*** reactModalContent filterZoneValues, loc', filterZoneValues, loc)
+                    
+                return (
+                    <div>
+                        <FMHeader>
+                            <FMHTitle>
+                                {modalTitle}
+                            </FMHTitle>
+
+                            <CloseModalButton onClick={closeModal} />
+                        </FMHeader>
+
+                        <FModalSelected
+                            modalType={modalType}
+                        />
+
+                    </div>
+                );
+            }
+
+            return;
+
+        };
+
+
+        return (
+            <ReactModal
+                className={modalClassName}
+                portalClassName={className}
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                shouldCloseOnOverlayClick={true}
+                overlayClassName={overlayClassName}
+            // modalClassName={modalClassName}
             // onAfterOpen={this.afterOpenModal}
             // style={customStyles}
             // contentLabel="Example Modal"            
-        >
-            <FMHeader>
-                <FMHTitle>
-                    {modalTitle}
-                </FMHTitle>
-                
-                <CloseModalButton onClick={props.closeModal} />
-            </FMHeader>
+            >
+                {reactModalContent({
+                    modalType,
+                    closeModal,
+                    getFilterZone,
+                    loc,
+                })}
 
-            <FModalSelected />
+            </ReactModal>
+        )
+    }
+}
 
-        </ReactModal>
-    );
-};
+
 
 const StyledModal = styled(ReactModalAdapter).attrs({
     overlayClassName: 'Overlay',
     modalClassName: 'Modal',
-})`
+}) `
     .Modal {
         /* width: 820px; */
         width: 800px;
