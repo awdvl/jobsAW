@@ -16,6 +16,15 @@ describe ('ui modal actions', () => {
                 payload: false
             });
         });
+    }); 
+
+    describe ('set type', () => {
+        it ('should pass payload city', () => {
+            expect (actions.setModalType ('city')).toEqual({
+                type: types.SET_MODAL_TYPE,
+                payload: 'city'
+            })
+        })
     })
     
 });

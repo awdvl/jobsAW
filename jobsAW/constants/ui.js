@@ -1,1 +1,2 @@
 export const SET_MODAL_ISOPEN = 'SET_MODAL_ISOPEN';
+export const SET_MODAL_TYPE = 'SET_MODAL_TYPE';

@@ -181,3 +181,5 @@ export const filter = combineReducers({
 // accessor functions
 export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
 export const getFilterOrder = (state) => state.ui.filter.__order;
+
+export const getFilterCategory = (state) => (filter, type) => state.ui.filter[filter].get(type);

@@ -37,28 +37,29 @@ const Header = styled.div`
 `;
 
 // ->> this better as props?? in {}
-const FilterElems = (
-    filterOrder,
-    loc,
-    moveFilter,
-    findFilter,
-    setIsMoving,
-    setModalIsOpen,
+// const FilterElems = ({
+//     filterOrder,
+//     locFilter,
+//     moveFilter,
+//     findFilter,
+//     setIsMoving,
+//     setModalIsOpen,
 
-) => {
-    if (loc) {
-        return filterOrder.map((elem) => {
+// }) => {
+const FilterElems = (props) => {
+    if (props.locFilter) {
+        return props.filterOrder.map((elem) => {
 
             return (
                 <FElem 
                     key={elem}
                     id={elem}
-                    text={loc.get(elem)}
-                    moveFilter={moveFilter}
-                    findFilter={findFilter}
-                    setIsMoving={setIsMoving}
-                    setModalIsOpen={setModalIsOpen}
-                    // {...props}
+                    text={props.locFilter.get(elem)}
+                    // moveFilter={moveFilter}
+                    // findFilter={findFilter}
+                    // setIsMoving={setIsMoving}
+                    // setModalIsOpen={setModalIsOpen}
+                    {...props}
                 />
             );
         });
@@ -69,11 +70,11 @@ const FilterElems = (
 
 
 
-// const findFilterIndex = R.curry ((filterOrder) => (filter) => filterOrder.findIndex(value => value === filter));
-const findFilterIndex = (filterOrder) => (filter) => filterOrder.findIndex(value => value === filter);
+// const findFilterFor = R.curry ((filterOrder) => (filter) => filterOrder.findIndex(value => value === filter));
+const findFilterFor = (filterOrder) => (filter) => filterOrder.findIndex(value => value === filter);
 
-const moveFilter = ({filterOrder, updateOrder, setIsMoving}) => (filter, atIndex) => {
-    const index = findFilterIndex(filterOrder)(filter);
+const moveFilterFor = ({filterOrder, updateOrder, setIsMoving}) => (filter, atIndex) => {
+    const index = findFilterFor(filterOrder)(filter);
                             // bug('*** filterOrder, filter, index, atIndex', filterOrder, filter, index, atIndex)
     updateOrder({
         filter,
@@ -100,11 +101,14 @@ const filterTarget = {
 export default class Filters extends Component {
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
-        updateOrder: PropTypes.func.isRequired,
-        setIsMoving: PropTypes.func.isRequired,
         filterOrder: PropTypes.object.isRequired,
         loc: PropTypes.object.isRequired,
+        updateOrder: PropTypes.func.isRequired,
+        setIsMoving: PropTypes.func.isRequired,
+        modalIsOpen: PropTypes.any.isRequired,
+        modalType: PropTypes.string.isRequired,
         setModalIsOpen: PropTypes.func.isRequired,
+        setModalType: PropTypes.func.isRequired,
     }
 
     // shouldComponentUpdate(nextProps, nextState) {
@@ -122,12 +126,18 @@ export default class Filters extends Component {
     // }
 
     render() {
-                                                                    // bug('*** Filters this.props', this.props)
-        const { connectDropTarget, filterOrder, loc, 
+                                                                    bug('*** Filters this.props', this.props)
+        const { 
+            connectDropTarget, 
+            filterOrder, 
+            loc, 
             updateOrder, 
             setIsMoving, 
             modalIsOpen,
-            setModalIsOpen } = this.props;
+            modalType,
+            setModalIsOpen,
+            setModalType 
+        } = this.props;
                                                                     bug('*** Filters modalIsOpen', modalIsOpen)
 
         return connectDropTarget(
@@ -138,14 +148,23 @@ export default class Filters extends Component {
                         Filter
                     </Header>
 
-                    {FilterElems(
+                    {/* {FilterElems(
                         filterOrder, 
                         loc.filter,
-                        moveFilter({filterOrder, updateOrder, setIsMoving}),
-                        findFilterIndex(filterOrder),
+                        moveFilterFor({filterOrder, updateOrder, setIsMoving}),
+                        findFilterFor(filterOrder),
                         setIsMoving,
                         setModalIsOpen,
-                    )}
+                    )} */}
+                    {FilterElems({
+                        // filterOrder, 
+                        locFilter: loc.filter,
+                        moveFilter: moveFilterFor({filterOrder, updateOrder, setIsMoving}),
+                        findFilter: findFilterFor(filterOrder),
+                        // setIsMoving,
+                        // setModalIsOpen,
+                        ...this.props
+                    })}
 
                 </Wrapper>
                 <FModal

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ItemTypes from '../../constants/itemTypes';
 import { DragSource, DropTarget } from 'react-dnd';
+import { compose } from 'redux';
 
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
@@ -39,16 +40,16 @@ const dndStyle = {
     cursor: 'move'
 };
 
-const clickFilterButton = (e) => {
-    bug('button clicked!')
-};
+// const clickFilterButton = (e) => {
+//     bug('button clicked!')
+// };
 
 
-const makeFilterButton = (text, setModalIsOpen) => {
+
+const makeFilterButton = ({text, setModalParams}) => {
     return (
         <FCompButton
-            // onClick={clickFilterButton}
-            onClick={() => setModalIsOpen(true)}
+            onClick={setModalParams}
         >
             {text}
         </FCompButton>
@@ -109,38 +110,45 @@ export default class FilterElem extends Component {
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired,
         isDragging: PropTypes.bool.isRequired,
-        id: PropTypes.any.isRequired,
+        id: PropTypes.string.isRequired,
         text: PropTypes.string.isRequired,
         moveFilter: PropTypes.func.isRequired,
         findFilter: PropTypes.func.isRequired,
         setModalIsOpen: PropTypes.func.isRequired,
+        setModalType: PropTypes.func.isRequired,        
+
     };
 
     render() {
         const { 
             text, 
+            id,
             isDragging,
             connectDragSource, 
             connectDropTarget,
             setModalIsOpen,
+            setModalType
         } = this.props;
 
         const opacity = isDragging ? 0 : 1;
 
-        return connectDragSource(
-            connectDropTarget(
-                // div necessary, as "Only native element nodes can now be passed to React DnD connectors"
-                <div>
-                    <FComp 
-                        style={{
-                            ...dndStyle,
-                            opacity
-                        }}
-                    >
-                        {makeFilterButton(text, setModalIsOpen)}
-                    </FComp>
-                </div>
-            )
+        return compose (connectDragSource, connectDropTarget)(
+            // div necessary, as "Only native element nodes can now be passed to React DnD connectors"
+            <div>
+                <FComp 
+                    style={{
+                        ...dndStyle,
+                        opacity
+                    }}
+                >
+                    {makeFilterButton ({
+                        text, 
+                        setModalParams: () => {
+                            setModalType(id)
+                        }
+                    })}
+                </FComp>
+            </div>
         );
 
     }
