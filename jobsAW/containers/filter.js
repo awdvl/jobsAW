@@ -12,7 +12,9 @@ const mapStateToProps = state => ({
     modalType: getModalType (state),
 });
 const mapDispatchToProps = dispatch => ({
-    updateOrder: props => dispatch (updateOrder (props)),
+    // updateOrder: props => dispatch (updateOrder (props)),
+    // updateOrder: (filter, props) => dispatch (updateOrder (filter, props)),
+    updateOrder: (...props) => dispatch (updateOrder (...props)),
     setIsMoving: isMoving => dispatch (setIsMoving (isMoving)),
     // setModalIsOpen: isOpen => dispatch (setModalIsOpen (isOpen)),
     setModalType: type => dispatch (setModalType (type)),

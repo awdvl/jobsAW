@@ -85,8 +85,8 @@ const CloseModalButton = ModalButton.extend`
 //                                                                         bug('REactModalAdapter ...props', {...props});
 
 //     const modalTitle = 'City';  // from props
-//     const filterZoneValues = getFilterZone(modalType, 'sel');
-//                                                                             bug('filterZoneValues', filterZoneValues)
+//     const zoneFilterOrder = getFilterZone(modalType, 'sel');
+//                                                                             bug('zoneFilterOrder', zoneFilterOrder)
 //     // const closeModal = () => setModalIsOpen(false);
 
 //     return (
@@ -155,10 +155,10 @@ class ReactModalAdapter extends Component {
             loc,
         }) => {
             if (modalType !== '') {
-                const filterZoneValues = getFilterZone(modalType, 'sel');
+                const zoneFilterOrder = getFilterZone(modalType, 'sel');
                 const modalTitle = loc.filter.get(modalType);  // from props
                 
-                                                bug('*** reactModalContent filterZoneValues, loc', filterZoneValues, loc)
+                                                bug('*** reactModalContent zoneFilterOrder, loc', zoneFilterOrder, loc)
                     
                 return (
                     <div>
@@ -172,6 +172,9 @@ class ReactModalAdapter extends Component {
 
                         <FModalSelected
                             modalType={modalType}
+                            zoneFilterOrder={zoneFilterOrder}
+                            {...this.props}
+
                         />
 
                     </div>

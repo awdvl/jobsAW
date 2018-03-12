@@ -74,6 +74,7 @@
     "last 2 versions"
   ],
   "dependencies": {
+    "chalk": "^2.3.2",
     "d3": "^4.12.2",
     "es6-promise": "^4.2.2",
     "immutable": "^3.8.2",
@@ -90,6 +91,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
+    "redux-immutable": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",

@@ -7,6 +7,7 @@ export default (language, data) => {
                                                                 // bug('loc', loc)
                                                                 // bug('loc.filter', loc.get('filter'))
     return {
-        filter: loc.get('filter')
+        filter: loc.get('filter'),
+        city: loc.get('city')
     };
 };

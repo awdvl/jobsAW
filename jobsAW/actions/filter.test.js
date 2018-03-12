@@ -3,17 +3,21 @@ import * as types from '../constants/filter';
 
 describe ('filter actions', () => {
     it ('should update the filter order', () => {
+        const filter = 'city';
+
         const payload = {
-            filter: 'city',
             index: 0,
             atIndex: 1
         };
 
         const expectedAction = {
             type: types.UPDATE_FILTER_ORDER,
-            payload: payload
+            payload: {
+                filter,
+                ...payload
+            }            
         };
 
-        expect(actions.updateOrder(payload)).toEqual(expectedAction);
+        expect(actions.updateOrder(filter, payload)).toEqual(expectedAction);
     });
 });

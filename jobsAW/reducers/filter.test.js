@@ -25,22 +25,22 @@ describe ('filter reducer', () => {
             expect (reducer.__order (undefined, {})).toEqual (initialState);
         });
 
-        describe ('update order', () => {
-            it ('should swap city backward', () => {
-                expect (reducer.__order (initialState, {
-                    type: types.UPDATE_FILTER_ORDER,
-                    payload: payload_swapCity
-                })).toEqual (state_citySwapped)
-            })
+        // describe ('update order', () => {
+        //     it ('should swap city backward', () => {
+        //         expect (reducer.__order (initialState, {
+        //             type: types.UPDATE_FILTER_ORDER,
+        //             payload: payload_swapCity
+        //         })).toEqual (state_citySwapped)
+        //     })
     
-            it ('should swap jobType forward', () => {
-                expect (reducer.__order (state_citySwapped, {
-                    type: types.UPDATE_FILTER_ORDER,
-                    payload: payload_swapJobType
-                })).toEqual (state_jobTypeSwapped)
-            });
+        //     it ('should swap jobType forward', () => {
+        //         expect (reducer.__order (state_citySwapped, {
+        //             type: types.UPDATE_FILTER_ORDER,
+        //             payload: payload_swapJobType
+        //         })).toEqual (state_jobTypeSwapped)
+        //     });
     
-        });
+        // });
 
 
     });

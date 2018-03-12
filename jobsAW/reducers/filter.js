@@ -5,7 +5,10 @@ import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmply from '../records/FilterCompEmply';
 
-import { UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING } from '../constants/filter';
+import { 
+    UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
+    UPDATE_CITY_ORDER
+} from '../constants/filter';
 
 
 // const initStateOrder = List(['city', 'compIndy']);
@@ -101,6 +104,12 @@ const initStateCity = new FilterCity({
 
 const city = (state=initStateCity, action) => {
     switch (action.type) {
+        case UPDATE_CITY_ORDER:
+            // console.log('## action.payload', action.payload)
+            // console.log('## reducer',
+            //     state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter))
+            return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
+
         default:
             return state;
     }

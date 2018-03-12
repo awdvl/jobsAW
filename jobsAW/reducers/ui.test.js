@@ -21,16 +21,17 @@ describe ('ui modal reducer', () => {
     })
 
     describe ('set isOpen', () => {
-        describe ('as true', () => {
-            it ('should return true', () => {
-                expect (reducer.modal (undefined, {
-                    type: types.SET_MODAL_ISOPEN,
-                    payload: true
-                }).get('isOpen')).toEqual (true);
-            })
+        // describe ('as true', () => {
+        //     it ('should return true', () => {
+        //         expect (reducer.modal (undefined, {
+        //             type: types.SET_MODAL_ISOPEN,
+        //             payload: true
+        //         }).get('isOpen')).toEqual (true);
+        //     })
 
-        });
+        // });
 
+        // --> rewrite SET_MODAL_ISOPEN to CLOSE_MODAL
         describe ('as false', () => {
             it ('should return false', () => {
                 expect (reducer.modal (undefined, {

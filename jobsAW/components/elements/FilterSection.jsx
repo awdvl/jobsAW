@@ -5,6 +5,8 @@ import { DropTarget } from 'react-dnd';
 // import { DropTarget, DragDropContext } from 'react-dnd';
 // import HTML5Backend from 'react-dnd-html5-backend';
 
+import { findElemFor, moveElemFor } from '../../../_libs/dnd';
+
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
@@ -56,22 +58,6 @@ const FilterElems = (props) => {
 };
 
 
-
-// const findFilterFor = R.curry ((filterOrder) => (filter) => filterOrder.findIndex(value => value === filter));
-const findFilterFor = (filterOrder) => (filter) => filterOrder.findIndex(value => value === filter);
-
-const moveFilterFor = ({filterOrder, updateOrder, setIsMoving}) => (filter, atIndex) => {
-    const index = findFilterFor(filterOrder)(filter);
-                            // bug('*** filterOrder, filter, index, atIndex', filterOrder, filter, index, atIndex)
-    updateOrder({
-        filter,
-        index,
-        atIndex,
-    });
-
-    setIsMoving(true);
-};
-
 const filterTarget = {
     drop (props, monitor, component) {
         // bug('*** drop  props, monitor, component', props, monitor, component)
@@ -81,7 +67,6 @@ const filterTarget = {
 
 
 
-// @DragDropContext(HTML5Backend)
 @DropTarget(ItemTypes.FILTER, filterTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
 }))
@@ -96,20 +81,6 @@ export default class Filters extends Component {
         modalType: PropTypes.string.isRequired,
         setModalType: PropTypes.func.isRequired,
     }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-    //                                                             // bug('***', this.props, nextProps, nextState)
-    //     const notUpdated = is (this.props.filterOrder, nextProps.filterOrder)
-
-    //     // bug('*** filterOrder updated', this.props.filterOrder.get(0), nextProps.filterOrder.get(0), !notUpdated)
-    //     bug('*** filterOrder updated', this.props.filterOrder.toJSON(), nextProps.filterOrder.toJSON(), !notUpdated)
-
-    //     if (!notUpdated) {
-    //         bug('*** UPDATE in FILTER');
-    //     }
-
-    //     return true;
-    // }
 
     render() {
                                                                     bug('*** Filters this.props', this.props)
@@ -134,12 +105,9 @@ export default class Filters extends Component {
                     </Header>
 
                     {FilterElems({
-                        // filterOrder, 
                         locFilter: loc.filter,
-                        moveFilter: moveFilterFor({filterOrder, updateOrder, setIsMoving}),
-                        findFilter: findFilterFor(filterOrder),
-                        // setIsMoving,
-                        // setModalIsOpen,
+                        moveFilter: moveElemFor (filterOrder, updateOrder, setIsMoving),
+                        findFilter: findElemFor (filterOrder),
                         ...this.props
                     })}
 
