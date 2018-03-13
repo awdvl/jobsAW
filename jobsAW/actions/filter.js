@@ -14,7 +14,7 @@ import {
 //     };
 // };
 export const updateOrder = (filter, payload) => {
-                                                        console.log('updateOrder filter', filter)
+                                                        console.log('+++ updateOrder filter', filter)
     // add additional param filterEnv                                                    
     // -> here: get filter type by filter
     const filterTypes = {

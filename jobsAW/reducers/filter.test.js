@@ -49,25 +49,42 @@ describe ('filter reducer', () => {
     });
 
     describe ('city', () => {
+        // const initialState = new FilterCity({
+        //     sel: ['S', 'M'],
+        //     // sel: List(['S', 'M']),
+        //     sortOrder: ['pop'],
+        //     sortByOrder: false,
+        //     inclRest: true,
+        //     sortRest: ['pop'],
+        //     excl: []
+        //     // excl: ['K']
+        // });        
         const initialState = new FilterCity({
-            sel: ['S', 'M'],
-            // sel: List(['S', 'M']),
+            sel: List(['S', 'M']),
             sortOrder: ['pop'],
             sortByOrder: false,
             inclRest: true,
-            sortRest: ['pop'],
-            excl: []
-            // excl: ['K']
+            sortRest: List(['pop']),
+            excl: List([])
         });        
 
+        // const endState_selSwapped = new FilterCity({
+        //     // sel: ['M', 'S'],
+        //     sel: List(['M', 'S']),
+        //     sortOrder: ['pop'],
+        //     sortByOrder: false,
+        //     inclRest: true,
+        //     sortRest: ['pop'],
+        //     excl: []
+        // });
+
         const endState_selSwapped = new FilterCity({
-            sel: ['M', 'S'],
-            // sel: List(['M', 'S']),
+            sel: List(['M', 'S']),
             sortOrder: ['pop'],
             sortByOrder: false,
             inclRest: true,
-            sortRest: ['pop'],
-            excl: []
+            sortRest: List(['pop']),
+            excl: List([])
         });
 
         const payload_swapSel = {

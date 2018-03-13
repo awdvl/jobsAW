@@ -82,8 +82,8 @@ const __mapToPath = (state=initMapToPath, action) => {
  *  excl: []  excluded items
 */
 const initStateCity = new FilterCity({
-    // sel: List(['S', 'M']),
-    sel: ['S', 'M'],
+    sel: List(['S', 'M']),
+    // sel: ['S', 'M'],
     // sel: ['F', 'M'],
     // sel: [],
     // sortOrder: ['pop', 'name'],
@@ -96,12 +96,15 @@ const initStateCity = new FilterCity({
     // sortRest: false,
     // sortRest: true,
     // sortRest: ['city'],
-    sortRest: ['pop'],
+    // sortRest: ['pop'],
+    sortRest: List(['pop']),
     // sortRest: ['pop', 'DSC'],
     // sortRest: ['text', 'DSC'],
     // sortRest: ['text'],
-    excl: []
+    excl: List([])
+    // excl: []
     // excl: ['K']
+    // excl: List(['K'])
 });
 
 // const swapInArray = (array, {filter, index, atIndex}) => {
@@ -122,55 +125,19 @@ const swapInArray = (arrayOrg, {filter, index, atIndex}) => {
 
 export const city = (state=initStateCity, action) => {
     const stateZone = state[action.zone];
-    // const stateZone = state[action.zone].toJSON();
-    // const swapped0 = stateZone
-    //                 .splice(action.payload.index, 1)
-    // const swapped = swapped0
-    //                 .splice(action.payload.atIndex, 0, action.payload.filter)
-    // const swapped = stateZone
-    //     .splice(action.payload.index, 1)
-    //     .splice(action.payload.atIndex, 0, action.payload.filter)
-    
-    // const swapped = stateZone.update()
-
-    // const newState = state.set(
-    //     action.zone,
-    //     // stateZone.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter)
-    //     swapInArray(stateZone, action.payload)
-    //     // List(swapInArray(stateZone, action.payload))
-    // );
-
-    // console.log('newState', newState)
-    // swapInArray(stateZone, action.payload)
-    // console.log('newState2', newState)
-
+   
     switch (action.type) {
         case UPDATE_CITY_ORDER:
-            // console.log('## action.payload', action.payload)
-            // console.log('## reducer',
-            //     state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter))
-            // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
-
-            bug('state', state)
-            bug('action.zone', action.zone)
-            bug('isArray stateZone', Array.isArray(stateZone))
-            // bug('isRecord plain', typeof stateZone)
-            // bug('isRecord plain', state.isRecord())
-            // bug('isRecord', isRecord(stateZone))
-            // bug('state[action.zone]', stateZone)
-            // bug('swapped', swapped)
-
-            // bug('swapInArray',swapInArray(stateZone, action.payload))
-
-            
-
-            // return state;
-
+           
             return state.set(
                 action.zone,
                 // stateZone.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter)
-                swapInArray(stateZone, action.payload)
-                // List(swapInArray(stateZone, action.payload))
+                // this is swapping in the same array!
+                stateZone
+                    .set (action.payload.index, stateZone.get(action.payload.atIndex))
+                    .set (action.payload.atIndex, action.payload.filter)
+
+                // swapInArray(stateZone, action.payload)
             );
 
 

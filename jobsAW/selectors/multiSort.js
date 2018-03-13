@@ -1,7 +1,9 @@
 import R from 'ramda';
 import bug from '../../_libs/bug';
 
-import { testData } from './_testData';
+import { Iterable } from 'immutable';
+
+// import { testData } from './_testData';
 
 // https://github.com/ramda/ramda/wiki/Cookbook#sort-a-list-by-array-of-props-if-first-prop-equivalent-sort-by-second-etc
 const variadicEither = (head, ...tail) => 
@@ -13,9 +15,22 @@ const variadicEither = (head, ...tail) =>
 
 // use a provided property map [1], look-up for values on a prop or following a path array
 // undefined value will be set to Infinity for sorting at the end
+// const byPropMap = (props, obj) => {
+//     const newProp = props[1][ R.pathOr (obj[props[0]], props[0], obj) ];  // here a path
+// bug('+++ multiSort::byPropMap props, obj', props, obj, newProp !== undefined ? newProp : Infinity)
+//     return newProp !== undefined ? newProp : Infinity;
+// }
 const byPropMap = (props, obj) => {
     const newProp = props[1][ R.pathOr (obj[props[0]], props[0], obj) ];  // here a path
 
+    // bug('+++ multiSort::byPropMap', 
+    //     obj[props[0]], props[0], obj,
+    //     R.pathOr (obj[props[0]], props[0], obj),
+    //     props[1]
+    // )
+    // +++ multiSort::byPropMap M city Record{_map: Map, text: {…}, param: {…}} M {S: 0, M: 1, K: 2, F: 3}
+
+// bug('+++ multiSort::byPropMap props, obj', props, obj, newProp !== undefined ? newProp : Infinity)
     return newProp !== undefined ? newProp : Infinity;
 }
 
@@ -77,11 +92,13 @@ const makeComparator = (props) => {
     let comparatorFn = R.lt;  // props do not include DSC (standard case: ASC)
 
     if (!R.isEmpty (props)) {
+                                                                            // bug('multiSort::props', props)   
+                                                    // bug('multiSort::props isImmutable', Iterable.isIterable(props))
         if (Array.isArray (props)) {
             const propsIncludeMap = typeof props[1] !== 'string';
-
+                                                // bug('multiSort::props isImmutable', Iterable.isIterable(props[1]))
             getProp = propsIncludeMap ? byPropMap : R.path;
-
+// bug('+++ getProp', getProp)
             if (!propsIncludeMap && R.last(props) === 'DSC') {
                 props = props.slice(0,-1);
                 comparatorFn = R.gt;

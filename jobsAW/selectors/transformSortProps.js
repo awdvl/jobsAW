@@ -3,6 +3,7 @@ import bug from '../../_libs/bug';
 
 import multiSort from './multiSort';
 
+import { Iterable } from 'immutable';
 
 // const citySel = ['city', {
 //     S: 0,
@@ -41,9 +42,18 @@ const makeIndex = (ary, i = 0) => (
     ) (ary, i));
 
 
+// get the start index independent, whether or not the object is a iterable (List)    
+const getIndexStart = (obj) =>
+    obj[Iterable.isIterable(obj) ? 'size' : 'length'];
+
 
 const makePropAccessFor = R.curry((filterState, type, filterName) =>
     (filterState[type].get(filterName) || filterName));
+// const makePropAccessFor = R.curry((filterState, type, filterName) => {
+//     // bug('+++ makePropAccessFor - filterState, type, filterName', filterState, type, filterName)
+//     bug('+++ makePropAccessFor -- filterName', filterName, (filterState[type].get(filterName) || filterName))
+//     return (filterState[type].get(filterName) || filterName);
+// })
 
 
 // this better as transform
@@ -66,6 +76,7 @@ const transformSortProps = (filterState, filteredRecords) => {
 
     const sortSamples = (filter, sortFilterProps, samples) => {
                                                                         // bug('** filter.sortRest',filter.sortRest)
+                                            // bug('+++ filter, sortFilterProps, samples', filter, sortFilterProps, samples)
         const getValueFromIndexBy = R.pipe (
             R.prop, 
             getByPropValueOf (samples.index)
@@ -91,7 +102,7 @@ const transformSortProps = (filterState, filteredRecords) => {
     const getSortedFilterProps = R.curry((filterName, sortOrder) => {
         // default in function not in argument, as function is curried
         sortOrder = sortOrder || [filterName];
-
+                                                                    // bug('+++ transformSortProps sortOrder',sortOrder)
         let preparedProp;
                                                 // bug('getSortedFilterProps::filterName, sortOrder', filterName, sortOrder)
         if (sortOrder[0] === 'text') {
@@ -110,7 +121,7 @@ const transformSortProps = (filterState, filteredRecords) => {
         if (R.contains ('DSC', sortOrder)) {
             preparedProp.push('DSC');
         }
-    
+                                                                                    // bug('+++ pr', preparedProp)
         return preparedProp;
     });
 
@@ -143,7 +154,8 @@ const transformSortProps = (filterState, filteredRecords) => {
                                     //             bug('>> this', filter.sel, filter.sortByOrder)
         if (filter.sel && !filter.sortByOrder) {
             let selIndex = makeIndex (filter.sel);
-                                                                                // bug('** selIndex A', selIndex)
+                                                                // bug('** isIterable', Iterable.isIterable(filter.sel))
+                                                                //                 bug('** selIndex A', selIndex)
             preparedProp = [ getPropNameMapped (filterName) ];
 
             if (filter.sortRest) {
@@ -159,14 +171,14 @@ const transformSortProps = (filterState, filteredRecords) => {
                     getSortedFilterProps (filterName), 
                     getSamplesFromRest (filteredRecords)
                 );
-                                                                        // bug('** sortedSamples', sortedSamples)
+                                                                        // bug('+++ sortedSamples', sortedSamples)
                 selIndex = {
                     ...selIndex, 
-                    ...makeIndex (sortedSamples, filter.sel.length)
+                    ...makeIndex (sortedSamples, getIndexStart(filter.sel))
                 };
                 
             }
-                                                                        // bug('** selIndexTot', selIndex)
+                                                                        bug('** selIndexTot', selIndex)
             preparedProp.push(selIndex);
 
 
