@@ -103,7 +103,7 @@ describe ('filter reducer', () => {
                 it ('should swap the first two elems', () => {
                     expect (reducer.city (initialState, {
                         type: types.UPDATE_CITY_ORDER,
-                        zone: 'sel',
+                        env: 'sel',
                         payload: payload_swapSel
                     })).toEqual (endState_selSwapped);
                 });

@@ -1,3 +1,5 @@
+import R from 'ramda';
+
 import { 
     UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
     UPDATE_CITY_ORDER
@@ -30,6 +32,25 @@ export const updateOrder = (filter, payload) => {
             ...payload
         }
     };
+};
+
+const filterActionTypes = {
+    _: UPDATE_FILTER_ORDER,
+    city: UPDATE_CITY_ORDER
+};
+
+export const updateOrderFor = (filterType = '_') => (dispatch) => (filter, payload, env) => {
+                                                        console.log('+++ updateOrder filter', filter, payload)
+                                console.log('+++ updateOrder type', filterActionTypes, filterType)
+                                            console.log('+++ updateOrder type', filterActionTypes[filterType || '_'])
+    return dispatch({
+        type: filterActionTypes[filterType || '_'],
+        payload: {
+            filter,
+            ...payload
+        },
+        env
+    });
 };
 
 export const setIsMoving = (payload) => ({

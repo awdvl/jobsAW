@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { List, Map, fromJS, isRecord } from 'immutable';
+import { List, Map, fromJS, Iterable } from 'immutable';
 import FilterCity from '../records/FilterCity';
 import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
@@ -124,13 +124,17 @@ const swapInArray = (arrayOrg, {filter, index, atIndex}) => {
 }
 
 export const city = (state=initStateCity, action) => {
-    const stateZone = state[action.zone];
+    // const stateZone = state[action.env];
+    const stateZone = state.get(action.env);
    
+                bug('reducers::city - state, action, stateZone', state, action, action.env, Iterable.isIterable(state))
+                bug('reducers::city - state.asJSON(), state.get', state.get('sel'))
+
     switch (action.type) {
         case UPDATE_CITY_ORDER:
            
             return state.set(
-                action.zone,
+                action.env,
                 // stateZone.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter)
                 // this is swapping in the same array!
                 stateZone

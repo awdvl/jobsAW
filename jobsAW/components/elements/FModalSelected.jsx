@@ -63,7 +63,8 @@ const filterTarget = {
 export default class FModalSelected extends Component {
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
-        modalType: PropTypes.string.isRequired
+        modalType: PropTypes.string.isRequired,
+        updateOrderFor: PropTypes.func.isRequired
     }
 
     render() {
@@ -72,7 +73,9 @@ export default class FModalSelected extends Component {
         const {
             connectDropTarget,
             modalType,
-            zoneFilterOrder
+            zoneFilterOrder,
+            updateOrderFor,
+
         } = this.props;
 
         const updateOrder = () => {};
@@ -83,7 +86,8 @@ export default class FModalSelected extends Component {
                 <Section>
                     {SecElems({
                         // locFilter: loc.filter,
-                        moveFilter: moveElemFor (zoneFilterOrder, updateOrder, setIsMoving),
+                        // moveFilter: moveElemFor (zoneFilterOrder, updateOrder, setIsMoving),
+                        moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel', setIsMoving}),
                         findFilter: findElemFor (zoneFilterOrder),
                         ...this.props
                     })}
