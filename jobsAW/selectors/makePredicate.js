@@ -2,8 +2,8 @@ import R from 'ramda';
 
 import bug from '../../_libs/bug';
 
-const log = R.bind(console.log, console);
-const sayX = x => console.log('x is ' + x);
+const log = R.bind (console.log, console);
+const sayX = x => console.log ('x is ' + x);
 
 
 // const comparator = R.curry((filterProps, x) => {
@@ -27,16 +27,16 @@ const sayX = x => console.log('x is ' + x);
 
 // const makePredicate = (filterProps, key) => R.propSatisfies(comparator(filterProps), key);
 
-const comparator = R.curry((sel, inclRest, excl, x) => {
+const comparator = R.curry ((sel, inclRest, excl, x) => {
 
     // only sel
     // if (!inclRest) {
-    if (!inclRest && !R.isEmpty(sel)) {
-        return R.contains(x, sel);
+    if (!inclRest && !R.isEmpty (sel)) {
+        return R.contains (x, sel);
 
     // all without excl
-    } else if (excl && !R.isEmpty(excl)) {
-        return !R.contains(x, excl);
+    } else if (excl && !R.isEmpty (excl)) {
+        return !R.contains (x, excl);
 
     // all
     } else {

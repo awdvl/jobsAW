@@ -1,4 +1,4 @@
-import { Record } from 'immutable';
+import { Record, List } from 'immutable';
 
 /** 
  *  sel: []  selected items
@@ -10,12 +10,22 @@ import { Record } from 'immutable';
 */
 const FilterCityRecord = Record({
     sel: [],
+    // sel: List([]),
+    // sel: new List(),
     sortOrder: [],
     sortByOrder: false,
     inclRest: false,
     sortRest: true,
     excl: []
 });
+// const FilterCityRecord = Record({
+//     sel: List([]),
+//     sortOrder: List([]),
+//     sortByOrder: false,
+//     inclRest: false,
+//     sortRest: true,
+//     excl: List([])
+// });
 
 const FilterCity = FilterCityRecord;
 

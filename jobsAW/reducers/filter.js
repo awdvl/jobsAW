@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { List, Map, fromJS } from 'immutable';
+import { List, Map, fromJS, isRecord } from 'immutable';
 import FilterCity from '../records/FilterCity';
 import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
@@ -10,6 +10,7 @@ import {
     UPDATE_CITY_ORDER
 } from '../constants/filter';
 
+import bug from '../../_libs/bug';
 
 // const initStateOrder = List(['city', 'compIndy']);
 // const initStateOrder = List(['city', 'compIndy', 'jobType']);
@@ -81,6 +82,7 @@ const __mapToPath = (state=initMapToPath, action) => {
  *  excl: []  excluded items
 */
 const initStateCity = new FilterCity({
+    // sel: List(['S', 'M']),
     sel: ['S', 'M'],
     // sel: ['F', 'M'],
     // sel: [],
@@ -102,13 +104,75 @@ const initStateCity = new FilterCity({
     // excl: ['K']
 });
 
-const city = (state=initStateCity, action) => {
+// const swapInArray = (array, {filter, index, atIndex}) => {
+//     array[index] = array[atIndex];
+//     array[atIndex] = filter;
+
+//     return array;
+// }
+
+// immutable swap
+const swapInArray = (arrayOrg, {filter, index, atIndex}) => {
+    const array = [...arrayOrg];
+    array[index] = array[atIndex];
+    array[atIndex] = filter;
+
+    return array;
+}
+
+export const city = (state=initStateCity, action) => {
+    const stateZone = state[action.zone];
+    // const stateZone = state[action.zone].toJSON();
+    // const swapped0 = stateZone
+    //                 .splice(action.payload.index, 1)
+    // const swapped = swapped0
+    //                 .splice(action.payload.atIndex, 0, action.payload.filter)
+    // const swapped = stateZone
+    //     .splice(action.payload.index, 1)
+    //     .splice(action.payload.atIndex, 0, action.payload.filter)
+    
+    // const swapped = stateZone.update()
+
+    // const newState = state.set(
+    //     action.zone,
+    //     // stateZone.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter)
+    //     swapInArray(stateZone, action.payload)
+    //     // List(swapInArray(stateZone, action.payload))
+    // );
+
+    // console.log('newState', newState)
+    // swapInArray(stateZone, action.payload)
+    // console.log('newState2', newState)
+
     switch (action.type) {
         case UPDATE_CITY_ORDER:
             // console.log('## action.payload', action.payload)
             // console.log('## reducer',
             //     state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter))
-            return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
+            // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
+
+            bug('state', state)
+            bug('action.zone', action.zone)
+            bug('isArray stateZone', Array.isArray(stateZone))
+            // bug('isRecord plain', typeof stateZone)
+            // bug('isRecord plain', state.isRecord())
+            // bug('isRecord', isRecord(stateZone))
+            // bug('state[action.zone]', stateZone)
+            // bug('swapped', swapped)
+
+            // bug('swapInArray',swapInArray(stateZone, action.payload))
+
+            
+
+            // return state;
+
+            return state.set(
+                action.zone,
+                // stateZone.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter)
+                swapInArray(stateZone, action.payload)
+                // List(swapInArray(stateZone, action.payload))
+            );
+
 
         default:
             return state;
