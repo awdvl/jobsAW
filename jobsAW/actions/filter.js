@@ -40,9 +40,9 @@ const filterActionTypes = {
 };
 
 export const updateOrderFor = (filterType = '_') => (dispatch) => (filter, payload, env) => {
-                                                        console.log('+++ updateOrder filter', filter, payload)
-                                console.log('+++ updateOrder type', filterActionTypes, filterType)
-                                            console.log('+++ updateOrder type', filterActionTypes[filterType || '_'])
+                                //                         console.log('+++ updateOrder filter', filter, payload)
+                                // console.log('+++ updateOrder type', filterActionTypes, filterType)
+                                //             console.log('+++ updateOrder type', filterActionTypes[filterType || '_'])
     return dispatch({
         type: filterActionTypes[filterType || '_'],
         payload: {

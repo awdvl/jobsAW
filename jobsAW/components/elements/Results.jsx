@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { getFilterIsMoving } from '../../reducers/filter';
+import { getModalIsOpen } from '../../reducers/ui';
 
 import bug from '../../../_libs/bug';
 
@@ -40,9 +41,10 @@ export default class Results extends Component {
         // // bug.rt('*** Results.jsx props', props)
         // // bug.rt('*** Results.jsx __isMoving', props.state.ui.filter.__isMoving)
 
-        bug('*** Results  should update', !getFilterIsMoving (nextProps.state));
+                            // bug('*** Results  should update', !getFilterIsMoving (nextProps.state), nextProps.state);
 
-        return !getFilterIsMoving (nextProps.state);
+        // return !getFilterIsMoving (nextProps.state);
+        return !getModalIsOpen (nextProps.state) && !getFilterIsMoving (nextProps.state);
     }
 
     render() {

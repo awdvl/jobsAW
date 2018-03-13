@@ -84,7 +84,7 @@ export default class Filters extends Component {
     }
 
     render() {
-                                                                    bug('*** Filters this.props', this.props)
+                                                                    // bug('*** Filters this.props', this.props)
         const { 
             connectDropTarget, 
             filterOrder, 
@@ -96,9 +96,9 @@ export default class Filters extends Component {
             modalType,
             setModalType 
         } = this.props;
-                                                                    bug('*** Filters modalIsOpen', modalIsOpen)
-                                                                    bug('*** updateOrder()', updateOrder)
-                                                                    bug('*** updateOrderFor()', updateOrderFor())
+                                                                    // bug('*** Filters modalIsOpen', modalIsOpen)
+                                                                    // bug('*** updateOrder()', updateOrder)
+                                                                    // bug('*** updateOrderFor()', updateOrderFor())
 
         return connectDropTarget(
             // div to transform into native componenet

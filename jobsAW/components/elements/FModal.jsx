@@ -57,74 +57,10 @@ const CloseModalButton = ModalButton.extend`
 `;
 
 
-// const ReactModalAdapter = (props) => {
-// // const ReactModalAdapter = ({
-// //     className, 
-// //     modalClassName, 
-
-// //     modalIsOpen,
-// //     modalType,
-// //     getFilterZone,
-// //     // setModalIsOpen,
-// //     closeModal,
-// //     ...props}
-// // ) => {
-
-//     const {
-//     className, 
-//     modalClassName, 
-//         overlayClassName,
-
-//     modalIsOpen,
-//     modalType,
-//     getFilterZone,
-//     // setModalIsOpen,
-//     closeModal,
-//     } = props;
-//                                                                         bug('REactModalAdapter props', props);
-//                                                                         bug('REactModalAdapter ...props', {...props});
-
-//     const modalTitle = 'City';  // from props
-//     const zoneFilterOrder = getFilterZone(modalType, 'sel');
-//                                                                             bug('zoneFilterOrder', zoneFilterOrder)
-//     // const closeModal = () => setModalIsOpen(false);
-
-//     return (
-//         <ReactModal
-//             className={modalClassName}
-//             portalClassName={className}
-//             isOpen={modalIsOpen}
-//             onRequestClose={closeModal}
-//             shouldCloseOnOverlayClick={true}
-//             overlayClassName={overlayClassName}
-//             // modalClassName={modalClassName}
-//             // {...props}
-//             // {{...props}}
-//             // onAfterOpen={this.afterOpenModal}
-//             // style={customStyles}
-//             // contentLabel="Example Modal"            
-//         >
-//             <FMHeader>
-//                 <FMHTitle>
-//                     {modalTitle}
-//                 </FMHTitle>
-
-//                 <CloseModalButton onClick={closeModal} />
-//             </FMHeader>
-
-//             <FModalSelected 
-//                 modalType={modalType}
-//             />
-
-//         </ReactModal>
-//     );
-// };
-
-
 class ReactModalAdapter extends Component {
 
     shouldComponentUpdate(nextProps) {
-        bug('ReactModalAdapter nextProps', nextProps, this.props)
+                                                            // bug('ReactModalAdapter nextProps', nextProps, this.props)
         // do not update if both flags are false
         return nextProps.modalIsOpen || this.props.modalIsOpen;
     }
@@ -144,7 +80,7 @@ class ReactModalAdapter extends Component {
             closeModal,
             // ...props 
         } = this.props;
-                                                                bug('REactModalAdapter props', this.props);
+                                                                // bug('REactModalAdapter props', this.props);
 
 
 
@@ -158,8 +94,7 @@ class ReactModalAdapter extends Component {
                 const zoneFilterOrder = getFilterZone(modalType, 'sel');
                 const modalTitle = loc.filter.get(modalType);  // from props
                 
-                                                bug('*** reactModalContent zoneFilterOrder, loc', zoneFilterOrder, loc)
-                    
+                                            // bug('*** reactModalContent zoneFilterOrder, loc', zoneFilterOrder, loc)
                 return (
                     <div>
                         <FMHeader>

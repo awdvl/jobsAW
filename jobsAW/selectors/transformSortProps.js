@@ -178,7 +178,7 @@ const transformSortProps = (filterState, filteredRecords) => {
                 };
                 
             }
-                                                                        bug('** selIndexTot', selIndex)
+                                                                        // bug('** selIndexTot', selIndex)
             preparedProp.push(selIndex);
 
 

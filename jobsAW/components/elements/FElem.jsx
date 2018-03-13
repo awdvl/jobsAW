@@ -11,7 +11,7 @@ import bug from '../../../_libs/bug';
 
 
 const FComp = styled.div`
-    width: 100px;
+    /* width: 100px; */
     background: snow;
     border: 1px dotted firebrick;
     padding: .5em;
@@ -72,7 +72,7 @@ const filterSource = {
                                                                     // bug('*** endDrag item-props', monitor.getItem())
         const { id: droppedId, originalIndex } = monitor.getItem();
         const didDrop = monitor.didDrop ();
-
+                                                                    // bug('*** didDrop',didDrop)
         if (!didDrop) {
             props.moveFilter (droppedId, originalIndex);
         }

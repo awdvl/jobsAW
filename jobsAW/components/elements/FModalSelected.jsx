@@ -22,7 +22,7 @@ const Section = styled.div`
 
 
 const SecElems = (props) => {
-    bug('SEcElems props', props)
+    // bug('SEcElems props', props)
     const {
         loc
     } = props;
@@ -30,10 +30,10 @@ const SecElems = (props) => {
     if (loc) {
         const type = 'city';
         const locForElem = loc[type].get('name')
-                                                                                    bug('locForElem', locForElem)
+                                                                                    // bug('locForElem', locForElem)
         return props.zoneFilterOrder.map((elem) => {
 
-                                                                                    bug('order elem', elem)
+                                                                                    // bug('order elem', elem)
             return (
                 <FMSElem 
                     key={elem}
@@ -51,43 +51,46 @@ const SecElems = (props) => {
 
 const filterTarget = {
     drop(props, monitor, component) {
-        // bug('*** drop  props, monitor, component', props, monitor, component)
-        // props.setIsMoving(false);
+                                            // bug('*** drop  props, monitor, component', props, monitor, component)
+        props.setIsMoving(false);
     }
 };
 
 
-@DropTarget(ItemTypes.FILTER1, filterTarget, (connect, monitor) => ({
+@DropTarget(ItemTypes.FILTERZ, filterTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
 }))
 export default class FModalSelected extends Component {
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
         modalType: PropTypes.string.isRequired,
-        updateOrderFor: PropTypes.func.isRequired
+        updateOrderFor: PropTypes.func.isRequired,
+        setIsMoving: PropTypes.func.isRequired,
     }
 
     render() {
-                                                                bug('FModalSelected this.props', this.props)
+                                                                // bug('FModalSelected this.props', this.props)
 
         const {
             connectDropTarget,
             modalType,
             zoneFilterOrder,
             updateOrderFor,
+            setIsMoving,
 
         } = this.props;
 
-        const updateOrder = () => {};
-        const setIsMoving = () => {};
+        // const updateOrder = () => {};
+        // const setIsMoving = () => {};
 
-        return connectDropTarget(
+        return connectDropTarget (
             <div>
                 <Section>
                     {SecElems({
                         // locFilter: loc.filter,
                         // moveFilter: moveElemFor (zoneFilterOrder, updateOrder, setIsMoving),
                         moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel', setIsMoving}),
+                        // moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel'}),
                         findFilter: findElemFor (zoneFilterOrder),
                         ...this.props
                     })}

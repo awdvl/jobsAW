@@ -11,7 +11,7 @@ import bug from '../../../_libs/bug';
 
 
 const FMSECompButton = SoftButton.extend`
-    width: 120px;
+    /* width: 120px; */
     background: snow;
     box-shadow: 0 0 0 0.5px #424e3d;
     margin: .5em;
@@ -82,7 +82,7 @@ const makeFilterButton = ({ text }) => {
 const filterSource = {
     beginDrag(props) {
         // bug('*** beginDrag props', props)
-        // props.setIsMoving(true);
+        props.setIsMoving(true);
 
         return {
             id: props.id,
@@ -90,11 +90,11 @@ const filterSource = {
         };
     },
 
-    endDrag(props, monitor) {
-        bug('*** endDrag item-props', monitor.getItem())
+    endDrag (props, monitor) {
+                                                                // bug('*** FMSELEM::endDrag item-props', monitor.getItem())
         const { id: droppedId, originalIndex } = monitor.getItem();
         const didDrop = monitor.didDrop ();
-
+                                                                    // bug('*** FMSELEM::didDrop',didDrop)
         if (!didDrop) {
             props.moveFilter (droppedId, originalIndex);
         }
@@ -120,10 +120,10 @@ const filterTarget = {
 
 
 
-@DropTarget(ItemTypes.FILTER, filterTarget, connect => ({
+@DropTarget(ItemTypes.FILTERZ, filterTarget, connect => ({
     connectDropTarget: connect.dropTarget(),
 }))
-@DragSource(ItemTypes.FILTER, filterSource, (connect, monitor) => ({
+@DragSource(ItemTypes.FILTERZ, filterSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
 }))

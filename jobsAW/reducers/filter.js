@@ -127,8 +127,20 @@ export const city = (state=initStateCity, action) => {
     // const stateZone = state[action.env];
     const stateZone = state.get(action.env);
    
-                bug('reducers::city - state, action, stateZone', state, action, action.env, Iterable.isIterable(state))
-                bug('reducers::city - state.asJSON(), state.get', state.get('sel'))
+                // bug('reducers::city - state, action, stateZone', state, action, action.env, Iterable.isIterable(state))
+                // bug('reducers::city - state.asJSON(), state.get', state.get('sel'))
+
+    const swapOrder = (state, action) => {
+        const stateZone = state.get(action.env);
+
+        const swappedRecord = stateZone
+                    .set (action.payload.index, stateZone.get(action.payload.atIndex))
+                    .set (action.payload.atIndex, action.payload.filter)
+
+        // bug('reducers::city - swappedRecord', swappedRecord)
+
+        return swappedRecord;
+    }
 
     switch (action.type) {
         case UPDATE_CITY_ORDER:
@@ -137,9 +149,10 @@ export const city = (state=initStateCity, action) => {
                 action.env,
                 // stateZone.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter)
                 // this is swapping in the same array!
-                stateZone
-                    .set (action.payload.index, stateZone.get(action.payload.atIndex))
-                    .set (action.payload.atIndex, action.payload.filter)
+                swapOrder (state, action)
+                // stateZone
+                //     .set (action.payload.index, stateZone.get(action.payload.atIndex))
+                //     .set (action.payload.atIndex, action.payload.filter)
 
                 // swapInArray(stateZone, action.payload)
             );
