@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import ItemTypes from '../../constants/itemTypes';
-
-import FMSElem from './FMSElem';
-
 import { findElemFor, moveElemFor } from '../../../_libs/dnd';
 
+import FMSElem from './FMSElem';
 import styled from 'styled-components';
 
 import bug from '../../../_libs/bug';
@@ -39,7 +38,6 @@ const SecElems = (props) => {
                     key={elem}
                     id={elem}
                     text={locForElem.get(elem)}
-                    // text={elem}
                     {...props}
                 />
             );
@@ -64,7 +62,9 @@ export default class FModalSelected extends Component {
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
         modalType: PropTypes.string.isRequired,
-        updateOrderFor: PropTypes.func.isRequired,
+        zoneFilterOrder: ImmutablePropTypes.list.isRequired,
+        updateOrder: PropTypes.func.isRequired,
+        // updateOrderFor: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
     }
 
@@ -75,21 +75,22 @@ export default class FModalSelected extends Component {
             connectDropTarget,
             modalType,
             zoneFilterOrder,
-            updateOrderFor,
+            updateOrder,
+            // updateOrderFor,
             setIsMoving,
 
         } = this.props;
-
-        // const updateOrder = () => {};
-        // const setIsMoving = () => {};
-
+                                                                        // bug('zoneFilterOrder', zoneFilterOrder)
         return connectDropTarget (
             <div>
                 <Section>
                     {SecElems({
                         // locFilter: loc.filter,
                         // moveFilter: moveElemFor (zoneFilterOrder, updateOrder, setIsMoving),
-                        moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel', setIsMoving}),
+                        // moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel', setIsMoving}),
+                        moveFilter: moveElemFor (zoneFilterOrder, updateOrder, {
+                            env: 'sel', type: modalType, setIsMoving
+                        }),
                         // moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel'}),
                         findFilter: findElemFor (zoneFilterOrder),
                         ...this.props

@@ -1,8 +1,9 @@
 import R from 'ramda';
 
 import { 
+    filterActionTypes,
     UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
-    UPDATE_CITY_ORDER
+    // UPDATE_CITY_ORDER
 } from '../constants/filter';
 
 // export const updateOrder = payload => {
@@ -15,43 +16,56 @@ import {
 //         }
 //     };
 // };
-export const updateOrder = (filter, payload) => {
-                                                        console.log('+++ updateOrder filter', filter)
-    // add additional param filterEnv                                                    
-    // -> here: get filter type by filter
-    const filterTypes = {
-        __order: UPDATE_FILTER_ORDER,
-        city: UPDATE_CITY_ORDER
-    };
+// export const updateOrder = (filter, payload) => {
+//                                                         console.log('+++ updateOrder filter', filter)
+//     // add additional param filterEnv                                                    
+//     // -> here: get filter type by filter
+//     const filterTypes = {
+//         __order: UPDATE_FILTER_ORDER,
+//         city: UPDATE_CITY_ORDER
+//     };
 
+//     return {
+//         type: UPDATE_FILTER_ORDER,
+//         // type: filterTypes[filter],
+//         payload: {
+//             filter,
+//             ...payload
+//         }
+//     };
+// };
+
+export const updateOrder = (elem, payload, env, type = '_') => {
+                                                        // console.log('+++ updateOrder filter', filter)
     return {
-        type: UPDATE_FILTER_ORDER,
-        // type: filterTypes[filter],
+        type: filterActionTypes[type],
         payload: {
-            filter,
-            ...payload
-        }
-    };
-};
-
-const filterActionTypes = {
-    _: UPDATE_FILTER_ORDER,
-    city: UPDATE_CITY_ORDER
-};
-
-export const updateOrderFor = (filterType = '_') => (dispatch) => (filter, payload, env) => {
-                                //                         console.log('+++ updateOrder filter', filter, payload)
-                                // console.log('+++ updateOrder type', filterActionTypes, filterType)
-                                //             console.log('+++ updateOrder type', filterActionTypes[filterType || '_'])
-    return dispatch({
-        type: filterActionTypes[filterType || '_'],
-        payload: {
-            filter,
+            elem,
             ...payload
         },
         env
-    });
+    };
 };
+
+// this in constants
+// const filterActionTypes = {
+//     _: UPDATE_FILTER_ORDER,
+//     city: UPDATE_CITY_ORDER
+// };
+
+// export const updateOrderFor = (filterType = '_') => (dispatch) => (filter, payload, env) => {
+//                                 //                         console.log('+++ updateOrder filter', filter, payload)
+//                                 // console.log('+++ updateOrder type', filterActionTypes, filterType)
+//                                 //             console.log('+++ updateOrder type', filterActionTypes[filterType || '_'])
+//     return dispatch({
+//         type: filterActionTypes[filterType || '_'],
+//         payload: {
+//             filter,
+//             ...payload
+//         },
+//         env
+//     });
+// };
 
 export const setIsMoving = (payload) => ({
     type: UPDATE_FILTER_ISMOVING,

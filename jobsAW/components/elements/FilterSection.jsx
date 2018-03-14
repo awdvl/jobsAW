@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ItemTypes from '../../constants/itemTypes';
 import { DropTarget } from 'react-dnd';
-// import { DropTarget, DragDropContext } from 'react-dnd';
-// import HTML5Backend from 'react-dnd-html5-backend';
 
 import { findElemFor, moveElemFor } from '../../../_libs/dnd';
 
@@ -12,7 +10,6 @@ import { SoftButton } from '../../styles/components';
 
 import FElem from './FElem';
 import FModal from '../../containers/filterModal';
-// import FModal from './FModal';
 
 import bug from '../../../_libs/bug';
 
@@ -76,7 +73,7 @@ export default class Filters extends Component {
         filterOrder: PropTypes.object.isRequired,
         loc: PropTypes.object.isRequired,
         updateOrder: PropTypes.func.isRequired,
-            updateOrderFor: PropTypes.func.isRequired,
+            // updateOrderFor: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
         modalIsOpen: PropTypes.any.isRequired,
         modalType: PropTypes.string.isRequired,
@@ -90,7 +87,7 @@ export default class Filters extends Component {
             filterOrder, 
             loc, 
             updateOrder, 
-                updateOrderFor,
+                // updateOrderFor,
             setIsMoving, 
             modalIsOpen,
             modalType,
@@ -111,7 +108,8 @@ export default class Filters extends Component {
                     {FilterElems({
                         locFilter: loc.filter,
                         // moveFilter: moveElemFor (filterOrder, updateOrder, setIsMoving),
-                        moveFilter: moveElemFor (filterOrder, updateOrderFor(), {setIsMoving}),
+                        // moveFilter: moveElemFor (filterOrder, updateOrderFor(), {setIsMoving}),
+                        moveFilter: moveElemFor (filterOrder, updateOrder, {setIsMoving}),
                         findFilter: findElemFor (filterOrder),
                         ...this.props
                     })}

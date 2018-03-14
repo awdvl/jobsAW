@@ -6,6 +6,7 @@ import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmply from '../records/FilterCompEmply';
 
 import { 
+    filterActionTypes,
     UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
     UPDATE_CITY_ORDER
 } from '../constants/filter';
@@ -20,11 +21,10 @@ const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
 
 export const __order = (state=initStateOrder, action) => {
     switch (action.type) {
-        case UPDATE_FILTER_ORDER:
-            // console.log('## action.payload', action.payload)
-            // console.log('## reducer',
-            //     state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter))
-            return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
+        // UPDATE_FILTER_ORDER:
+        case filterActionTypes._:
+            // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
+            return swapOrder (state, action);
 
         default:
             return state;
@@ -107,54 +107,32 @@ const initStateCity = new FilterCity({
     // excl: List(['K'])
 });
 
-// const swapInArray = (array, {filter, index, atIndex}) => {
+
+
+// immutable array swap
+// const swapInArray = (arrayOrg, {filter, index, atIndex}) => {
+//     const array = [...arrayOrg];
 //     array[index] = array[atIndex];
 //     array[atIndex] = filter;
 
 //     return array;
 // }
 
-// immutable swap
-const swapInArray = (arrayOrg, {filter, index, atIndex}) => {
-    const array = [...arrayOrg];
-    array[index] = array[atIndex];
-    array[atIndex] = filter;
 
-    return array;
-}
+// this in helper with a higher order switch, checking if it is a swap, a delete or a insert
+const swapOrder = (state, action) => 
+    state
+        .set (action.payload.index, state.get (action.payload.atIndex))
+        .set (action.payload.atIndex, action.payload.elem);
+
 
 export const city = (state=initStateCity, action) => {
-    // const stateZone = state[action.env];
-    const stateZone = state.get(action.env);
-   
-                // bug('reducers::city - state, action, stateZone', state, action, action.env, Iterable.isIterable(state))
-                // bug('reducers::city - state.asJSON(), state.get', state.get('sel'))
-
-    const swapOrder = (state, action) => {
-        const stateZone = state.get(action.env);
-
-        const swappedRecord = stateZone
-                    .set (action.payload.index, stateZone.get(action.payload.atIndex))
-                    .set (action.payload.atIndex, action.payload.filter)
-
-        // bug('reducers::city - swappedRecord', swappedRecord)
-
-        return swappedRecord;
-    }
-
     switch (action.type) {
-        case UPDATE_CITY_ORDER:
-           
+        // UPDATE_CITY_ORDER:
+        case filterActionTypes.city:
             return state.set(
                 action.env,
-                // stateZone.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter)
-                // this is swapping in the same array!
-                swapOrder (state, action)
-                // stateZone
-                //     .set (action.payload.index, stateZone.get(action.payload.atIndex))
-                //     .set (action.payload.atIndex, action.payload.filter)
-
-                // swapInArray(stateZone, action.payload)
+                swapOrder (state.get(action.env), action)
             );
 
 
