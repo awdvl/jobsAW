@@ -35,13 +35,7 @@ const Wrapper = styled.div`
 
 export default class Results extends Component {
     shouldComponentUpdate (nextProps, nextState) {
-        // // const props = this.props;
-        // const props = nextProps;
-
-        // // bug.rt('*** Results.jsx props', props)
-        // // bug.rt('*** Results.jsx __isMoving', props.state.ui.filter.__isMoving)
-
-                            // bug('*** Results  should update', !getFilterIsMoving (nextProps.state), nextProps.state);
+        // const props = this.props;
 
         // return !getFilterIsMoving (nextProps.state);
         return !getModalIsOpen (nextProps.state) && !getFilterIsMoving (nextProps.state);

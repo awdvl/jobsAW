@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
@@ -58,6 +59,19 @@ const CloseModalButton = ModalButton.extend`
 
 
 class ReactModalAdapter extends Component {
+    static propTypes = {
+        className: PropTypes.string,
+        modalClassName: PropTypes.string,
+        overlayClassName: PropTypes.string,
+
+        loc: PropTypes.object.isRequired,
+        modalIsOpen: PropTypes.bool.isRequired,
+        modalType: PropTypes.string.isRequired,
+        closeModal: PropTypes.func.isRequired,
+        getFilterZone: PropTypes.func.isRequired,
+
+        setIsMoving: PropTypes.func.isRequired,
+    }
 
     shouldComponentUpdate(nextProps) {
                                                             // bug('ReactModalAdapter nextProps', nextProps, this.props)
@@ -72,17 +86,14 @@ class ReactModalAdapter extends Component {
             modalClassName,
             overlayClassName,
 
+            loc,
             modalIsOpen,
             modalType,
             getFilterZone,
-            loc,
             // setModalIsOpen,
             closeModal,
-            // ...props 
         } = this.props;
-                                                                // bug('REactModalAdapter props', this.props);
-
-
+                                                                bug('REactModalAdapter props', this.props);
 
         const reactModalContent = ({
             modalType,

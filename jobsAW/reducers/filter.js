@@ -87,7 +87,7 @@ const initStateCity = new FilterCity({
     // sel: ['F', 'M'],
     // sel: [],
     // sortOrder: ['pop', 'name'],
-    sortOrder: ['pop'],
+    sortOrder: List(['pop']),
     // sortOrder: ['pop', 'name','DSC'],
     sortByOrder: false,
     // sortByOrder: true,
@@ -218,7 +218,3 @@ export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
 export const getFilterOrder = (state) => state.ui.filter.__order;
 
 export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get(zone);
-// export const getFilterZoneFor = (state) => (filter, zone) => {
-//     console.log('filter, zone', filter, zone, state.ui.filter)
-//     // state.ui.filter[filter].get(zone);
-// }

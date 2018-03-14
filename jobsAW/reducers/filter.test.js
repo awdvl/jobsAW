@@ -3,7 +3,6 @@ import * as types from '../constants/filter';
 
 import FilterCity from '../records/FilterCity';
 
-
 import { List } from 'immutable';
 
 describe ('filter reducer', () => {
@@ -13,13 +12,13 @@ describe ('filter reducer', () => {
         const endState_jobTypeSwapped = List(['compIndy', 'jobType', 'city', 'compEmply']);
         
         const payload_swapCity = {
-            filter: 'city',
+            elem: 'city',
             index: 0,
             atIndex: 1
         };
 
         const payload_swapJobType = {
-            filter: 'jobType',
+            elem: 'jobType',
             index: 2,
             atIndex: 1
         };
@@ -49,38 +48,18 @@ describe ('filter reducer', () => {
     });
 
     describe ('city', () => {
-        // const initialState = new FilterCity({
-        //     sel: ['S', 'M'],
-        //     // sel: List(['S', 'M']),
-        //     sortOrder: ['pop'],
-        //     sortByOrder: false,
-        //     inclRest: true,
-        //     sortRest: ['pop'],
-        //     excl: []
-        //     // excl: ['K']
-        // });        
         const initialState = new FilterCity({
             sel: List(['S', 'M']),
-            sortOrder: ['pop'],
+            sortOrder: List(['pop']),
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
             excl: List([])
         });        
 
-        // const endState_selSwapped = new FilterCity({
-        //     // sel: ['M', 'S'],
-        //     sel: List(['M', 'S']),
-        //     sortOrder: ['pop'],
-        //     sortByOrder: false,
-        //     inclRest: true,
-        //     sortRest: ['pop'],
-        //     excl: []
-        // });
-
         const endState_selSwapped = new FilterCity({
             sel: List(['M', 'S']),
-            sortOrder: ['pop'],
+            sortOrder: List(['pop']),
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
@@ -88,7 +67,7 @@ describe ('filter reducer', () => {
         });
 
         const payload_swapSel = {
-            filter: 'S',
+            elem: 'S',
             index: 0,
             atIndex: 1
         };
@@ -109,7 +88,6 @@ describe ('filter reducer', () => {
                 });
               
             });
-            
           
         });
         

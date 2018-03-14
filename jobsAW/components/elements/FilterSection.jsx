@@ -73,9 +73,8 @@ export default class Filters extends Component {
         filterOrder: PropTypes.object.isRequired,
         loc: PropTypes.object.isRequired,
         updateOrder: PropTypes.func.isRequired,
-            // updateOrderFor: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
-        modalIsOpen: PropTypes.any.isRequired,
+        modalIsOpen: PropTypes.bool.isRequired,
         modalType: PropTypes.string.isRequired,
         setModalType: PropTypes.func.isRequired,
     }
@@ -87,16 +86,12 @@ export default class Filters extends Component {
             filterOrder, 
             loc, 
             updateOrder, 
-                // updateOrderFor,
             setIsMoving, 
             modalIsOpen,
             modalType,
             setModalType 
         } = this.props;
                                                                     // bug('*** Filters modalIsOpen', modalIsOpen)
-                                                                    // bug('*** updateOrder()', updateOrder)
-                                                                    // bug('*** updateOrderFor()', updateOrderFor())
-
         return connectDropTarget(
             // div to transform into native componenet
             <div>
@@ -107,8 +102,6 @@ export default class Filters extends Component {
 
                     {FilterElems({
                         locFilter: loc.filter,
-                        // moveFilter: moveElemFor (filterOrder, updateOrder, setIsMoving),
-                        // moveFilter: moveElemFor (filterOrder, updateOrderFor(), {setIsMoving}),
                         moveFilter: moveElemFor (filterOrder, updateOrder, {setIsMoving}),
                         findFilter: findElemFor (filterOrder),
                         ...this.props

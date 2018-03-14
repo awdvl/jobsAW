@@ -110,21 +110,21 @@ export default class FilterElem extends Component {
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired,
         isDragging: PropTypes.bool.isRequired,
-        id: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
         moveFilter: PropTypes.func.isRequired,
         findFilter: PropTypes.func.isRequired,
+        id: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
         setModalType: PropTypes.func.isRequired,        
 
     };
 
     render() {
         const { 
-            text, 
-            id,
-            isDragging,
             connectDragSource, 
             connectDropTarget,
+            isDragging,
+            id,
+            text, 
             setModalType
         } = this.props;
                                                                             // bug('FElem.jsx this.props', this.props)

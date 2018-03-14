@@ -136,7 +136,6 @@ export default class FilterZoneElem extends Component {
         text: PropTypes.string.isRequired,
         moveFilter: PropTypes.func.isRequired,
         findFilter: PropTypes.func.isRequired,
-        //     setModalType: PropTypes.func.isRequired,        
 
     };
 
@@ -147,13 +146,12 @@ export default class FilterZoneElem extends Component {
             isDragging,
             connectDragSource,
             connectDropTarget,
-            // setModalType
+
         } = this.props;
         // bug('FElem.jsx this.props', this.props)
         const opacity = isDragging ? 0 : 1;
 
         return compose(connectDragSource, connectDropTarget)(
-            // return (
             // div necessary, as "Only native element nodes can now be passed to React DnD connectors"
             <div>
                 <FMSECompButton
@@ -164,9 +162,6 @@ export default class FilterZoneElem extends Component {
                 >
                     {makeFilterButton({
                         text
-                        // setModalParams: () => {
-                        //     setModalType(id)
-                        // }
                     })}
                 </FMSECompButton>
             </div>

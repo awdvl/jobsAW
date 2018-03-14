@@ -22,16 +22,13 @@ const Section = styled.div`
 
 const SecElems = (props) => {
     // bug('SEcElems props', props)
-    const {
-        loc
-    } = props;
+    const { loc } = props;
 
     if (loc) {
         const type = 'city';
         const locForElem = loc[type].get('name')
                                                                                     // bug('locForElem', locForElem)
         return props.zoneFilterOrder.map((elem) => {
-
                                                                                     // bug('order elem', elem)
             return (
                 <FMSElem 
@@ -64,7 +61,6 @@ export default class FModalSelected extends Component {
         modalType: PropTypes.string.isRequired,
         zoneFilterOrder: ImmutablePropTypes.list.isRequired,
         updateOrder: PropTypes.func.isRequired,
-        // updateOrderFor: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
     }
 
@@ -76,7 +72,6 @@ export default class FModalSelected extends Component {
             modalType,
             zoneFilterOrder,
             updateOrder,
-            // updateOrderFor,
             setIsMoving,
 
         } = this.props;
@@ -85,13 +80,9 @@ export default class FModalSelected extends Component {
             <div>
                 <Section>
                     {SecElems({
-                        // locFilter: loc.filter,
-                        // moveFilter: moveElemFor (zoneFilterOrder, updateOrder, setIsMoving),
-                        // moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel', setIsMoving}),
                         moveFilter: moveElemFor (zoneFilterOrder, updateOrder, {
                             env: 'sel', type: modalType, setIsMoving
                         }),
-                        // moveFilter: moveElemFor (zoneFilterOrder, updateOrderFor(modalType), {env: 'sel'}),
                         findFilter: findElemFor (zoneFilterOrder),
                         ...this.props
                     })}
