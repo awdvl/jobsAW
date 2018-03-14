@@ -12,19 +12,20 @@ import bug from '../../../_libs/bug';
 
 const FComp = styled.div`
     /* width: 100px; */
-    background: snow;
-    border: 1px dotted firebrick;
+    background: #8c0275;
+    border: 1px solid white;
     padding: .5em;
     margin: 0 .5em;
     text-align: center;
     /* line-height: .75em; */
 
     &:hover {
-        background: #d9e4e4;
+        background: #630353;
     }
 `;
 
 const FCompButton = SoftButton.extend`
+    color: white;
     padding: .25em;
     border-radius: 3px;
 

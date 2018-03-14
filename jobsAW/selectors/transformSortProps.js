@@ -3,7 +3,7 @@ import bug from '../../_libs/bug';
 
 import multiSort from './multiSort';
 
-import { Iterable } from 'immutable';
+import { List, Iterable } from 'immutable';
 
 // const citySel = ['city', {
 //     S: 0,
@@ -99,31 +99,65 @@ const transformSortProps = (filterState, filteredRecords) => {
 
     //  for more elements, push them into an array of arrays and transform the map in multiSort to a
     //      reduce to apply the different subsorts to the first acc array layer!!
-    const getSortedFilterProps = R.curry((filterName, sortOrder) => {
+    // const getSortedFilterProps = R.curry((filterName, sortOrder) => {
+    //     // default in function not in argument, as function is curried
+    //     sortOrder = sortOrder || [filterName];
+    //                                                     bug('+++ transformSortProps sortOrder',sortOrder, filterName)
+    //                                                             bug('+++ isIterable', Iterable.isIterable(sortOrder))
+    //                                                             bug('sortOrder[0]', sortOrder[0])
+    //                                                             bug('+++ getPRopName',getPropName(filterName))
+                                                                    
+    //     let preparedProp;
+    //                                             // bug('getSortedFilterProps::filterName, sortOrder', filterName, sortOrder)
+    //     if (sortOrder[0] === 'text') {
+    //         preparedProp = ['text', getPropName (filterName)];
+    //                                                 // bug('text filter.sortOrder preparedProp ', preparedProp)
+    //     // e.g. 'pop'
+    //     } else if (!R.isEmpty (sortOrder) && sortOrder[0] !== 'DSC') {
+    //         preparedProp = getPropNameMapped (sortOrder[0]);
+
+    //     // this only fallback                                            
+    //     } else {
+    //         preparedProp = getPropNameMapped (filterName);
+    //                                                 // bug('with filter.sortOrder preparedProp ', preparedProp)
+    //     }
+    //                                                                                 bug('+++ pr', preparedProp)
+    //     if (R.contains ('DSC', sortOrder)) {
+    //         preparedProp.push('DSC');
+    //     }
+    //                                                                                 // bug('+++ pr', preparedProp)
+    //     return preparedProp;
+    // });
+
+
+    const getSortedFilterProps = R.curry ((filterName, sortOrder) => {
         // default in function not in argument, as function is curried
-        sortOrder = sortOrder || [filterName];
-                                                                    // bug('+++ transformSortProps sortOrder',sortOrder)
+        sortOrder = sortOrder || List ([filterName]);
+                                                        // bug('+++ transformSortProps sortOrder',sortOrder, filterName)
+        const firstElem = sortOrder.get (0)
+                                                // bug('+++ firstElem, getPRopName', firstElem, getPropName(filterName))
         let preparedProp;
                                                 // bug('getSortedFilterProps::filterName, sortOrder', filterName, sortOrder)
-        if (sortOrder[0] === 'text') {
+        if (firstElem === 'text') {
             preparedProp = ['text', getPropName (filterName)];
                                                     // bug('text filter.sortOrder preparedProp ', preparedProp)
         // e.g. 'pop'
-        } else if (!R.isEmpty(sortOrder) && sortOrder[0] !== 'DSC') {
-            preparedProp = getPropNameMapped (sortOrder[0]);
+        } else if (!sortOrder.isEmpty () && firstElem !== 'DSC') {
+            preparedProp = getPropNameMapped (firstElem);
 
         // this only fallback                                            
         } else {
             preparedProp = getPropNameMapped (filterName);
                                                     // bug('with filter.sortOrder preparedProp ', preparedProp)
         }
-
-        if (R.contains ('DSC', sortOrder)) {
+                                                                                    // bug('+++ pr', preparedProp)
+        if (sortOrder.includes()) {
             preparedProp.push('DSC');
         }
                                                                                     // bug('+++ pr', preparedProp)
         return preparedProp;
     });
+
 
     // -->> possible also for R.path with automatic switch
     // const getPropFor = filterName => obj => R.prop (filterName, obj);
@@ -147,7 +181,7 @@ const transformSortProps = (filterState, filteredRecords) => {
 
     };
 
-    const filterProps = filterState.__order.map((filterName) => {
+    const filterProps = filterState.__order.map ((filterName) => {
         const filter = filterState[filterName];
         let preparedProp = [];
                                     // bug('>>> transformSortProps::filterProps filterName', filterName, filter);
@@ -174,7 +208,7 @@ const transformSortProps = (filterState, filteredRecords) => {
                                                                         // bug('+++ sortedSamples', sortedSamples)
                 selIndex = {
                     ...selIndex, 
-                    ...makeIndex (sortedSamples, getIndexStart(filter.sel))
+                    ...makeIndex (sortedSamples, getIndexStart (filter.sel))
                 };
                 
             }
@@ -182,7 +216,7 @@ const transformSortProps = (filterState, filteredRecords) => {
             preparedProp.push(selIndex);
 
 
-        } else if (!R.isEmpty(filter.sortOrder) && filter.sortByOrder) {
+        } else if (!R.isEmpty (filter.sortOrder) && filter.sortByOrder) {
                                                         // bug('sortByOrder -> filter.sortOrder', filter.sortOrder)
             preparedProp = getSortedFilterProps (filterName, filter.sortOrder);
         }

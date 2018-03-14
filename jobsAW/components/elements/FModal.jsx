@@ -68,18 +68,18 @@ class ReactModalAdapter extends Component {
         modalIsOpen: PropTypes.bool.isRequired,
         modalType: PropTypes.string.isRequired,
         closeModal: PropTypes.func.isRequired,
-        getFilterZone: PropTypes.func.isRequired,
+        // getFilterZone: PropTypes.func.isRequired,
 
         setIsMoving: PropTypes.func.isRequired,
     }
 
-    shouldComponentUpdate(nextProps) {
+    shouldComponentUpdate (nextProps) {
                                                             // bug('ReactModalAdapter nextProps', nextProps, this.props)
         // do not update if both flags are false
         return nextProps.modalIsOpen || this.props.modalIsOpen;
     }
 
-    render() {
+    render () {
 
         const {
             className,
@@ -89,8 +89,7 @@ class ReactModalAdapter extends Component {
             loc,
             modalIsOpen,
             modalType,
-            getFilterZone,
-            // setModalIsOpen,
+            // getFilterZone,
             closeModal,
         } = this.props;
                                                                 bug('REactModalAdapter props', this.props);
@@ -98,14 +97,13 @@ class ReactModalAdapter extends Component {
         const reactModalContent = ({
             modalType,
             closeModal,
-            getFilterZone,
+            // getFilterZone,
             loc,
         }) => {
             if (modalType !== '') {
-                const zoneFilterOrder = getFilterZone(modalType, 'sel');
-                const modalTitle = loc.filter.get(modalType);  // from props
+                const modalTitle = loc.filter.get (modalType);  // from props
                 
-                                            // bug('*** reactModalContent zoneFilterOrder, loc', zoneFilterOrder, loc)
+                                            // bug('*** reactModalContent - loc', loc)
                 return (
                     <div>
                         <FMHeader>
@@ -118,9 +116,16 @@ class ReactModalAdapter extends Component {
 
                         <FModalSelected
                             modalType={modalType}
-                            zoneFilterOrder={zoneFilterOrder}
+                            zoneType='sel'
+                            // zoneFilterOrder={getFilterZone (modalType, 'sel')}
                             {...this.props}
+                        />
 
+                        <FModalSelected
+                            modalType={modalType}
+                            zoneType='excl'
+                            // zoneFilterOrder={getFilterZone (modalType, 'sel')}
+                            {...this.props}
                         />
 
                     </div>
@@ -148,7 +153,7 @@ class ReactModalAdapter extends Component {
                 {reactModalContent({
                     modalType,
                     closeModal,
-                    getFilterZone,
+                    // getFilterZone,
                     loc,
                 })}
 
@@ -172,8 +177,8 @@ const StyledModal = styled(ReactModalAdapter).attrs({
         left: 211px;
     }
     .Overlay {
-        background: silver;
-        opacity: .92;
+        background: #3d4641;
+        opacity: .95;
         position: absolute;
         top: 130px;
         bottom: 0;

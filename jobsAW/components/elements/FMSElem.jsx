@@ -80,19 +80,20 @@ const makeFilterButton = ({ text }) => {
 };
 
 const filterSource = {
-    beginDrag(props) {
+    beginDrag (props) {
         // bug('*** beginDrag props', props)
-        props.setIsMoving(true);
-
+        props.setIsMoving (true);
+                                                                                    // bug('beginDrag props', props)
         return {
             id: props.id,
-            originalIndex: props.findFilter(props.id),
+            originalIndex: props.findFilter (props.id),
+            zoneType: props.zoneType
         };
     },
 
     endDrag (props, monitor) {
                                                                 // bug('*** FMSELEM::endDrag item-props', monitor.getItem())
-        const { id: droppedId, originalIndex } = monitor.getItem();
+        const { id: droppedId, originalIndex } = monitor.getItem ();
         const didDrop = monitor.didDrop ();
                                                                     // bug('*** FMSELEM::didDrop',didDrop)
         if (!didDrop) {
@@ -132,7 +133,7 @@ export default class FilterZoneElem extends Component {
         connectDragSource: PropTypes.func.isRequired,
         connectDropTarget: PropTypes.func.isRequired,
         isDragging: PropTypes.bool.isRequired,
-        id: PropTypes.string.isRequired,
+        id: PropTypes.any.isRequired,  // number or string
         text: PropTypes.string.isRequired,
         moveFilter: PropTypes.func.isRequired,
         findFilter: PropTypes.func.isRequired,

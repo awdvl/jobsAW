@@ -17,6 +17,16 @@ import bug from '../../../_libs/bug';
 const Wrapper = styled.div`
     font-size: 1.5em;
     color: gray;
+    padding: 1em 2.5em;
+    width: 100%;
+    position: fixed;
+    margin-top: 58.5px;
+    background: #96097f;
+
+    display: flex;
+
+    /* font-size: 1.5em;
+    color: gray;
     background: seagreen;
     padding: 1em 2.5em;
     width: 100%;
@@ -24,7 +34,7 @@ const Wrapper = styled.div`
     margin-top: 58.5px;
     background: wheat;
 
-    display: flex;
+    display: flex; */
 
 `;
 

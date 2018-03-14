@@ -8,24 +8,24 @@ import { Record, List } from 'immutable';
  *  sortRest: true/[]  true: same sort order as in sortOrder,  []: define a different sort order
  *  excl: []  excluded items
 */
-const FilterCityRecord = Record({
-    sel: [],
-    // sel: List([]),
-    // sel: new List(),
-    sortOrder: [],
-    sortByOrder: false,
-    inclRest: false,
-    sortRest: true,
-    excl: []
-});
 // const FilterCityRecord = Record({
-//     sel: List([]),
-//     sortOrder: List([]),
+//     sel: [],
+//     // sel: List([]),
+//     // sel: new List(),
+//     sortOrder: [],
 //     sortByOrder: false,
 //     inclRest: false,
 //     sortRest: true,
-//     excl: List([])
+//     excl: []
 // });
+const FilterCityRecord = Record({
+    sel: List([]),
+    sortOrder: List([]),
+    sortByOrder: false,
+    inclRest: false,
+    sortRest: true,
+    excl: List([])
+});
 
 const FilterCity = FilterCityRecord;
 

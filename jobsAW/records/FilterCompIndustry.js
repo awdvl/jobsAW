@@ -1,4 +1,4 @@
-import { Record } from 'immutable';
+import { Record, List } from 'immutable';
 
 /** 
  *  sel: []  selected items
@@ -9,12 +9,12 @@ import { Record } from 'immutable';
  *  excl: []  excluded items
 */
 const FilterCompIndustryRecord = Record({
-    sel: [],
-    sortOrder: [],
+    sel: List([]),
+    sortOrder: List([]),
     sortByOrder: false,
     inclRest: false,
     sortRest: true,
-    excl: []
+    excl: List([])
 });
 
 const FilterCompIndustry = FilterCompIndustryRecord;

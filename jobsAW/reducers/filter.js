@@ -5,8 +5,11 @@ import FilterJobType from '../records/FilterJobType';
 import FilterCompIndustry from '../records/FilterCompIndustry';
 import FilterCompEmply from '../records/FilterCompEmply';
 
+import R from 'ramda';
+
 import { 
     filterActionTypes,
+    moveTypes,
     UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
     UPDATE_CITY_ORDER
 } from '../constants/filter';
@@ -101,10 +104,10 @@ const initStateCity = new FilterCity({
     // sortRest: ['pop', 'DSC'],
     // sortRest: ['text', 'DSC'],
     // sortRest: ['text'],
-    excl: List([])
+    // excl: List([])
     // excl: []
     // excl: ['K']
-    // excl: List(['K'])
+    excl: List(['K'])
 });
 
 
@@ -126,6 +129,21 @@ const swapOrder = (state, action) =>
         .set (action.payload.atIndex, action.payload.elem);
 
 
+const moveToZone = (state, action) => {
+            // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
+    const getFromZone = state.get (action.env[0]);
+    const getToZone = state.get (action.env[1]);
+                                                                        // bug(' --> getFromZone', getFromZone)
+                                                                        // bug(' --> moveToZOne state', state)
+    const newState = state
+        .set (action.env[0], getFromZone.delete (action.payload.index))
+        .set (action.env[1], getToZone.insert (action.payload.atIndex, action.payload.elem))
+        // .set (action.env[0], getFromZone.splice (action.payload.index, 1))
+        // .set (action.env[1], getToZone.splice (action.payload.atIndex, 0, action.payload.elem))
+
+    return newState;
+};
+
 export const city = (state=initStateCity, action) => {
     switch (action.type) {
         // UPDATE_CITY_ORDER:
@@ -135,6 +153,10 @@ export const city = (state=initStateCity, action) => {
                 swapOrder (state.get(action.env), action)
             );
 
+        case moveTypes.city:
+            return moveToZone (state, action);
+
+            // return state;
 
         default:
             return state;
@@ -143,17 +165,17 @@ export const city = (state=initStateCity, action) => {
 
 
 const initStateCompIndy = new FilterCompIndustry({
-    sel: [2,1],
+    sel: List ([2,1]),
     // sel: [],
     // sortOrder: [1,2],
-    sortOrder: ['text'],
+    sortOrder: List (['text']),
     // sortByOrder: false,
     sortByOrder: true,
     inclRest: true,
     // sortRest: true,
     sortRest: false,
     // excl: [3]
-    excl: []
+    excl: List ([])
 });
 
 const compIndy = (state=initStateCompIndy, action) => {
@@ -166,16 +188,30 @@ const compIndy = (state=initStateCompIndy, action) => {
 
 const initStateCompEmply = new FilterCompEmply({
     // sel: [],
-    sel: [4,5,6,9],
+    sel: List ([4,5,6,9]),
     // sel: [9,6,5,4],
     // sortOrder: ['emply'],
-    sortOrder: ['DSC'],
+    // sortOrder: ['DSC'],
+    sortOrder: List (['DSC']),
     sortByOrder: true,
     // sortByOrder: false,
     inclRest: false,
     sortRest: true,
-    excl: []
+    excl: List ([])
 });
+// const initStateCompEmply = new FilterCompEmply({
+//     // sel: [],
+//     sel: [4,5,6,9],
+//     // sel: [9,6,5,4],
+//     // sortOrder: ['emply'],
+//     // sortOrder: ['DSC'],
+//     sortOrder: ['DSC'],
+//     sortByOrder: true,
+//     // sortByOrder: false,
+//     inclRest: false,
+//     sortRest: true,
+//     excl: []
+// });
 
 const compEmply = (state=initStateCompEmply, action) => {
     switch (action.type) {
@@ -188,10 +224,25 @@ const compEmply = (state=initStateCompEmply, action) => {
 const initStateJobType = new FilterJobType({
     // sel: [3]
     // sel: []
-    sel: [1,2,3],
-    sortOrder: ['text'],
-    sortByOrder: true
+    sel: List ([1,2,3]),
+    sortOrder: List (['text']),
+    sortByOrder: true,
+    inclRest: false,
+    sortRest: true,
+    excl: List ([])
 });
+// const initStateJobType = new FilterJobType({
+//     // sel: [3]
+//     // sel: []
+//     // sel: [1,2,3],
+//     // sel: List ([1,2,3]),
+//     sel: List ([1,2]),
+//     sortOrder: ['text'],
+//     sortByOrder: true,
+//     // inclRest: false,
+//     // sortRest: true,
+//     excl: List ([3])
+// });
 
 const jobType = (state=initStateJobType, action) => {
     switch (action.type) {

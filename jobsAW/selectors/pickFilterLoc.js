@@ -8,6 +8,8 @@ export default (language, data) => {
                                                                 // bug('loc.filter', loc.get('filter'))
     return {
         filter: loc.get('filter'),
-        city: loc.get('city')
+        city: loc.get('city'),
+        comp: loc.get('company'),
+        job: loc.get('job'),
     };
 };

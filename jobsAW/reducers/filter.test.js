@@ -54,7 +54,8 @@ describe ('filter reducer', () => {
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            excl: List([])
+            // excl: List([])
+            excl: List(['K'])
         });        
 
         const endState_selSwapped = new FilterCity({
@@ -63,10 +64,26 @@ describe ('filter reducer', () => {
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            excl: List([])
+            // excl: List([])
+            excl: List(['K'])
         });
 
+        const endState_movedFromSelToExcl = new FilterCity({
+            sel: List(['M']),
+            sortOrder: List(['pop']),
+            sortByOrder: false,
+            inclRest: true,
+            sortRest: List(['pop']),
+            excl: List(['K', 'S'])
+        })
+
         const payload_swapSel = {
+            elem: 'S',
+            index: 0,
+            atIndex: 1
+        };
+
+        const payload_moveSelToExcl = {
             elem: 'S',
             index: 0,
             atIndex: 1
@@ -90,6 +107,20 @@ describe ('filter reducer', () => {
             });
           
         });
+
+        describe ('move between zones', () => {
+            describe('from sel to excl', () => {
+                it ('should move S', () => {
+                    expect (reducer.city (initialState, {
+                        type: types.moveTypes.city,
+                        env: ['sel', 'excl'],
+                        payload: payload_moveSelToExcl
+                    })).toEqual (endState_movedFromSelToExcl);
+                });
+              
+            })
+            
+        })
         
     });
     
