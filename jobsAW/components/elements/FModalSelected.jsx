@@ -8,7 +8,10 @@ import { findElemFor, moveElemFor } from '../../../_libs/dnd';
 import FMSElem from './FMSElem';
 import styled from 'styled-components';
 
+// import { getMovingFromZone } from '../../reducers/filter';
+
 import bug from '../../../_libs/bug';
+import { isNull } from 'util';
 
 const Section = styled.div`
     background: #e1e8d6; 
@@ -33,7 +36,7 @@ const SectionTitle = styled.div`
 `;
 
 const SectionBody = styled.div`
-    min-height: 2em;
+    min-height: 5.5em;
     padding: 1em;
     display: flex;
 `;
@@ -82,13 +85,47 @@ const SecElems = (props) => {
 const filterTarget = {
     hover(props, monitor, component) {
                         bug('FModalSelected::filterTarget:hover - props, monitor, component', props, monitor, component)
-        const { zoneType } = monitor.getItem();
+        const { id, zoneType } = monitor.getItem();
+        
                                                         bug('FModalSelected::filterTarget:hover - zoneType', zoneType)
+        const currentZoneType = isNull (props.movedFromZone) ?
+            zoneType :
+            props.movedFromZone;
+
+        if (currentZoneType !== props.zoneType) {
+        // if (zoneType !== props.zoneType) {
+            const overIndex = 0;  // for empty
+            // const overIndex = props.findFilter (overId);
+            // const newZone = zoneType !== props.zoneType ?
+            //     props.zoneType :
+            //     null;
+
+            const { 
+                getFilterZone,
+                updateOrder,
+                zoneType: zoneTypeOrg,
+                modalType,
+                setIsMoving,
+                setMovingFromZone,
+            } = props;
+
+            const zoneFilterOrder = getFilterZone (modalType, zoneType);
+            const moveFilter = moveElemFor (zoneFilterOrder, updateOrder, {
+                env: zoneTypeOrg, type: modalType, setIsMoving, setMovingFromZone
+            });
+
+
+            moveFilter (id, overIndex, props.zoneType);
+
+            // props.moveFilter (id, overIndex, props.zoneType);
+        }
+                                                                                                        
     },
 
     drop(props, monitor, component) {
                                             // bug('*** drop  props, monitor, component', props, monitor, component)
-        props.setIsMoving(false);
+        props.setIsMoving (false);
+            props.setMovingFromZone (null);
     }
 };
 
@@ -107,6 +144,7 @@ export default class FModalSelected extends Component {
         updateOrder: PropTypes.func.isRequired,
         moveToZone: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
+        setMovingFromZone: PropTypes.func.isRequired,
     }
 
     render() {
@@ -121,6 +159,7 @@ export default class FModalSelected extends Component {
             updateOrder,
             moveToZone,
             setIsMoving,
+            setMovingFromZone,
 
         } = this.props;
 
@@ -154,7 +193,7 @@ export default class FModalSelected extends Component {
                         {SecElems({
                             zoneFilterOrder,
                             moveFilter: moveElemFor (zoneFilterOrder, updateOrder, {
-                                env: zoneType, type: modalType, setIsMoving
+                                env: zoneType, type: modalType, setIsMoving, setMovingFromZone
                             }),
                             findFilter: findElemFor (zoneFilterOrder),
                             ...this.props

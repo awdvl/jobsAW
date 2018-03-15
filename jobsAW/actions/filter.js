@@ -2,11 +2,17 @@ import {
     filterActionTypes,
     moveTypes,
     UPDATE_FILTER_ISMOVING,
+    UPDATE_MOVING_FROM_ZONE,
 } from '../constants/filter';
 
 
 export const setIsMoving = (payload) => ({
     type: UPDATE_FILTER_ISMOVING,
+    payload
+});
+
+export const setMovingFromZone = (payload) => ({
+    type: UPDATE_MOVING_FROM_ZONE,
     payload
 });
 

@@ -11,6 +11,7 @@ import {
     filterActionTypes,
     moveTypes,
     UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
+    UPDATE_MOVING_FROM_ZONE,
     UPDATE_CITY_ORDER
 } from '../constants/filter';
 
@@ -37,6 +38,16 @@ export const __order = (state=initStateOrder, action) => {
 export const __isMoving = (state=false, action) => {
     switch (action.type) {
         case UPDATE_FILTER_ISMOVING:
+            return action.payload;
+
+        default:
+            return state;
+    }
+};
+
+export const __movingFromZone = (state=null, action) => {
+    switch (action.type) {
+        case UPDATE_MOVING_FROM_ZONE:
             return action.payload;
 
         default:
@@ -104,10 +115,10 @@ const initStateCity = new FilterCity({
     // sortRest: ['pop', 'DSC'],
     // sortRest: ['text', 'DSC'],
     // sortRest: ['text'],
-    // excl: List([])
     // excl: []
     // excl: ['K']
-    excl: List(['K'])
+    // excl: List(['K'])
+    excl: List([])
 });
 
 
@@ -133,8 +144,8 @@ const moveToZone = (state, action) => {
             // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
     const getFromZone = state.get (action.env[0]);
     const getToZone = state.get (action.env[1]);
-                                                                        // bug(' --> getFromZone', getFromZone)
-                                                                        // bug(' --> moveToZOne state', state)
+                                                                        bug(' --> getFromZone', getFromZone)
+                                                                bug(' --> moveToZOne state, action', state, action)
     const newState = state
         .set (action.env[0], getFromZone.delete (action.payload.index))
         .set (action.env[1], getToZone.insert (action.payload.atIndex, action.payload.elem))
@@ -255,6 +266,7 @@ const jobType = (state=initStateJobType, action) => {
 export const filter = combineReducers({
     __order,
     __isMoving,
+    __movingFromZone,
     __pointToPath,
     __mapToPath,
     city,
@@ -266,6 +278,8 @@ export const filter = combineReducers({
 
 // accessor functions
 export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
+export const getMovingFromZone = (state) => state.ui.filter.__movingFromZone;
+
 export const getFilterOrder = (state) => state.ui.filter.__order;
 
 export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get(zone);

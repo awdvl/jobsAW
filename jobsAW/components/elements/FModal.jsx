@@ -70,7 +70,7 @@ class ReactModalAdapter extends Component {
         closeModal: PropTypes.func.isRequired,
         // getFilterZone: PropTypes.func.isRequired,
 
-        setIsMoving: PropTypes.func.isRequired,
+        // setIsMoving: PropTypes.func.isRequired,
     }
 
     shouldComponentUpdate (nextProps) {

@@ -83,6 +83,9 @@ const filterSource = {
     beginDrag (props) {
         // bug('*** beginDrag props', props)
         props.setIsMoving (true);
+
+        // ---> set here, does not need the zoneType here below in the props!!
+        props.setMovingFromZone (props.zoneType);
                                                                                     // bug('beginDrag props', props)
         return {
             id: props.id,
