@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
 import bug from '../../../_libs/bug';
+import { isNull } from 'util';
 
 
 const FMSECompButton = SoftButton.extend`
@@ -117,15 +118,27 @@ const filterTarget = {
 
         const { zoneType } = monitor.getItem();
 
-bug('FMSElem::filterTarget:hover draggedId, overId', draggedId, overId)
-bug('FMSElem::filterTarget:hover zoneType, props.zoneType', zoneType, props.zoneType)
+bug('*** FMSElem::filterTarget:hover draggedId, overId', draggedId, overId, zoneType, props.zoneType)
+// bug('*** FMSElem::filterTarget:hover draggedId, overId', draggedId, overId)
+// bug('*** FMSElem::filterTarget:hover zoneType, props.zoneType', zoneType, props.zoneType)
 
         if (draggedId !== overId) {
             const overIndex = props.findFilter (overId);
-            const newZone = zoneType !== props.zoneType ?
-                props.zoneType :
+
+            const currentZoneType = isNull (props.movedFromZone) ?
+                zoneType :
+                props.movedFromZone;                
+                
+            
+            // const newZone = zoneType !== props.zoneType ?
+                // props.zoneType :
+                // null;
+            const newZone = currentZoneType !== props.zoneType ?
+                [currentZoneType, props.zoneType] :
                 null;
 
+
+            // props.moveFilter (draggedId, overIndex, [currentZoneType, newZone]);
             props.moveFilter (draggedId, overIndex, newZone);
         }
     },

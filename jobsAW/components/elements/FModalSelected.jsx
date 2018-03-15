@@ -84,17 +84,27 @@ const SecElems = (props) => {
 
 const filterTarget = {
     hover(props, monitor, component) {
-                        bug('FModalSelected::filterTarget:hover - props, monitor, component', props, monitor, component)
+                        // bug('FModalSelected::filterTarget:hover - props, monitor, component', props, monitor, component)
         const { id, zoneType } = monitor.getItem();
         
-                                                        bug('FModalSelected::filterTarget:hover - zoneType', zoneType)
+                                                        // bug('FModalSelected::filterTarget:hover - zoneType', zoneType)
+                                                        
+
         const currentZoneType = isNull (props.movedFromZone) ?
             zoneType :
             props.movedFromZone;
+            
+        const elemListZoneTo = props.getFilterZone (props.modalType, props.zoneType);
+
+                    // bug('*** FModalSelected::filterTarget:hover - elemListZoneTo',elemListZoneTo, elemListZoneTo.size)
+        bug('*** FModalSelected::filterTarget:hover currentZoneType, props.zoneType', currentZoneType, props.zoneType)
 
         if (currentZoneType !== props.zoneType) {
         // if (zoneType !== props.zoneType) {
-            const overIndex = 0;  // for empty
+            // const overIndex = 0;  // for empty
+            // const overIndex = elemListZoneTo.isEmpty() ? 0 : elemListZoneTo.size +1 ;
+            const overIndex = elemListZoneTo.isEmpty() ? 0 : elemListZoneTo.size;
+
             // const overIndex = props.findFilter (overId);
             // const newZone = zoneType !== props.zoneType ?
             //     props.zoneType :
@@ -103,17 +113,20 @@ const filterTarget = {
             const { 
                 getFilterZone,
                 updateOrder,
-                zoneType: zoneTypeOrg,
+                // zoneType: zoneTypeOrg,
                 modalType,
                 setIsMoving,
                 setMovingFromZone,
             } = props;
 
-            const zoneFilterOrder = getFilterZone (modalType, zoneType);
-            const moveFilter = moveElemFor (zoneFilterOrder, updateOrder, {
-                env: zoneTypeOrg, type: modalType, setIsMoving, setMovingFromZone
-            });
+            // const zoneTypeOrg = props.zoneType;
 
+            // bug('*** FModalSelected::zoneTypeOrg', zoneTypeOrg)
+
+            const zoneFilterOrder = getFilterZone (modalType, currentZoneType);
+            const moveFilter = moveElemFor (zoneFilterOrder, updateOrder, {
+                env: currentZoneType, type: modalType, setIsMoving, setMovingFromZone
+            });
 
             moveFilter (id, overIndex, props.zoneType);
 

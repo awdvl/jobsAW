@@ -144,11 +144,11 @@ const moveToZone = (state, action) => {
             // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
     const getFromZone = state.get (action.env[0]);
     const getToZone = state.get (action.env[1]);
-                                                                        bug(' --> getFromZone', getFromZone)
-                                                                bug(' --> moveToZOne state, action', state, action)
+                                                                        bug('*** getFromZone', getFromZone)
+                                                                bug('*** moveToZOne state, action', state, action)
     const newState = state
         .set (action.env[0], getFromZone.delete (action.payload.index))
-        .set (action.env[1], getToZone.insert (action.payload.atIndex, action.payload.elem))
+        .set (action.env[1], getToZone.insert (action.payload.atIndex || 0, action.payload.elem))
         // .set (action.env[0], getFromZone.splice (action.payload.index, 1))
         // .set (action.env[1], getToZone.splice (action.payload.atIndex, 0, action.payload.elem))
 
