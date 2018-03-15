@@ -1,5 +1,5 @@
 import { 
-    filterActionTypes,
+    updateTypes,
     moveTypes,
     UPDATE_FILTER_ISMOVING,
     UPDATE_MOVING_FROM_ZONE,
@@ -18,10 +18,9 @@ export const setMovingFromZone = (payload) => ({
 
 export const updateOrder = (elem, payload, env, type = '_') => {
                                                         // console.log('+++ updateOrder filter', filter)
-    const types = Array.isArray(env) ? moveTypes : filterActionTypes;
+    const types = Array.isArray (env) ? moveTypes : updateTypes;
 
     return {
-        // type: filterActionTypes[type],
         type: types[type],
         payload: {
             elem,
@@ -31,30 +30,3 @@ export const updateOrder = (elem, payload, env, type = '_') => {
     };
 };
 
-// export const updateOrder = (elem, payload, env, type = '_', newEnv) => {
-
-//     if (newEnv) {
-//         env = [env, newEnv];
-//     }
-//                                                         // console.log('+++ updateOrder filter', filter)
-//     return {
-//         type: filterActionTypes[type],
-//         payload: {
-//             elem,
-//             ...payload
-//         },
-//         env
-//     };
-// };
-
-export const moveToZone = (elem, payload, env, type) => {
-
-    return {
-        type: moveTypes[type],
-        payload: {
-            elem,
-            ...payload
-        },
-        env
-    };
-};

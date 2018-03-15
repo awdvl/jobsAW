@@ -8,7 +8,7 @@ import FilterCompEmply from '../records/FilterCompEmply';
 import R from 'ramda';
 
 import { 
-    filterActionTypes,
+    updateTypes,
     moveTypes,
     UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
     UPDATE_MOVING_FROM_ZONE,
@@ -26,7 +26,7 @@ const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
 export const __order = (state=initStateOrder, action) => {
     switch (action.type) {
         // UPDATE_FILTER_ORDER:
-        case filterActionTypes._:
+        case updateTypes._:
             // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
             return swapOrder (state, action);
 
@@ -139,18 +139,20 @@ const swapOrder = (state, action) =>
         .set (action.payload.index, state.get (action.payload.atIndex))
         .set (action.payload.atIndex, action.payload.elem);
 
+const updateZone = (state, action) => 
+    state.set (action.env, swapOrder (state.get (action.env), action));
 
 const moveToZone = (state, action) => {
-            // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
-    const getFromZone = state.get (action.env[0]);
-    const getToZone = state.get (action.env[1]);
-                                                                        bug('*** getFromZone', getFromZone)
-                                                                bug('*** moveToZOne state, action', state, action)
+    const fromZone = state.get (action.env[0]);
+    const toZone = state.get (action.env[1]);
+                                    // bug('*** fromZone', fromZone); bug('*** moveToZOne state, action', state, action)
+                                    // bug('## action.payload.atIndex', action.payload.atIndex)
     const newState = state
-        .set (action.env[0], getFromZone.delete (action.payload.index))
-        .set (action.env[1], getToZone.insert (action.payload.atIndex || 0, action.payload.elem))
-        // .set (action.env[0], getFromZone.splice (action.payload.index, 1))
-        // .set (action.env[1], getToZone.splice (action.payload.atIndex, 0, action.payload.elem))
+        .set (action.env[0], fromZone.delete (action.payload.index))
+        // .set (action.env[1], toZone.insert (action.payload.atIndex || 0, action.payload.elem))
+        .set (action.env[1], toZone.insert (action.payload.atIndex, action.payload.elem))
+        // .set (action.env[0], fromZone.splice (action.payload.index, 1))
+        // .set (action.env[1], toZone.splice (action.payload.atIndex, 0, action.payload.elem))
 
     return newState;
 };
@@ -158,16 +160,11 @@ const moveToZone = (state, action) => {
 export const city = (state=initStateCity, action) => {
     switch (action.type) {
         // UPDATE_CITY_ORDER:
-        case filterActionTypes.city:
-            return state.set(
-                action.env,
-                swapOrder (state.get(action.env), action)
-            );
+        case updateTypes.city:
+            return updateZone (state, action);
 
         case moveTypes.city:
             return moveToZone (state, action);
-
-            // return state;
 
         default:
             return state;

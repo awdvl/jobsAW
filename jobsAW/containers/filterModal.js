@@ -4,7 +4,6 @@ import { getFilterZoneFor, getMovingFromZone } from '../reducers/filter';
 import { getModalIsOpen, getModalType } from '../reducers/ui';
 import { 
     updateOrder, 
-    moveToZone, 
     setIsMoving,
     setMovingFromZone
 } from '../actions/filter';
@@ -25,7 +24,6 @@ const mapDispatchToProps = dispatch => ({
     setMovingFromZone: fromZone => dispatch (setMovingFromZone (fromZone)),
     closeModal: () => dispatch (closeModal ()),
     updateOrder: (...props) => dispatch (updateOrder (...props)),
-    moveToZone: (...props) => dispatch (moveToZone (...props)),
 });
 
 const enhance = connect (

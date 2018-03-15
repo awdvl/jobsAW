@@ -10,9 +10,6 @@ export const moveElemFor = (elemOrder, updateOrder, {setIsMoving, setMovingFromZ
         const index = findElemFor (elemOrder)(elem);
                                 // bug('dnd.js:: *** elemOrder, elem, index, atIndex', elemOrder, elem, index, atIndex)
         bug('*** dnd.js::moveElemFor - env, newEnv, elemOrder, index, atIndex', env, newEnv, elemOrder, index, atIndex)
-        // if (newEnv) {
-        //     env = [env, newEnv];
-        // }
                                                         
         if (newEnv) {
             if (Array.isArray(newEnv)) {
@@ -24,13 +21,10 @@ export const moveElemFor = (elemOrder, updateOrder, {setIsMoving, setMovingFromZ
         }
                                                         
         updateOrder (
-            elem, 
-            { 
+            elem, { 
                 index,
                 atIndex
-            }, 
-            env,
-            type
+            }, env, type
         );
 
         if (setMovingFromZone && newEnv) {

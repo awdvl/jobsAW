@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+// import ImmutablePropTypes from 'react-immutable-proptypes';
 import ItemTypes from '../../constants/itemTypes';
 import { findElemFor, moveElemFor } from '../../../_libs/dnd';
 
@@ -100,15 +100,7 @@ const filterTarget = {
         bug('*** FModalSelected::filterTarget:hover currentZoneType, props.zoneType', currentZoneType, props.zoneType)
 
         if (currentZoneType !== props.zoneType) {
-        // if (zoneType !== props.zoneType) {
-            // const overIndex = 0;  // for empty
-            // const overIndex = elemListZoneTo.isEmpty() ? 0 : elemListZoneTo.size +1 ;
-            const overIndex = elemListZoneTo.isEmpty() ? 0 : elemListZoneTo.size;
-
-            // const overIndex = props.findFilter (overId);
-            // const newZone = zoneType !== props.zoneType ?
-            //     props.zoneType :
-            //     null;
+            const overIndex = elemListZoneTo.size;
 
             const { 
                 getFilterZone,
@@ -153,9 +145,7 @@ export default class FModalSelected extends Component {
         zoneType: PropTypes.string.isRequired,
             getFilterZone: PropTypes.func.isRequired,
         
-        // zoneFilterOrder: ImmutablePropTypes.list.isRequired,
         updateOrder: PropTypes.func.isRequired,
-        moveToZone: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
         setMovingFromZone: PropTypes.func.isRequired,
     }
@@ -168,9 +158,7 @@ export default class FModalSelected extends Component {
             modalType,
             zoneType,
                 getFilterZone,
-            // zoneFilterOrder,
             updateOrder,
-            moveToZone,
             setIsMoving,
             setMovingFromZone,
 

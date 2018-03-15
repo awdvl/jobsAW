@@ -68,9 +68,6 @@ class ReactModalAdapter extends Component {
         modalIsOpen: PropTypes.bool.isRequired,
         modalType: PropTypes.string.isRequired,
         closeModal: PropTypes.func.isRequired,
-        // getFilterZone: PropTypes.func.isRequired,
-
-        // setIsMoving: PropTypes.func.isRequired,
     }
 
     shouldComponentUpdate (nextProps) {
@@ -89,7 +86,6 @@ class ReactModalAdapter extends Component {
             loc,
             modalIsOpen,
             modalType,
-            // getFilterZone,
             closeModal,
         } = this.props;
                                                                 bug('REactModalAdapter props', this.props);
@@ -97,7 +93,6 @@ class ReactModalAdapter extends Component {
         const reactModalContent = ({
             modalType,
             closeModal,
-            // getFilterZone,
             loc,
         }) => {
             if (modalType !== '') {
@@ -115,16 +110,12 @@ class ReactModalAdapter extends Component {
                         </FMHeader>
 
                         <FModalSelected
-                            modalType={modalType}
                             zoneType='sel'
-                            // zoneFilterOrder={getFilterZone (modalType, 'sel')}
                             {...this.props}
                         />
 
                         <FModalSelected
-                            modalType={modalType}
                             zoneType='excl'
-                            // zoneFilterOrder={getFilterZone (modalType, 'sel')}
                             {...this.props}
                         />
 
@@ -153,7 +144,6 @@ class ReactModalAdapter extends Component {
                 {reactModalContent({
                     modalType,
                     closeModal,
-                    // getFilterZone,
                     loc,
                 })}
 
