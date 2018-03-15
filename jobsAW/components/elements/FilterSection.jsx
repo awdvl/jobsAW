@@ -68,7 +68,7 @@ const FilterElems = (props) => {
 const filterTarget = {
     drop (props, monitor, component) {
         // bug('*** drop  props, monitor, component', props, monitor, component)
-        props.setIsMoving(false);
+        props.setIsMoving (false);
     }    
 };
 

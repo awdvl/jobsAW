@@ -112,9 +112,18 @@ const filterTarget = {
         const { id: draggedId } = monitor.getItem();
         const { id: overId } = props;
 
+        const { zoneType } = monitor.getItem();
+
+bug('FMSElem::filterTarget:hover draggedId, overId', draggedId, overId)
+bug('FMSElem::filterTarget:hover zoneType, props.zoneType', zoneType, props.zoneType)
+
         if (draggedId !== overId) {
-            const overIndex = props.findFilter(overId);
-            props.moveFilter(draggedId, overIndex);
+            const overIndex = props.findFilter (overId);
+            const newZone = zoneType !== props.zoneType ?
+                props.zoneType :
+                null;
+
+            props.moveFilter (draggedId, overIndex, newZone);
         }
     },
 };

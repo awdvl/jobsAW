@@ -47,25 +47,24 @@ const locRefForModalType = {
 
 const getLocForModalType = (loc, modalType) => {
     const locRef = locRefForModalType[modalType];
-                                    bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
-                                            loc, modalType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
-
+                                    // bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
+                                    //         loc, modalType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
     return loc[locRef[0]].get (locRef[1]);
 }
 
 const SecElems = (props) => {
     // bug('SEcElems props', props)
     const { loc, modalType } = props;
-                                                                                    bug('SecElems props', props)
+                                                                                    // bug('SecElems props', props)
     if (loc) {
         // const type = 'city';
         // const locForElem = loc[type].get('name')
         const locForElem = getLocForModalType (loc, modalType)
-                                                                                    bug('*** locForElem', locForElem)
-                                                                bug('*** props.zoneFilterOrder', props.zoneFilterOrder)
+                                                                //                     bug('*** locForElem', locForElem)
+                                                                // bug('*** props.zoneFilterOrder', props.zoneFilterOrder)
         return props.zoneFilterOrder.map ((elem) => {
-                                                                                    bug('*** order elem', elem)
-                                                                bug('*** text ', locForElem.get (String (elem)))
+                                                                //                     bug('*** order elem', elem)
+                                                                // bug('*** text ', locForElem.get (String (elem)))
             return (
                 <FMSElem 
                     key={elem}
@@ -106,6 +105,7 @@ export default class FModalSelected extends Component {
         
         // zoneFilterOrder: ImmutablePropTypes.list.isRequired,
         updateOrder: PropTypes.func.isRequired,
+        moveToZone: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
     }
 
@@ -119,6 +119,7 @@ export default class FModalSelected extends Component {
                 getFilterZone,
             // zoneFilterOrder,
             updateOrder,
+            moveToZone,
             setIsMoving,
 
         } = this.props;
