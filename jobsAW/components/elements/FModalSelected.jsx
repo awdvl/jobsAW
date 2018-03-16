@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import ItemTypes from '../../constants/itemTypes';
 import { findElem } from '../../../_libs/dnd';
 
+import HoverText from './HoverText';
+
 import FMSElem from './FMSElem';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
@@ -131,14 +133,24 @@ const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
     let text = textFalse;
 
     if (zoneType === 'sel') {
+        // return (
+        //     <OnlyTopButton 
+        //         onlyTop={onlyTop}
+        //         onClick={() => toggleOnlyTop(modalType)}
+        //         onMouseEnter={() => text = textTrue}
+        //     >
+        //         {text}
+        //     </OnlyTopButton>
+        // );
         return (
-            <OnlyTopButton 
-                onlyTop={onlyTop}
-                onClick={() => toggleOnlyTop(modalType)}
-                onMouseEnter={() => text = textTrue}
-            >
-                {text}
-            </OnlyTopButton>
+            <HoverText>
+                {(isHovered) => {
+                    const text = isHovered ? 'Button hovered' : 'Button ent-hovered'
+                    bug('** isHovered', isHovered);
+                    return (<div>{text}</div>);
+                    // return (<div>Hörzer</div>);
+                }}
+            </HoverText>
         );
     }
 };
