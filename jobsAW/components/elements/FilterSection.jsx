@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import ItemTypes from '../../constants/itemTypes';
 import { DropTarget } from 'react-dnd';
 
-// import { findElemFor, moveElemFor } from '../../../_libs/dnd';
-import { findElemFor, moveElemFor2 } from '../../../_libs/dnd';
+import { findElem, moveElem } from '../../../_libs/dnd';
 
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
@@ -113,9 +112,8 @@ export default class Filters extends Component {
 
                     {FilterElems({
                         locFilter: loc.filter,
-                        // moveFilter: moveElemFor (filterOrder, updateOrder, {setIsMoving}),
-                        moveFilter: moveElemFor2 (updateOrder, {setIsMoving}),
-                        findFilter: findElemFor (filterOrder),
+                        moveFilter: moveElem (updateOrder, {setIsMoving}),
+                        findFilter: findElem (filterOrder),
                         ...this.props
                     })}
 

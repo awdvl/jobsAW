@@ -6,7 +6,7 @@ import { SoftButton } from '../../styles/components';
 
 import FModalSelected from './FModalSelected';
 
-import { moveElemFor2 } from '../../../_libs/dnd';
+import { moveElem } from '../../../_libs/dnd';
 import bug from '../../../_libs/bug';
 
 
@@ -113,8 +113,7 @@ class ReactModalAdapter extends Component {
             if (modalType !== '') {
                 const modalTitle = loc.filter.get (modalType);  // from props
 
-                const moveFilter = moveElemFor2 (updateOrder, {
-                    // type: modalType, setIsMoving, setMovingFromZone
+                const moveFilter = moveElem (updateOrder, {
                     type: modalType, setMovingFromZone
                 });
     

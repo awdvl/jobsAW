@@ -16,13 +16,26 @@ export const setMovingFromZone = (payload) => ({
     payload
 });
 
+/**
+ * 
+ * @param {string/number} elem 
+ * @param {object} payload 
+ * @param {array/undefined} env  -  undefined (no zones), 
+ *                                      [] (drop outside), [x] (multiple zones, no zone move), [x,y] (intra zones move)
+ * @param {string} type 
+ */
 export const updateOrder = (elem, payload, env, type = '_') => {
                                                         // console.log('+++ updateOrder filter', filter)
-    // const types = Array.isArray (env) ? moveTypes : updateTypes;
-    const types = env && env[1] ? moveTypes : updateTypes;
+    const withInZone = !env || env.length === 1;
 
+    const types = withInZone ?
+        updateTypes :
+            env[1] ?
+                moveTypes :
+                null;
+                        
     return {
-        type: types[type],
+        type: types ? types[type] : null,
         payload: {
             elem,
             ...payload

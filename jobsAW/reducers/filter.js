@@ -140,7 +140,6 @@ const swapOrder = (state, action) =>
         .set (action.payload.atIndex, action.payload.elem);
 
 const updateZone = (state, action) => 
-    // state.set (action.env, swapOrder (state.get (action.env), action));
     state.set (action.env[0], swapOrder (state.get (action.env[0]), action));
 
 const moveToZone = (state, action) => {
@@ -150,7 +149,6 @@ const moveToZone = (state, action) => {
                                     // bug('## action.payload.atIndex', action.payload.atIndex)
     const newState = state
         .set (action.env[0], fromZone.delete (action.payload.index))
-        // .set (action.env[1], toZone.insert (action.payload.atIndex || 0, action.payload.elem))
         .set (action.env[1], toZone.insert (action.payload.atIndex, action.payload.elem))
         // .set (action.env[0], fromZone.splice (action.payload.index, 1))
         // .set (action.env[1], toZone.splice (action.payload.atIndex, 0, action.payload.elem))
