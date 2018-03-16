@@ -82,7 +82,7 @@ const makeFilterButton = ({ text }) => {
 const filterSource = {
     beginDrag (props) {
         // bug('*** beginDrag props', props)
-        props.setMovingFromZone (props.zoneType);
+        props.setIsMovingFromZone (props.zoneType);
                                                                                     // bug('beginDrag props', props)
         return {
             id: props.id,

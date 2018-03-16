@@ -70,9 +70,9 @@ class ReactModalAdapter extends Component {
         modalType: PropTypes.string.isRequired,
         closeModal: PropTypes.func.isRequired,
 
-        updateOrder: PropTypes.func.isRequired,
+        updateFilter: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
-        setMovingFromZone: PropTypes.func.isRequired,
+        setIsMovingFromZone: PropTypes.func.isRequired,
 
     }
 
@@ -94,27 +94,27 @@ class ReactModalAdapter extends Component {
             modalType,
             closeModal,
 
-            updateOrder, 
+            updateFilter, 
             setIsMoving, 
-            setMovingFromZone,
+            setIsMovingFromZone,
 
         } = this.props;
-                                                                bug('REactModalAdapter props', this.props);
+                                                                // bug('REactModalAdapter props', this.props);
 
         const reactModalContent = ({
             modalType,
             closeModal,
             loc,
-            updateOrder, 
+            updateFilter, 
             setIsMoving, 
-            setMovingFromZone,
+            setIsMovingFromZone,
             
         }) => {
             if (modalType !== '') {
                 const modalTitle = loc.filter.get (modalType);  // from props
 
-                const moveFilter = moveElem (updateOrder, {
-                    type: modalType, setMovingFromZone
+                const moveFilter = moveElem (updateFilter, {
+                    type: modalType, setIsMovingFromZone
                 });
     
                                             // bug('*** reactModalContent - loc', loc)
@@ -166,9 +166,9 @@ class ReactModalAdapter extends Component {
                     modalType,
                     closeModal,
                     loc,
-                    updateOrder, 
+                    updateFilter, 
                     setIsMoving, 
-                    setMovingFromZone,
+                    setIsMovingFromZone,
                 })}
 
             </ReactModal>

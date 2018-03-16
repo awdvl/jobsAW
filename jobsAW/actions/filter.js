@@ -2,7 +2,7 @@ import {
     updateTypes,
     moveTypes,
     UPDATE_FILTER_ISMOVING,
-    UPDATE_MOVING_FROM_ZONE,
+    UPDATE_ISMOVING_FROM_ZONE,
 } from '../constants/filter';
 
 
@@ -11,8 +11,8 @@ export const setIsMoving = (payload) => ({
     payload
 });
 
-export const setMovingFromZone = (payload) => ({
-    type: UPDATE_MOVING_FROM_ZONE,
+export const setIsMovingFromZone = (payload) => ({
+    type: UPDATE_ISMOVING_FROM_ZONE,
     payload
 });
 
@@ -24,8 +24,8 @@ export const setMovingFromZone = (payload) => ({
  *                                      [] (drop outside), [x] (multiple zones, no zone move), [x,y] (intra zones move)
  * @param {string} type 
  */
-export const updateOrder = (elem, payload, env, type = '_') => {
-                                                        // console.log('+++ updateOrder filter', filter)
+export const updateFilter = (elem, payload, env, type = '_') => {
+                                                        // console.log('+++ updateFilter filter', filter)
     const withInZone = !env || env.length === 1;
 
     const types = withInZone ?

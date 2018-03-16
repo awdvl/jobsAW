@@ -86,10 +86,10 @@ const filterTarget = {
         const { id } = monitor.getItem ();
         const { 
             getFilterZone,
-            updateOrder,
+            updateFilter,
             modalType,
             zoneType,
-            setMovingFromZone,
+            setIsMovingFromZone,
             movedFromZone: currentZoneType,
         } = props;
 
@@ -106,7 +106,7 @@ const filterTarget = {
 
     drop(props, monitor, component) {
                                             // bug('*** drop  props, monitor, component', props, monitor, component)
-        props.setMovingFromZone (null);
+        props.setIsMovingFromZone (null);
     }
 };
 
@@ -122,13 +122,12 @@ export default class FModalSelected extends Component {
             getFilterZone: PropTypes.func.isRequired,
             moveFilter: PropTypes.func.isRequired,
         
-        updateOrder: PropTypes.func.isRequired,
-        // setIsMoving: PropTypes.func.isRequired,
-        setMovingFromZone: PropTypes.func.isRequired,
+        updateFilter: PropTypes.func.isRequired,
+        setIsMovingFromZone: PropTypes.func.isRequired,
     }
 
     render() {
-                                                                bug('FModalSelected this.props', this.props)
+                                                                // bug('FModalSelected this.props', this.props)
 
         const {
             connectDropTarget,
@@ -136,9 +135,8 @@ export default class FModalSelected extends Component {
             zoneType,
                 getFilterZone,
                 moveFilter,
-            updateOrder,
-            // setIsMoving,
-            setMovingFromZone,
+            updateFilter,
+            setIsMovingFromZone,
 
         } = this.props;
 

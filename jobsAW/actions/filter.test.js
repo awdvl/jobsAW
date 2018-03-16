@@ -19,6 +19,6 @@ describe ('filter actions', () => {
             env: undefined
         };
 
-        expect(actions.updateOrder(elem, payload)).toEqual(expectedAction);
+        expect(actions.updateFilter(elem, payload)).toEqual(expectedAction);
     });
 });

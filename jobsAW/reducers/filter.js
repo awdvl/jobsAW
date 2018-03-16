@@ -11,7 +11,7 @@ import {
     updateTypes,
     moveTypes,
     UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
-    UPDATE_MOVING_FROM_ZONE,
+    UPDATE_ISMOVING_FROM_ZONE,
     UPDATE_CITY_ORDER
 } from '../constants/filter';
 
@@ -47,7 +47,7 @@ export const __isMoving = (state=false, action) => {
 
 export const __movingFromZone = (state=null, action) => {
     switch (action.type) {
-        case UPDATE_MOVING_FROM_ZONE:
+        case UPDATE_ISMOVING_FROM_ZONE:
             return action.payload;
 
         default:
@@ -164,6 +164,9 @@ export const city = (state=initStateCity, action) => {
 
         case moveTypes.city:
             return moveToZone (state, action);
+
+        case 'UPDATE_ONLY_TOP':
+            return state;
 
         default:
             return state;

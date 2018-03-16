@@ -3,9 +3,9 @@ import { getLoc } from '../selectors';
 import { getFilterZoneFor, getMovingFromZone } from '../reducers/filter';
 import { getModalIsOpen, getModalType } from '../reducers/ui';
 import { 
-    updateOrder, 
+    updateFilter, 
     setIsMoving,
-    setMovingFromZone
+    setIsMovingFromZone
 } from '../actions/filter';
 
 import { closeModal } from '../actions/ui';
@@ -21,10 +21,10 @@ const mapStateToProps = (state) => ({
 
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    setIsMoving: isMoving => dispatch (setIsMoving (isMoving)),
-    setMovingFromZone: fromZone => dispatch (setMovingFromZone (fromZone)),
+    setIsMoving: (isMoving) => dispatch (setIsMoving (isMoving)),
+    setIsMovingFromZone: (fromZone) => dispatch (setIsMovingFromZone (fromZone)),
     closeModal: () => dispatch (closeModal ()),
-    updateOrder: (...props) => dispatch (updateOrder (...props)),
+    updateFilter: (...props) => dispatch (updateFilter (...props)),
 });
 
 const enhance = connect (

@@ -82,7 +82,7 @@ export default class Filters extends Component {
         connectDropTarget: PropTypes.func.isRequired,
         filterOrder: PropTypes.object.isRequired,
         loc: PropTypes.object.isRequired,
-        updateOrder: PropTypes.func.isRequired,
+        updateFilter: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
         modalIsOpen: PropTypes.bool.isRequired,
         modalType: PropTypes.string.isRequired,
@@ -95,7 +95,7 @@ export default class Filters extends Component {
             connectDropTarget, 
             filterOrder, 
             loc, 
-            updateOrder, 
+            updateFilter, 
             setIsMoving, 
             modalIsOpen,
             modalType,
@@ -112,7 +112,7 @@ export default class Filters extends Component {
 
                     {FilterElems({
                         locFilter: loc.filter,
-                        moveFilter: moveElem (updateOrder, {setIsMoving}),
+                        moveFilter: moveElem (updateFilter, {setIsMoving}),
                         findFilter: findElem (filterOrder),
                         ...this.props
                     })}
