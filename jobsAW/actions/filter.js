@@ -18,7 +18,8 @@ export const setMovingFromZone = (payload) => ({
 
 export const updateOrder = (elem, payload, env, type = '_') => {
                                                         // console.log('+++ updateOrder filter', filter)
-    const types = Array.isArray (env) ? moveTypes : updateTypes;
+    // const types = Array.isArray (env) ? moveTypes : updateTypes;
+    const types = env && env[1] ? moveTypes : updateTypes;
 
     return {
         type: types[type],

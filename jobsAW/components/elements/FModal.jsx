@@ -6,6 +6,7 @@ import { SoftButton } from '../../styles/components';
 
 import FModalSelected from './FModalSelected';
 
+import { moveElemFor2 } from '../../../_libs/dnd';
 import bug from '../../../_libs/bug';
 
 
@@ -68,6 +69,11 @@ class ReactModalAdapter extends Component {
         modalIsOpen: PropTypes.bool.isRequired,
         modalType: PropTypes.string.isRequired,
         closeModal: PropTypes.func.isRequired,
+
+        updateOrder: PropTypes.func.isRequired,
+        setIsMoving: PropTypes.func.isRequired,
+        setMovingFromZone: PropTypes.func.isRequired,
+
     }
 
     shouldComponentUpdate (nextProps) {
@@ -87,6 +93,11 @@ class ReactModalAdapter extends Component {
             modalIsOpen,
             modalType,
             closeModal,
+
+            updateOrder, 
+            setIsMoving, 
+            setMovingFromZone,
+
         } = this.props;
                                                                 bug('REactModalAdapter props', this.props);
 
@@ -94,10 +105,19 @@ class ReactModalAdapter extends Component {
             modalType,
             closeModal,
             loc,
+            updateOrder, 
+            setIsMoving, 
+            setMovingFromZone,
+            
         }) => {
             if (modalType !== '') {
                 const modalTitle = loc.filter.get (modalType);  // from props
-                
+
+                const moveFilter = moveElemFor2 (updateOrder, {
+                    // type: modalType, setIsMoving, setMovingFromZone
+                    type: modalType, setMovingFromZone
+                });
+    
                                             // bug('*** reactModalContent - loc', loc)
                 return (
                     <div>
@@ -111,11 +131,13 @@ class ReactModalAdapter extends Component {
 
                         <FModalSelected
                             zoneType='sel'
+                            moveFilter={moveFilter}
                             {...this.props}
                         />
 
                         <FModalSelected
                             zoneType='excl'
+                            moveFilter={moveFilter}
                             {...this.props}
                         />
 
@@ -145,6 +167,9 @@ class ReactModalAdapter extends Component {
                     modalType,
                     closeModal,
                     loc,
+                    updateOrder, 
+                    setIsMoving, 
+                    setMovingFromZone,
                 })}
 
             </ReactModal>

@@ -75,7 +75,9 @@ const filterSource = {
         const didDrop = monitor.didDrop ();
                                                                     // bug('*** didDrop',didDrop)
         if (!didDrop) {
-            props.moveFilter (droppedId, originalIndex);
+            // props.moveFilter (droppedId, originalIndex);
+            const { moveFilter, filterOrder } = props;
+            moveFilter (filterOrder, droppedId, originalIndex);
         }
     }
 };
@@ -88,11 +90,13 @@ const filterTarget = {
     hover (props, monitor) {
                                                                 // bug('*** hover item-props', monitor.getItem(), props)
         const { id: draggedId } = monitor.getItem ();
-        const { id: overId } = props;
+        // const { id: overId } = props;
+        const { id: overId, filterOrder, moveFilter } = props;
 
         if (draggedId !== overId) {
             const overIndex = props.findFilter (overId);
-            props.moveFilter (draggedId, overIndex);
+            // props.moveFilter (draggedId, overIndex);
+            moveFilter (filterOrder, draggedId, overIndex);
         }
     },
 };

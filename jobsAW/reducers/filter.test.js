@@ -54,8 +54,8 @@ describe ('filter reducer', () => {
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            // excl: List([])
-            excl: List(['K'])
+            excl: List([])
+            // excl: List(['K'])
         });        
 
         const endState_selSwapped = new FilterCity({
@@ -64,8 +64,8 @@ describe ('filter reducer', () => {
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            // excl: List([])
-            excl: List(['K'])
+            excl: List([])
+            // excl: List(['K'])
         });
 
         const endState_movedFromSelToExcl = new FilterCity({
@@ -74,7 +74,8 @@ describe ('filter reducer', () => {
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            excl: List(['K', 'S'])
+            excl: List(['S'])
+            // excl: List(['K', 'S'])
         })
 
         const payload_swapSel = {
@@ -99,7 +100,8 @@ describe ('filter reducer', () => {
                 it ('should swap the first two elems', () => {
                     expect (reducer.city (initialState, {
                         type: types.UPDATE_CITY_ORDER,
-                        env: 'sel',
+                        // env: 'sel',
+                        env: ['sel'],
                         payload: payload_swapSel
                     })).toEqual (endState_selSwapped);
                 });

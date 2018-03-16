@@ -3,7 +3,8 @@ import { DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 import ItemTypes from '../../constants/itemTypes';
-import { findElemFor, moveElemFor } from '../../../_libs/dnd';
+// import { findElemFor, moveElemFor, moveElemFor2 } from '../../../_libs/dnd';
+import { findElemFor, moveElemFor2 } from '../../../_libs/dnd';
 
 import FMSElem from './FMSElem';
 import styled from 'styled-components';
@@ -85,43 +86,41 @@ const SecElems = (props) => {
 const filterTarget = {
     hover(props, monitor, component) {
                         // bug('FModalSelected::filterTarget:hover - props, monitor, component', props, monitor, component)
-        const { id, zoneType } = monitor.getItem();
-        
+        // const { id, zoneType } = monitor.getItem();
+        const { id } = monitor.getItem ();
+        const { 
+            getFilterZone,
+            updateOrder,
+            modalType,
+            zoneType,
+            // setIsMoving,
+            setMovingFromZone,
+            movedFromZone: currentZoneType,
+        } = props;
+
+    
                                                         // bug('FModalSelected::filterTarget:hover - zoneType', zoneType)
-                                                        
-
-        const currentZoneType = isNull (props.movedFromZone) ?
-            zoneType :
-            props.movedFromZone;
+        // const currentZoneType = isNull (props.movedFromZone) ?
+        //     zoneType :
+        //     props.movedFromZone;
             
-        const elemListZoneTo = props.getFilterZone (props.modalType, props.zoneType);
+        // const toZone = props.getFilterZone (modalType, zoneType);
 
-                    // bug('*** FModalSelected::filterTarget:hover - elemListZoneTo',elemListZoneTo, elemListZoneTo.size)
-        bug('*** FModalSelected::filterTarget:hover currentZoneType, props.zoneType', currentZoneType, props.zoneType)
+                    // bug('*** FModalSelected::filterTarget:hover - toZone',toZone, toZone.size)
+        // bug('*** FModalSelected::filterTarget:hover currentZoneType, props.zoneType', currentZoneType, props.zoneType)
 
-        if (currentZoneType !== props.zoneType) {
-            const overIndex = elemListZoneTo.size;
+        if (currentZoneType !== zoneType) {
+            const fromZone = getFilterZone (modalType, currentZoneType);
+            const toZone = getFilterZone (modalType, zoneType);
+            const overIndex = toZone.size;
 
-            const { 
-                getFilterZone,
-                updateOrder,
-                // zoneType: zoneTypeOrg,
-                modalType,
-                setIsMoving,
-                setMovingFromZone,
-            } = props;
+            // const moveFilter = moveElemFor (fromZone, updateOrder, {
+            //     env: currentZoneType, type: modalType, setIsMoving, setMovingFromZone
+            // });
 
-            // const zoneTypeOrg = props.zoneType;
+            // moveFilter (id, overIndex, zoneType);
 
-            // bug('*** FModalSelected::zoneTypeOrg', zoneTypeOrg)
-
-            const zoneFilterOrder = getFilterZone (modalType, currentZoneType);
-            const moveFilter = moveElemFor (zoneFilterOrder, updateOrder, {
-                env: currentZoneType, type: modalType, setIsMoving, setMovingFromZone
-            });
-
-            moveFilter (id, overIndex, props.zoneType);
-
+            props.moveFilter (fromZone, id, overIndex, [currentZoneType, zoneType]);
             // props.moveFilter (id, overIndex, props.zoneType);
         }
                                                                                                         
@@ -129,7 +128,7 @@ const filterTarget = {
 
     drop(props, monitor, component) {
                                             // bug('*** drop  props, monitor, component', props, monitor, component)
-        props.setIsMoving (false);
+        // props.setIsMoving (false);
             props.setMovingFromZone (null);
     }
 };
@@ -144,9 +143,10 @@ export default class FModalSelected extends Component {
         modalType: PropTypes.string.isRequired,
         zoneType: PropTypes.string.isRequired,
             getFilterZone: PropTypes.func.isRequired,
+            moveFilter: PropTypes.func.isRequired,
         
         updateOrder: PropTypes.func.isRequired,
-        setIsMoving: PropTypes.func.isRequired,
+        // setIsMoving: PropTypes.func.isRequired,
         setMovingFromZone: PropTypes.func.isRequired,
     }
 
@@ -158,8 +158,9 @@ export default class FModalSelected extends Component {
             modalType,
             zoneType,
                 getFilterZone,
+                moveFilter,
             updateOrder,
-            setIsMoving,
+            // setIsMoving,
             setMovingFromZone,
 
         } = this.props;
@@ -193,9 +194,13 @@ export default class FModalSelected extends Component {
                     <SectionBody>
                         {SecElems({
                             zoneFilterOrder,
-                            moveFilter: moveElemFor (zoneFilterOrder, updateOrder, {
-                                env: zoneType, type: modalType, setIsMoving, setMovingFromZone
-                            }),
+                            // moveFilter: moveElemFor (zoneFilterOrder, updateOrder, {
+                            //     env: zoneType, type: modalType, setIsMoving, setMovingFromZone
+                            // }),
+                            // moveFilter: moveElemFor2 (updateOrder, {
+                            //     type: modalType, setIsMoving, setMovingFromZone
+                            // }),
+                            moveFilter,
                             findFilter: findElemFor (zoneFilterOrder),
                             ...this.props
                         })}

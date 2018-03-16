@@ -83,7 +83,7 @@ const makeFilterButton = ({ text }) => {
 const filterSource = {
     beginDrag (props) {
         // bug('*** beginDrag props', props)
-        props.setIsMoving (true);
+        // props.setIsMoving (true);
 
         // ---> set here, does not need the zoneType here below in the props!!
         props.setMovingFromZone (props.zoneType);
@@ -112,34 +112,39 @@ const filterTarget = {
     },
 
     hover(props, monitor) {
-        // bug('*** hover item-props', monitor.getItem(), props)
+                                                                // bug('*** hover item-props', monitor.getItem(), props)
         const { id: draggedId } = monitor.getItem();
         const { id: overId } = props;
-
-        const { zoneType } = monitor.getItem();
-
-bug('*** FMSElem::filterTarget:hover draggedId, overId', draggedId, overId, zoneType, props.zoneType)
-// bug('*** FMSElem::filterTarget:hover draggedId, overId', draggedId, overId)
-// bug('*** FMSElem::filterTarget:hover zoneType, props.zoneType', zoneType, props.zoneType)
-
+        // const { zoneType } = monitor.getItem();
+                            // bug('*** FMSElem::filterTarget:hover draggedId, overId', draggedId, overId, props.zoneType)
         if (draggedId !== overId) {
-            const overIndex = props.findFilter (overId);
+            const { 
+                findFilter, 
+                zoneType, 
+                movedFromZone: currentZoneType,
+                zoneFilterOrder,
+                moveFilter,
+            } = props;
 
-            const currentZoneType = isNull (props.movedFromZone) ?
-                zoneType :
-                props.movedFromZone;                
+            const overIndex = findFilter (overId);
+
+            // const currentZoneType = props.movedFromZone;                
+            // const currentZoneType = isNull (props.movedFromZone) ?
+            //     zoneType :
+            //     props.movedFromZone;                
                 
             
             // const newZone = zoneType !== props.zoneType ?
                 // props.zoneType :
                 // null;
-            const newZone = currentZoneType !== props.zoneType ?
-                [currentZoneType, props.zoneType] :
-                null;
+            const newZoneType = currentZoneType !== zoneType ?
+                [currentZoneType, zoneType] :
+                [currentZoneType];
+                // null;
 
-
-            // props.moveFilter (draggedId, overIndex, [currentZoneType, newZone]);
-            props.moveFilter (draggedId, overIndex, newZone);
+                                                                                    // bug('*** FMSELem - props', props)
+            moveFilter (zoneFilterOrder, draggedId, overIndex, newZoneType);
+            // props.moveFilter (draggedId, overIndex, newZoneType);
         }
     },
 };
