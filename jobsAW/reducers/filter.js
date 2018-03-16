@@ -10,9 +10,9 @@ import R from 'ramda';
 import { 
     updateTypes,
     moveTypes,
-    UPDATE_FILTER_ORDER, UPDATE_FILTER_ISMOVING,
+    onlyTopTypes,
+    UPDATE_FILTER_ISMOVING,
     UPDATE_ISMOVING_FROM_ZONE,
-    UPDATE_CITY_ORDER
 } from '../constants/filter';
 
 import bug from '../../_libs/bug';
@@ -165,8 +165,8 @@ export const city = (state=initStateCity, action) => {
         case moveTypes.city:
             return moveToZone (state, action);
 
-        case 'UPDATE_ONLY_TOP':
-            return state;
+        case onlyTopTypes.city:
+            return state.set ('inclRest', !state.inclRest);
 
         default:
             return state;
@@ -282,3 +282,4 @@ export const getMovingFromZone = (state) => state.ui.filter.__movingFromZone;
 export const getFilterOrder = (state) => state.ui.filter.__order;
 
 export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get(zone);
+export const getFilterOnlyTop = (state) => (filter) => !state.ui.filter[filter].inclRest

@@ -11,7 +11,8 @@ describe ('filter actions', () => {
         };
 
         const expectedAction = {
-            type: types.UPDATE_FILTER_ORDER,
+            // type: types.UPDATE_FILTER_ORDER,
+            type: types.updateTypes._,
             payload: {
                 elem,
                 ...payload

@@ -7,6 +7,7 @@ import { findElem } from '../../../_libs/dnd';
 
 import FMSElem from './FMSElem';
 import styled from 'styled-components';
+import { SoftButton } from '../../styles/components';
 
 
 import bug from '../../../_libs/bug';
@@ -37,6 +38,19 @@ const SectionBody = styled.div`
     min-height: 5.5em;
     padding: 1em;
     display: flex;
+`;
+
+const OnlyTopButton = SoftButton.extend`
+    margin: 0 2em;
+    padding: .35em 0.75em;
+    border: 1px solid #7cbd7e;
+    /* background: #c4ffc6; */
+    /* background: ${props => ('#c4ffc6')} ; */
+    background: ${props => {
+        bug ('++ OnlyTopButton props', props)
+        /* ('#c4ffc6') */
+        return props.onlyTop ? 'turquoise' : '#c4ffc6'
+    }};
 `;
 
 const locRefForModalType = {
@@ -110,6 +124,24 @@ const filterTarget = {
     }
 };
 
+const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
+    const textFalse = 'show only results for the top selection';
+    const textTrue = 'show results for the top selection first';
+
+    let text = textFalse;
+
+    if (zoneType === 'sel') {
+        return (
+            <OnlyTopButton 
+                onlyTop={onlyTop}
+                onClick={() => toggleOnlyTop(modalType)}
+                onMouseEnter={() => text = textTrue}
+            >
+                {text}
+            </OnlyTopButton>
+        );
+    }
+};
 
 @DropTarget(ItemTypes.FILTERZ, filterTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
@@ -124,6 +156,8 @@ export default class FModalSelected extends Component {
         
         updateFilter: PropTypes.func.isRequired,
         setIsMovingFromZone: PropTypes.func.isRequired,
+        toggleOnlyTop: PropTypes.func.isRequired,
+        onlyTop2: PropTypes.bool.isRequired,
     }
 
     render() {
@@ -133,10 +167,12 @@ export default class FModalSelected extends Component {
             connectDropTarget,
             modalType,
             zoneType,
-                getFilterZone,
-                moveFilter,
+            getFilterZone,
+            moveFilter,
             updateFilter,
             setIsMovingFromZone,
+            toggleOnlyTop,
+            onlyTop2,
 
         } = this.props;
 
@@ -163,6 +199,7 @@ export default class FModalSelected extends Component {
                     <SectionHeader>
                         <SectionTitle>
                             {zoneLoc.title}
+                            {onlyTopButton (modalType, zoneType, toggleOnlyTop, onlyTop2)}
                         </SectionTitle>
                     </SectionHeader>
 

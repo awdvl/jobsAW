@@ -30,14 +30,16 @@ describe ('filter reducer', () => {
         describe ('update order', () => {
             it ('should swap city backward', () => {
                 expect (reducer.__order (initialState, {
-                    type: types.UPDATE_FILTER_ORDER,
+                    // type: types.UPDATE_FILTER_ORDER,
+                    type: types.updateTypes._,
                     payload: payload_swapCity
                 })).toEqual (endState_citySwapped)
             })
     
             it ('should swap jobType forward', () => {
                 expect (reducer.__order (endState_citySwapped, {
-                    type: types.UPDATE_FILTER_ORDER,
+                    // type: types.UPDATE_FILTER_ORDER,
+                    type: types.updateTypes._,
                     payload: payload_swapJobType
                 })).toEqual (endState_jobTypeSwapped)
             });
@@ -99,8 +101,7 @@ describe ('filter reducer', () => {
             describe('for selected filters sel', () => {
                 it ('should swap the first two elems', () => {
                     expect (reducer.city (initialState, {
-                        type: types.UPDATE_CITY_ORDER,
-                        // env: 'sel',
+                        type: types.updateTypes.city,
                         env: ['sel'],
                         payload: payload_swapSel
                     })).toEqual (endState_selSwapped);
@@ -122,7 +123,18 @@ describe ('filter reducer', () => {
               
             })
             
+        });
+
+        describe('toggle only top flag', () => {
+            it ('should return false for .inclRest', () => {
+                expect (reducer.city (initialState, {
+                    type: types.onlyTopTypes.city,
+                    
+                }).inclRest).toEqual (false);
+            });
+          
         })
+        
         
     });
     

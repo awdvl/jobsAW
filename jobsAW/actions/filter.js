@@ -1,6 +1,7 @@
 import { 
     updateTypes,
     moveTypes,
+    onlyTopTypes,
     UPDATE_FILTER_ISMOVING,
     UPDATE_ISMOVING_FROM_ZONE,
 } from '../constants/filter';
@@ -15,6 +16,11 @@ export const setIsMovingFromZone = (payload) => ({
     type: UPDATE_ISMOVING_FROM_ZONE,
     payload
 });
+
+export const toggleOnlyTop = (type, payload) => ({
+    type: onlyTopTypes[type],
+    payload
+})
 
 /**
  * 
