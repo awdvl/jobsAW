@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ItemTypes from '../../constants/itemTypes';
 import { findElem } from '../../../_libs/dnd';
 
-import HoverText from './HoverText';
+import StateComponent from '../facc/StateComponent'
 
 import FMSElem from './FMSElem';
 import styled from 'styled-components';
@@ -34,6 +34,7 @@ const SectionTitle = styled.div`
     font-size: 1.25em;
     line-height: 2.2em;
     padding: 0 1.75em 0 3.5em;
+    display: flex;
 `;
 
 const SectionBody = styled.div`
@@ -127,12 +128,16 @@ const filterTarget = {
 };
 
 const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
-    const textFalse = 'show only results for the top selection';
-    const textTrue = 'show results for the top selection first';
+    
+    const textOffOn = ['show results for the top selection first', 'show only results for the top selection'];
 
-    let text = textFalse;
 
     if (zoneType === 'sel') {
+
+        // const textFalse = 'show only results for the top selection';
+        // let text = textFalse;
+        // const textTrue = 'show results for the top selection first';
+
         // return (
         //     <OnlyTopButton 
         //         onlyTop={onlyTop}
@@ -143,14 +148,25 @@ const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
         //     </OnlyTopButton>
         // );
         return (
-            <HoverText>
-                {(isHovered) => {
-                    const text = isHovered ? 'Button hovered' : 'Button ent-hovered'
-                    bug('** isHovered', isHovered);
-                    return (<div>{text}</div>);
-                    // return (<div>Hörzer</div>);
+            <StateComponent>
+                {(elemState) => {
+                    const onOff = elemState.hover !== elemState.active ? 1 : 0;
+                    const text = textOffOn[onOff];
+
+                                                                        // bug('** isHovered', elemState.hover);
+                                                                        // bug('** isFocused', elemState.focus);
+                                                                        // bug('** isActive', elemState.active);
+                    // return (<div>{text}</div>);
+                    return (
+                        <OnlyTopButton
+                            onlyTop={onlyTop}
+                            onClick={() => toggleOnlyTop (modalType)}  // -->> check, if the default is first in redux!!
+                        >
+                            {text}
+                        </OnlyTopButton>
+                    );
                 }}
-            </HoverText>
+            </StateComponent>
         );
     }
 };
