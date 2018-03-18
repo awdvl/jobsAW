@@ -96,7 +96,8 @@ const __mapToPath = (state=initMapToPath, action) => {
  *  excl: []  excluded items
 */
 const initStateCity = new FilterCity({
-    sel: List(['S', 'M']),
+    sel: List(['F']),
+    // sel: List(['S', 'M']),
     // sel: ['S', 'M'],
     // sel: ['F', 'M'],
     // sel: [],
@@ -167,6 +168,8 @@ export const city = (state=initStateCity, action) => {
 
         case onlyTopTypes.city:
             return state.set ('inclRest', !state.inclRest);
+            // with a set option!
+            // return state.set ('inclRest', action.payload !== undefined ? action.payload : !state.inclRest);
 
         default:
             return state;

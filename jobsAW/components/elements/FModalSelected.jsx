@@ -43,17 +43,32 @@ const SectionBody = styled.div`
     display: flex;
 `;
 
+    /* background: #c4ffc6; */
+    /* background: ${props => ('#c4ffc6')} ; */
+    /* background: ${props => {
+        bug ('** OnlyTopButton props', props)
+        return props.onOff ? '#c4ffc6' : 'transparent'
+    }}; */
+
+
 const OnlyTopButton = SoftButton.extend`
     margin: 0 2em;
     padding: .35em 0.75em;
     border: 1px solid #7cbd7e;
-    /* background: #c4ffc6; */
-    /* background: ${props => ('#c4ffc6')} ; */
     background: ${props => {
-        bug ('++ OnlyTopButton props', props)
-        /* ('#c4ffc6') */
-        return props.onlyTop ? 'turquoise' : '#c4ffc6'
+        /* bug ('** OnlyTopButton props', props, props.onlyTop ? '#c4ffc6' : 'transparent') */
+        return props.onlyTop ? '#c4ffc6' : 'transparent'
     }};
+    border-color: ${props => {
+        /* bug ('** OnlyTopButton props', props, props.onlyTop ? '#c4ffc6' : 'transparent') */
+        return props.hoverP ? '#96097f' : 
+            props.onlyTop ? 
+                '#7cbd7e':
+                '#909690'
+    }};
+    /* &:hover {
+        border-color: red
+    } */
 `;
 
 const locRefForModalType = {
@@ -129,7 +144,7 @@ const filterTarget = {
 
 const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
     
-    const textOffOn = ['show results for the top selection first', 'show only results for the top selection'];
+    const textOffOn = ['top selection results first', 'only top selection results'];
 
 
     if (zoneType === 'sel') {
@@ -148,19 +163,32 @@ const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
         //     </OnlyTopButton>
         // );
         return (
-            <StateComponent>
+            // <StateComponent>
+            <StateComponent active={onlyTop}>
                 {(elemState) => {
-                    const onOff = elemState.hover !== elemState.active ? 1 : 0;
-                    const text = textOffOn[onOff];
+                        bug('** load component elemState', elemState)
+                    
+                    // const onOff = elemState.hoverP !== elemState.active ? 1 : 0;
+                    // const text = textOffOn[onOff];
+                    const onOff = elemState.hoverP !== elemState.active;
+                    // const onOff = elemState.active;
+                    const text = textOffOn[onOff ? 1 : 0];
 
                                                                         // bug('** isHovered', elemState.hover);
                                                                         // bug('** isFocused', elemState.focus);
                                                                         // bug('** isActive', elemState.active);
+                    // if (elemState.active) {
+                        // toggleOnlyTop (modalType, elemState.active);
+                    // }
+
                     // return (<div>{text}</div>);
                     return (
                         <OnlyTopButton
-                            onlyTop={onlyTop}
+                            // onlyTop={onlyTop}
+                            onlyTop={onOff}
+                            hoverP={elemState.hoverP}
                             onClick={() => toggleOnlyTop (modalType)}  // -->> check, if the default is first in redux!!
+                            // onClick={() => toggleOnlyTop (modalType, elemState.active)}  // -->> check, if the default is first in redux!!
                         >
                             {text}
                         </OnlyTopButton>

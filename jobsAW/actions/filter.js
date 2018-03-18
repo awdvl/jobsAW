@@ -17,6 +17,7 @@ export const setIsMovingFromZone = (payload) => ({
     payload
 });
 
+// payload necessary??
 export const toggleOnlyTop = (type, payload) => ({
     type: onlyTopTypes[type],
     payload
