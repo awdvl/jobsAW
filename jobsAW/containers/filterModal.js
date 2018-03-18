@@ -3,7 +3,7 @@ import { getLoc } from '../selectors';
 import { 
     getFilterZoneFor, 
     getMovingFromZone,
-    getFilterOnlyTop 
+    getFilterTopOnlyFor 
 } from '../reducers/filter';
 
 import { getModalIsOpen, getModalType } from '../reducers/ui';
@@ -11,7 +11,7 @@ import {
     updateFilter, 
     setIsMoving,
     setIsMovingFromZone,
-    toggleOnlyTop
+    toggleTopOnly
 } from '../actions/filter';
 
 import { closeModal } from '../actions/ui';
@@ -22,7 +22,7 @@ const mapStateToProps = (state, ownProps) => ({
     modalIsOpen: getModalIsOpen (state),
     modalType: getModalType (state),
     getFilterZone: getFilterZoneFor (state),
-    onlyTop: getFilterOnlyTop (state),
+    getFilterTopOnly: getFilterTopOnlyFor (state),
     movedFromZone: getMovingFromZone (state),
     loc: getLoc (state),
 
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     setIsMovingFromZone: (fromZone) => dispatch (setIsMovingFromZone (fromZone)),
     closeModal: () => dispatch (closeModal ()),
     updateFilter: (...props) => dispatch (updateFilter (...props)),
-    toggleOnlyTop: (type, payload) => dispatch (toggleOnlyTop (type, payload)),
+    toggleTopOnly: (type, payload) => dispatch (toggleTopOnly (type, payload)),
 });
 
 const enhance = connect (

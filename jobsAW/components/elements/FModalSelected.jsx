@@ -43,29 +43,22 @@ const SectionBody = styled.div`
     display: flex;
 `;
 
-    /* background: #c4ffc6; */
-    /* background: ${props => ('#c4ffc6')} ; */
-    /* background: ${props => {
-        bug ('** OnlyTopButton props', props)
-        return props.onOff ? '#c4ffc6' : 'transparent'
-    }}; */
-
 
 const OnlyTopButton = SoftButton.extend`
+    width: 10em;
     margin: 0 2em;
     padding: .35em 0.75em;
     border: 1px solid #7cbd7e;
-    background: ${props => {
-        /* bug ('** OnlyTopButton props', props, props.onlyTop ? '#c4ffc6' : 'transparent') */
-        return props.onlyTop ? '#c4ffc6' : 'transparent'
-    }};
-    border-color: ${props => {
-        /* bug ('** OnlyTopButton props', props, props.onlyTop ? '#c4ffc6' : 'transparent') */
-        return props.hoverP ? '#96097f' : 
-            props.onlyTop ? 
+    background: ${props => (props.topOnly ? '#d9f7c6' : 'transparent')};
+    border-color: ${props => 
+        (props.hoverP ? 
+            '#96097f' : 
+            props.topOnly ? 
                 '#7cbd7e':
-                '#909690'
-    }};
+                '#909690')
+    };
+    box-shadow: ${props => (props.hoverP ? '0 0 4px 0px #e08fd3' : 'none')};
+
     /* &:hover {
         border-color: red
     } */
@@ -142,62 +135,27 @@ const filterTarget = {
     }
 };
 
-const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
-    
-    const textOffOn = ['top selection results first', 'only top selection results'];
 
+const topOnlyButton = ({topOnly, topOnlyOnClick, topOnlyLoc}) => (
+    <StateComponent active={topOnly}>
+        {(elemState) => {
+                                                            // bug('** load component elemState', elemState)
+            const onOff = elemState.hoverP !== elemState.active;
+            const text = topOnlyLoc.get (onOff ? 1 : 0);
 
-    if (zoneType === 'sel') {
+            return (
+                <OnlyTopButton
+                    topOnly={onOff}
+                    hoverP={elemState.hoverP}
+                    onClick={topOnlyOnClick} 
+                >
+                    {text}
+                </OnlyTopButton>
+            );
+        }}
+    </StateComponent>
+);
 
-        // const textFalse = 'show only results for the top selection';
-        // let text = textFalse;
-        // const textTrue = 'show results for the top selection first';
-
-        // return (
-        //     <OnlyTopButton 
-        //         onlyTop={onlyTop}
-        //         onClick={() => toggleOnlyTop(modalType)}
-        //         onMouseEnter={() => text = textTrue}
-        //     >
-        //         {text}
-        //     </OnlyTopButton>
-        // );
-        return (
-            // <StateComponent>
-            <StateComponent active={onlyTop}>
-                {(elemState) => {
-                        bug('** load component elemState', elemState)
-                    
-                    // const onOff = elemState.hoverP !== elemState.active ? 1 : 0;
-                    // const text = textOffOn[onOff];
-                    const onOff = elemState.hoverP !== elemState.active;
-                    // const onOff = elemState.active;
-                    const text = textOffOn[onOff ? 1 : 0];
-
-                                                                        // bug('** isHovered', elemState.hover);
-                                                                        // bug('** isFocused', elemState.focus);
-                                                                        // bug('** isActive', elemState.active);
-                    // if (elemState.active) {
-                        // toggleOnlyTop (modalType, elemState.active);
-                    // }
-
-                    // return (<div>{text}</div>);
-                    return (
-                        <OnlyTopButton
-                            // onlyTop={onlyTop}
-                            onlyTop={onOff}
-                            hoverP={elemState.hoverP}
-                            onClick={() => toggleOnlyTop (modalType)}  // -->> check, if the default is first in redux!!
-                            // onClick={() => toggleOnlyTop (modalType, elemState.active)}  // -->> check, if the default is first in redux!!
-                        >
-                            {text}
-                        </OnlyTopButton>
-                    );
-                }}
-            </StateComponent>
-        );
-    }
-};
 
 @DropTarget(ItemTypes.FILTERZ, filterTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
@@ -205,6 +163,7 @@ const onlyTopButton = (modalType, zoneType, toggleOnlyTop, onlyTop) => {
 export default class FModalSelected extends Component {
     static propTypes = {
         connectDropTarget: PropTypes.func.isRequired,
+        loc: PropTypes.object.isRequired,
         modalType: PropTypes.string.isRequired,
         zoneType: PropTypes.string.isRequired,
             getFilterZone: PropTypes.func.isRequired,
@@ -212,41 +171,30 @@ export default class FModalSelected extends Component {
         
         updateFilter: PropTypes.func.isRequired,
         setIsMovingFromZone: PropTypes.func.isRequired,
-        toggleOnlyTop: PropTypes.func.isRequired,
-        onlyTop2: PropTypes.bool.isRequired,
+        toggleTopOnly: PropTypes.func.isRequired,
+        topOnly: PropTypes.bool.isRequired,
     }
 
     render() {
-                                                                // bug('FModalSelected this.props', this.props)
+                                                                bug('** FModalSelected this.props', this.props)
 
         const {
             connectDropTarget,
+            loc,
             modalType,
             zoneType,
             getFilterZone,
             moveFilter,
             updateFilter,
             setIsMovingFromZone,
-            toggleOnlyTop,
-            onlyTop2,
+            toggleTopOnly,
+            topOnly,
 
         } = this.props;
 
-        // in extern loc
-        const uiLoc = {
-            zone: {
-                sel: {
-                    title: 'Top'
-                },
-                excl: {
-                    title: 'Excluded'
-                }
-            }
-        };
-
                                                                         // bug('modalType, zoneType', modalType, zoneType)
-        const zoneLoc = uiLoc.zone[zoneType];  
-
+        // const zoneLoc = uiLoc.zone[zoneType];  
+        const zoneTitle = loc.filter.getIn (['zone', zoneType, 'title']);  
         const zoneFilterOrder = getFilterZone (modalType, zoneType);
                                                                         // bug('zoneFilterOrder', zoneFilterOrder)
         return connectDropTarget (
@@ -254,8 +202,15 @@ export default class FModalSelected extends Component {
                 <Section>
                     <SectionHeader>
                         <SectionTitle>
-                            {zoneLoc.title}
-                            {onlyTopButton (modalType, zoneType, toggleOnlyTop, onlyTop2)}
+                            {zoneTitle}
+                            {zoneType === 'sel' ? 
+                                topOnlyButton ({
+                                    topOnly, 
+                                    topOnlyOnClick: () => toggleTopOnly (modalType), 
+                                    topOnlyLoc: loc.filter.get ('topOnly')
+                                }) : 
+                                null
+                            }
                         </SectionTitle>
                     </SectionHeader>
 

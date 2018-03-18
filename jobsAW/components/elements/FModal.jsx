@@ -73,7 +73,7 @@ class ReactModalAdapter extends Component {
         updateFilter: PropTypes.func.isRequired,
         setIsMoving: PropTypes.func.isRequired,
         setIsMovingFromZone: PropTypes.func.isRequired,
-        onlyTop: PropTypes.func.isRequired,
+        getFilterTopOnly: PropTypes.func.isRequired,
 
     }
 
@@ -98,7 +98,7 @@ class ReactModalAdapter extends Component {
             updateFilter, 
             setIsMoving, 
             setIsMovingFromZone,
-            onlyTop,
+            getFilterTopOnly,
 
         } = this.props;
                                                                 // bug('REactModalAdapter props', this.props);
@@ -110,7 +110,7 @@ class ReactModalAdapter extends Component {
             updateFilter, 
             setIsMoving, 
             setIsMovingFromZone,
-            onlyTop,
+            getFilterTopOnly,
             
         }) => {
             if (modalType !== '') {
@@ -120,8 +120,8 @@ class ReactModalAdapter extends Component {
                     type: modalType, setIsMovingFromZone
                 });
 
-                const onlyTop2 = onlyTop (modalType);
-    bug('onlyTop2', onlyTop2)
+                const topOnly = getFilterTopOnly (modalType);
+                                                                                        // bug('topOnly', topOnly)
                                             // bug('*** reactModalContent - loc', loc)
                 return (
                     <div>
@@ -136,14 +136,14 @@ class ReactModalAdapter extends Component {
                         <FModalSelected
                             zoneType='sel'
                             moveFilter={moveFilter}
-                            onlyTop2={onlyTop2}
+                            topOnly={topOnly}
                             {...this.props}
                         />
 
                         <FModalSelected
                             zoneType='excl'
                             moveFilter={moveFilter}
-                            onlyTop2={onlyTop2}
+                            topOnly={topOnly}
                             {...this.props}
                         />
 
@@ -176,7 +176,7 @@ class ReactModalAdapter extends Component {
                     updateFilter, 
                     setIsMoving, 
                     setIsMovingFromZone,
-                    onlyTop,
+                    getFilterTopOnly,
                 })}
 
             </ReactModal>

@@ -7,7 +7,16 @@
             "city": "Stadt",
             "jobType": "Vertrag",
             "compIndy": "Branche",
-            "compEmply": "Mitarbeiter"
+            "compEmply": "Mitarbeiter",
+            "topOnly": ["top selection first", "only top selection"],
+            "zone": {
+                "sel": {
+                    "title": "Top"
+                },
+                "excl": {
+                    "title": "Excluded"
+                }
+            }
         },
         "job": {
             "type": {

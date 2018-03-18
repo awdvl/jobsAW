@@ -285,4 +285,4 @@ export const getMovingFromZone = (state) => state.ui.filter.__movingFromZone;
 export const getFilterOrder = (state) => state.ui.filter.__order;
 
 export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get(zone);
-export const getFilterOnlyTop = (state) => (filter) => !state.ui.filter[filter].inclRest
+export const getFilterTopOnlyFor = (state) => (filter) => !state.ui.filter[filter].inclRest
