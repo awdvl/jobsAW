@@ -27,13 +27,19 @@ const SectionHeader = styled.div`
     height: 2.75em;
     background: #f2f5ef;
     display: flex;
+
+    > div {
+        font-size: 1.25em;
+        line-height: 2.2em;
+    }
 `;
 
 const SectionTitle = styled.div`
     color: #5d6d4c;
-    font-size: 1.25em;
-    line-height: 2.2em;
-    padding: 0 1.75em 0 3.5em;
+    padding: 0 2em 0 3.5em;
+`;
+
+const SectionCtrls = styled.div`
     display: flex;
 `;
 
@@ -46,18 +52,23 @@ const SectionBody = styled.div`
 
 const OnlyTopButton = SoftButton.extend`
     width: 10em;
-    margin: 0 2em;
+    /* margin: 0 2em; */
     padding: .35em 0.75em;
-    border: 1px solid #7cbd7e;
-    background: ${props => (props.topOnly ? '#d9f7c6' : 'transparent')};
+    /* border: 1px solid #7cbd7e; */
+    border: 1px solid transparent;
+    /* background: ${props => (props.topOnly ? '#d9f7c6' : 'transparent')}; */
+    background: ${props => (props.topOnly ? '#f5dff1' : 'transparent')};
     border-color: ${props => 
-        (props.hoverP ? 
-            '#96097f' : 
-            props.topOnly ? 
+        (props.hovered ? 
+            /* '#96097f' :  */
+            'grey' : 
+            'transparent'
+            /* props.topOnly ? 
                 '#7cbd7e':
-                '#909690')
+                '#909690' */
+        )
     };
-    box-shadow: ${props => (props.hoverP ? '0 0 4px 0px #e08fd3' : 'none')};
+    box-shadow: ${props => (props.hovered ? '0 0 4px 0px #827b81' : 'none')};
 
     /* &:hover {
         border-color: red
@@ -79,12 +90,10 @@ const getLocForModalType = (loc, modalType) => {
 }
 
 const SecElems = (props) => {
-    // bug('SEcElems props', props)
+                                                                                    // bug('SEcElems props', props)
     const { loc, modalType } = props;
                                                                                     // bug('SecElems props', props)
     if (loc) {
-        // const type = 'city';
-        // const locForElem = loc[type].get('name')
         const locForElem = getLocForModalType (loc, modalType)
                                                                 //                     bug('*** locForElem', locForElem)
                                                                 // bug('*** props.zoneFilterOrder', props.zoneFilterOrder)
@@ -140,13 +149,13 @@ const topOnlyButton = ({topOnly, topOnlyOnClick, topOnlyLoc}) => (
     <StateComponent active={topOnly}>
         {(elemState) => {
                                                             // bug('** load component elemState', elemState)
-            const onOff = elemState.hoverP !== elemState.active;
+            const onOff = elemState.hovered !== elemState.active;
             const text = topOnlyLoc.get (onOff ? 1 : 0);
 
             return (
                 <OnlyTopButton
                     topOnly={onOff}
-                    hoverP={elemState.hoverP}
+                    hovered={elemState.hovered}
                     onClick={topOnlyOnClick} 
                 >
                     {text}
@@ -176,7 +185,7 @@ export default class FModalSelected extends Component {
     }
 
     render() {
-                                                                bug('** FModalSelected this.props', this.props)
+                                                                // bug('** FModalSelected this.props', this.props)
 
         const {
             connectDropTarget,
@@ -196,13 +205,16 @@ export default class FModalSelected extends Component {
         // const zoneLoc = uiLoc.zone[zoneType];  
         const zoneTitle = loc.filter.getIn (['zone', zoneType, 'title']);  
         const zoneFilterOrder = getFilterZone (modalType, zoneType);
-                                                                        // bug('zoneFilterOrder', zoneFilterOrder)
+                                                    bug('+++ zoneFilterOrder', modalType, zoneType, zoneFilterOrder)
         return connectDropTarget (
             <div>
                 <Section>
                     <SectionHeader>
                         <SectionTitle>
                             {zoneTitle}
+                        </SectionTitle>
+
+                        <SectionCtrls>
                             {zoneType === 'sel' ? 
                                 topOnlyButton ({
                                     topOnly, 
@@ -211,7 +223,7 @@ export default class FModalSelected extends Component {
                                 }) : 
                                 null
                             }
-                        </SectionTitle>
+                        </SectionCtrls>
                     </SectionHeader>
 
                     <SectionBody>

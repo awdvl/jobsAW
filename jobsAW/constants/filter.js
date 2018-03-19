@@ -1,7 +1,8 @@
 import typesFactory from '../../_libs/typesFactory';
 
 
-const filterTypes = ['city', 'jobType'];
+// const filterTypes = ['city', 'jobType'];
+const filterTypes = ['city', 'jobType', 'compIndy', 'compEmply'];
 
 export const updateTypes = typesFactory (filterTypes, ['UPDATE_', '_ORDER'], {_: 'UPDATE_FILTER_ORDER'})
 export const moveTypes = typesFactory (filterTypes, ['MOVE_TO_', '_ZONE']);

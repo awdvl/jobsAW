@@ -20,6 +20,36 @@ import { sortedRestByName, sortedRestByNumber } from './__testData';
 // const selectedCities = ['M', 'S']
 // const pickSelectedCities = R.pick(selectedCities);
 
+// const uniques = R.uniqBy ()
+
+
+const reduceRestToUniqueValues = (getProp, indexIsUndefined) => {
+
+    const bucketReducer = (bucket) => (prev, curr) => {
+        const propValue = getProp (curr);
+
+        if (indexIsUndefined (propValue)) {
+            bucket[propValue] = bucket[propValue] ||
+                // (prev.index[curr.id] = propValue) && prev.list.push (curr) && propValue;
+                prev.push (propValue) && propValue;
+        }
+
+        return prev;
+    };
+
+    // return R.reduce (bucketReducer ({}), { index:{}, list:[] });
+    return R.reduce (bucketReducer ({}), []);
+
+};
+
+
+
+
+
+
+
+
+
 
 const getSelectedCities = (state) => state.ui.filter.city.sel;
 const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
@@ -32,7 +62,7 @@ const getFilters = (state) => state.ui.filter;
 // }
 
 // export const getJobData = createSelector(
-const getJobData = createSelector(
+const getJobData = createSelector (
     getRichJobData,
     getFilters,
 

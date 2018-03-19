@@ -3,15 +3,21 @@ import PropTypes from 'prop-types';
 
 import bug from '../../../_libs/bug';
 
+/**
+ *  A component that handles the interactive component state
+ *      - hover
+ *      - hovered  -  like hover but unhovers on button click
+ *      - focus
+ *      - active
+ */
 class StateComponent extends Component {
     constructor(props) {
         super (props);
 
         this.state = {
             hover: false,
-            hoverP: false,
+            hovered: false,
             focus: false,
-            // active: false,
             active: this.props.active,
         };
     }
@@ -20,50 +26,48 @@ class StateComponent extends Component {
         children: PropTypes.func.isRequired,
     }
 
+    // React 16.3
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.active === prevState.active) {
+            return null;
+        }
+
+        return { 
+            active: nextProps.active
+        };
+    }
+
+    // < React 16.3  -  deprecated
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.active !== this.props.active) {
+            this.setState ({ active: nextProps.active});
+        }
+    }
+
+
     render() {
         return (
             <div 
-                onMouseEnter={() => (
-                    // this.setState ({ hover: true })
-                    this.setState ((prevState) => {
-                        // bug('** enter prevState', prevState)
-                        // const hoverP = prevState.active && prevState.hoverP ? false : true;
-                        return {
-                            hover: true,
-                            hoverP: true
-                        }
-                    }
-                ))}
-                // onMouseEnter={() => (this.setState({ hover: true }))}
-                // onMouseEnter={() => (this.setState((prevState) => ({
-                //     hover: !prevState.hover
-                // })))}
-                // onMouseLeave={() => (this.setState({ hover: false }))}
-                // onMouseLeave={() => (this.setState({ hover: false, hoverP: false }))}
-                onMouseLeave={() => (this.setState((prevState) => {
-                        // bug('** leave prevState', prevState)
-                        // const hoverP = prevState.active && prevState.hoverP ? false : true;
-                        return {
-                            hover: false,
-                            hoverP: false
-                        }
-                    }
-                ))}
+                onMouseEnter={() => (this.setState ({
+                        hover: true,
+                        hovered: true
+                    })
+                )}
+                onMouseLeave={() => (this.setState({
+                        hover: false,
+                        hovered: false
+                    })
+                )}
 
-                onFocus={() => (this.setState({ focus: true }))}
-                onBlur={() => (this.setState({ focus: false }))}
-                onClick={() => (this.setState((prevState) => {
-                    // bug('** click prevState', prevState)
-                    
-                    return {
+                onFocus={() => (this.setState ({ focus: true }))}
+                onBlur={() => (this.setState ({ focus: false }))}
+                onClick={() => (this.setState ((prevState) => ({
                         active: !prevState.active,
-                        hoverP: false
-                }}))}
-                // onClick={() => (this.setState((prevState) => ({
-                //     active: !prevState.active
-                // })))}
+                        hovered: false
+                    })
+                ))}
             >
-                {this.props.children(this.state)}
+                {this.props.children (this.state)}
             </div>
         );
     }
