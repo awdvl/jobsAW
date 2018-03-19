@@ -26,7 +26,8 @@ import makeIndex from '../../_libs/makeIndex';
 
 // const uniques = R.uniqBy ()
 
-const getProp = filterPropAccessorFor ()
+// const getProp = filterPropAccessorFor ()
+
 
 const reduceSelectables = (getPropFor) => {
 
@@ -49,6 +50,116 @@ const reduceSelectables = (getPropFor) => {
 
     return R.reduce (bucketReducer ({}), []);
 
+};
+
+// const reduceSelectables = (getPropFor) => {
+
+//     const filterName = 'city';  // this in a map or directly in callback as map with a dynamic getProp
+//     const getProp = getPropFor (filterName);
+
+//     const bucketReducer = (getProp, bucket) => (prev, curr) => {
+//         const propValue = getProp (curr);
+//                                                                                         // bug('curr', curr, propValue)
+//         // if (indexIsUndefined (propValue)) {
+//             bucket[propValue] = bucket[propValue] ||
+//                 // (prev.index[curr.id] = propValue) && prev.list.push (curr) && propValue;
+//                 prev.push (propValue) && propValue;
+//         // }
+
+//         return prev;
+//     };
+
+//     return bucketReducer ({});
+
+//     // return R.reduce (bucketReducer ({}), []);
+
+// };
+
+
+const extractSelectables = (filterNames, filters, data) => {
+    bug ('*** extractSelectables filters ', filters);
+
+    const bucketReducer = (getProp, bucket) => (prev, curr) => {
+        const propValue = getProp (curr);
+                                                                                        // bug('curr', curr, propValue)
+        bucket[propValue] = bucket[propValue] ||
+                prev.push (propValue) && propValue;
+
+        return prev;
+    };
+
+    const getNotSelectablesIndex = (filter) => ({
+        ...makeIndex (filter.sel, 1),
+        ...makeIndex (filter.excl, 1)
+    });
+
+    const filterPredicateWith = (notSelectablesIndex) => (elem) => {
+        return !notSelectablesIndex[elem];
+    };
+
+    const getPropFor = filterPropAccessorFor (filters).getProp;
+
+    const mapper = (data) => (filterName) => {
+        const getProp = getPropFor (filterName);
+
+        const fi2 = R.pipe (
+            R.reduce (bucketReducer (getProp, {}), []),
+            // R.filter (filterPredicate)
+            // reduceSelectables (getProp),
+            R.filter (filterPredicateWith (getNotSelectablesIndex (filters[filterName])))
+        );
+
+        return fi2 (data);
+    };
+
+    // const mapper2 = (filterName) => {
+    //     const fi2 = R.pipe (
+    //         R.reduce (bucketReducer (getPropFor (filterName), {}), []),
+    //         // R.filter (filterPredicateWith (getNotSelectablesIndex (filters[filterName])))
+    //         R.filter (R.compose (filterPredicateWith, getNotSelectablesIndex) (filters[filterName]))
+    //         // R.filter (R.apply (R.pipe (getNotSelectablesIndex, filterPredicateWith), filters[filterName]))
+    //     );
+
+    //     return fi2;
+    // };
+    const mapper3 = (filters) => (filterName) => {
+        const fi2 = R.pipe (
+            R.reduce (bucketReducer (getPropFor (filterName), {}), []),
+            // R.filter (filterPredicateWith (getNotSelectablesIndex (filters[filterName])))
+            R.filter (R.compose (filterPredicateWith, getNotSelectablesIndex) (filters[filterName]))
+            // R.filter (R.apply (R.pipe (getNotSelectablesIndex, filterPredicateWith), filters[filterName]))
+        );
+
+        return fi2;
+    };
+
+    const map = R.map (mapper (data));
+                                                        bug ('*** extractSelectables map ', map);
+
+    const fmap = map (filterNames);
+                                                                        bug ('*** extractSelectables fmap ', fmap);
+    // const pmap = R.map (mapper2);
+    // const pmap2 = pmap (filterNames);
+    //                                                                     bug ('*** extractSelectables pmap2', pmap2);
+
+
+    // const dmap = R.map (R.applyTo (data))
+    // const dmap2 = dmap (pmap2)
+    //                                                                     bug ('*** extractSelectables dmap2', dmap2);
+    const xmap = R.pipe (
+        // R.map (mapper2),
+        // R.map (mapper3 (filters)),
+        R.map (mapper3 (filters)),
+        R.map (R.applyTo (data))
+    );
+    const xmap2 = xmap (filterNames);
+                                                                        bug ('*** extractSelectables xmap2', xmap2);
+
+    // const pmap = R.pipe (
+    //     R.map (mapper (filterNames),
+    //     R.map ((elem) => )
+    // )                                                                    
+    return fmap;
 };
 
 const getSelectableFilters = createSelector (
@@ -90,6 +201,11 @@ const getSelectableFilters = createSelector (
         const fi3 = fi2 (richJobData);
         // bug ('+++ filteredS', filteredS);
         bug ('+++ fi3', fi3);
+
+
+        const fi4 = extractSelectables (['city'], filter, richJobData);
+        // // const fi4 = fi4p (richJobData);
+        // bug ('+++ fi4', fi4);
 
         // reduceRestToUniqueValues (
         //     getProp (filterName), 
