@@ -5,7 +5,7 @@ const makePropAccessFor = R.curry ((filterState, type, filterName) =>
 
 // getPropFor -->> possible also for R.path with automatic switch
 // const getPropFor = filterName => obj => R.prop (filterName, obj);
-const filterPropAccessor = (filterState, getPropFor = R.prop) => {
+const filterPropAccessorFor = (filterState, getPropFor = R.prop) => {
     const makePropAccess = makePropAccessFor (filterState);
     const getPropName = makePropAccess ('__pointToPath');
     
@@ -23,4 +23,4 @@ const filterPropAccessor = (filterState, getPropFor = R.prop) => {
     };
 };
 
-export default filterPropAccessor;
+export default filterPropAccessorFor;

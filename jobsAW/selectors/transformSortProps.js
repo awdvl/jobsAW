@@ -1,8 +1,9 @@
 import R from 'ramda';
 import bug from '../../_libs/bug';
+import makeIndex from '../../_libs/makeIndex';
 
 import multiSort from './multiSort';
-import filterPropAccessor from '../reducers/filterPropAccessor';
+import filterPropAccessorFor from '../reducers/filterPropAccessorFor';
 
 import { List, Iterable } from 'immutable';
 
@@ -27,29 +28,29 @@ const propIsUndefinedIn = R.curry((obj, prop) => obj[prop] === undefined);
 const wrapInArray = (value) => [value];
 
 
-const reduceIndexed = R.addIndex(R.reduce);
+// const reduceIndexed = R.addIndex (R.reduce);
 
-/**
- *  @param ary {Array} -  the array for which the index will be made
- *  @param i {Number} -  array index from which on the index will be added  -  default: 0 (new index)
- */
-const makeIndex = (ary, i = 0) => (
-        reduceIndexed ( (acc, value, index) => {
-            acc[value] = index + i;
-            return acc;
-        }, 
-        {}
+// /**
+//  *  @param ary {Array} -  the array for which the index will be made
+//  *  @param i {Number} -  array index from which on the index will be added  -  default: 0 (new index)
+//  */
+// const makeIndex = (ary, i = 0) => (
+//         reduceIndexed ( (acc, value, index) => {
+//             acc[value] = index + i;
+//             return acc;
+//         }, 
+//         {}
 
-    ) (ary, i));
+//     ) (ary, i));
 
-const makeIndex2 = (ary, acc = {}, i = 0) => (
-        reduceIndexed ( (acc, value, index) => {
-            acc[value] = index + i;
-            return acc;
-        }, 
-        acc
+// const makeIndex2 = (ary, acc = {}, i = 0) => (
+//         reduceIndexed ( (acc, value, index) => {
+//             acc[value] = index + i;
+//             return acc;
+//         }, 
+//         acc
 
-    ) (ary, i));
+//     ) (ary, i));
 
 
 // get the start index independent, whether or not the object is a iterable (List)    
@@ -71,14 +72,19 @@ const transformSortProps = (filterState, filteredRecords) => {
                                                             bug('+++++ filterState', filterState)
                                                             // bug('++ filterState.__order', filterState.__order)
                                                             // bug('++ filterState.city', filterState.city)
-    // filterPropAccessor                                                            
-    const makePropAccess = makePropAccessFor (filterState);
-    const getPropName = makePropAccess ('__pointToPath');
+    const filterPropAccessor = filterPropAccessorFor (filterState);
 
-    const getPropNameMapped = R.pipe (
-        getPropName, 
-        makePropAccess ('__mapToPath')
-    );
+    const getPropName = filterPropAccessor.getPropName;
+    const getPropNameMapped = filterPropAccessor.getPropNameMapped;
+    const getProp = filterPropAccessor.getProp;
+
+    // const makePropAccess = makePropAccessFor (filterState);
+    // const getPropName = makePropAccess ('__pointToPath');
+
+    // const getPropNameMapped = R.pipe (
+    //     getPropName, 
+    //     makePropAccess ('__mapToPath')
+    // );
 
     const getSortOrder = (filter) => filter.sortRest === true ?
             !R.isEmpty (filter.sortOrder) ? filter.sortOrder : undefined :
@@ -108,39 +114,6 @@ const transformSortProps = (filterState, filteredRecords) => {
 
     };
 
-    //  for more elements, push them into an array of arrays and transform the map in multiSort to a
-    //      reduce to apply the different subsorts to the first acc array layer!!
-    // const getSortedFilterProps = R.curry((filterName, sortOrder) => {
-    //     // default in function not in argument, as function is curried
-    //     sortOrder = sortOrder || [filterName];
-    //                                                     bug('+++ transformSortProps sortOrder',sortOrder, filterName)
-    //                                                             bug('+++ isIterable', Iterable.isIterable(sortOrder))
-    //                                                             bug('sortOrder[0]', sortOrder[0])
-    //                                                             bug('+++ getPRopName',getPropName(filterName))
-                                                                    
-    //     let preparedProp;
-    //                                             // bug('getSortedFilterProps::filterName, sortOrder', filterName, sortOrder)
-    //     if (sortOrder[0] === 'text') {
-    //         preparedProp = ['text', getPropName (filterName)];
-    //                                                 // bug('text filter.sortOrder preparedProp ', preparedProp)
-    //     // e.g. 'pop'
-    //     } else if (!R.isEmpty (sortOrder) && sortOrder[0] !== 'DSC') {
-    //         preparedProp = getPropNameMapped (sortOrder[0]);
-
-    //     // this only fallback                                            
-    //     } else {
-    //         preparedProp = getPropNameMapped (filterName);
-    //                                                 // bug('with filter.sortOrder preparedProp ', preparedProp)
-    //     }
-    //                                                                                 bug('+++ pr', preparedProp)
-    //     if (R.contains ('DSC', sortOrder)) {
-    //         preparedProp.push('DSC');
-    //     }
-    //                                                                                 // bug('+++ pr', preparedProp)
-    //     return preparedProp;
-    // });
-
-
     const getSortedFilterProps = R.curry ((filterName, sortOrder) => {
         // default in function not in argument, as function is curried
         sortOrder = sortOrder || List ([filterName]);
@@ -165,34 +138,14 @@ const transformSortProps = (filterState, filteredRecords) => {
         if (sortOrder.includes()) {
             preparedProp.push('DSC');
         }
-                                                                    bug('+++ getSortedFilterProps', preparedProp)
+                                                                    // bug('+++ getSortedFilterProps', preparedProp)
         return preparedProp;
     });
 
 
     // -->> possible also for R.path with automatic switch
     // const getPropFor = filterName => obj => R.prop (filterName, obj);
-    const getPropFor = R.prop;
-
-    
-    const reduceRestToUniqueValues = (getProp, indexIsUndefined) => {
-
-        const bucketReducer = (bucket) => (prev, curr) => {
-            const propValue = getProp (curr);
-
-            if (indexIsUndefined (propValue)) {
-                bucket[propValue] = bucket[propValue] ||
-                    // (prev.index[curr.id] = propValue) && prev.list.push (curr) && propValue;
-                    prev.push (propValue) && propValue;
-            }
-
-            return prev;
-        };
-
-        // return R.reduce (bucketReducer ({}), { index:{}, list:[] });
-        return R.reduce (bucketReducer ({}), []);
-
-    };
+    // const getPropFor = R.prop;
     
     const reduceRestToSamples = (getProp, indexIsUndefined) => {
 
@@ -223,27 +176,27 @@ const transformSortProps = (filterState, filteredRecords) => {
             preparedProp = [ getPropNameMapped (filterName) ];
 
             if (filter.sortRest) {
-                const getProp = R.compose (getPropFor, getPropNameMapped);
+                // const getProp = R.compose (getPropFor, getPropNameMapped);
 
                 const getSamplesFromRest = reduceRestToSamples (
                     getProp (filterName), 
                     propIsUndefinedIn (selIndex)
                 );
-                                                    bug ('+++ filterName, selIndex', filterName, selIndex)
-                                                    bug('+++  filteredRecords.size', filteredRecords.length)
-                        bug ('+++ uniques', 
-                            reduceRestToUniqueValues (
-                                getProp (filterName), 
-                                propIsUndefinedIn (selIndex)
-                            ) (filteredRecords)
-                        )
-                                                    bug ('+++ getSamplesFromRest', getSamplesFromRest (filteredRecords))
+                                                    // bug ('+++ filterName, selIndex', filterName, selIndex)
+                                                    // bug('+++  filteredRecords.size', filteredRecords.length)
+                        // bug ('+++ uniques', 
+                        //     reduceRestToUniqueValues (
+                        //         getProp (filterName), 
+                        //         propIsUndefinedIn (selIndex)
+                        //     ) (filteredRecords)
+                        // )
+                                                    // bug ('+++ getSamplesFromRest', getSamplesFromRest (filteredRecords))
                 const sortedSamples = sortSamples (
                     filter, 
                     getSortedFilterProps (filterName), 
                     getSamplesFromRest (filteredRecords)
                 );
-                                                                        bug('+++ sortedSamples', sortedSamples)
+                                                                        // bug('+++ sortedSamples', sortedSamples)
                 selIndex = {
                     ...selIndex, 
                     ...makeIndex (sortedSamples, getIndexStart (filter.sel))

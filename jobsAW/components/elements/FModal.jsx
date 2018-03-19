@@ -100,9 +100,11 @@ class ReactModalAdapter extends Component {
             setIsMovingFromZone,
             getFilterTopOnly,
 
+            selectable,
+
         } = this.props;
                                                                 // bug('REactModalAdapter props', this.props);
-
+                                                            // bug('+++ selectable', selectable)
         const reactModalContent = ({
             modalType,
             closeModal,

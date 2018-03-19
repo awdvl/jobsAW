@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getLoc } from '../selectors';
+import { getLoc, getSelectableFilters } from '../selectors';
 import { 
     getFilterZoneFor, 
     getMovingFromZone,
@@ -25,6 +25,7 @@ const mapStateToProps = (state, ownProps) => ({
     getFilterTopOnly: getFilterTopOnlyFor (state),
     movedFromZone: getMovingFromZone (state),
     loc: getLoc (state),
+    selectable: getSelectableFilters (state),
 
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({

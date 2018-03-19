@@ -118,8 +118,8 @@ const initStateCity = new FilterCity({
     // sortRest: ['text'],
     // excl: []
     // excl: ['K']
-    // excl: List(['K'])
-    excl: List([])
+    excl: List(['K'])
+    // excl: List([])
 });
 
 
@@ -279,10 +279,22 @@ export const filter = combineReducers({
 
 
 // accessor functions
+export const getFilter = (state) => state.ui.filter;
+// const getFilters = (state) => {
+//             bug('----->>> filters state', state);bug('----->>> filters state2', JSON.stringify(state))
+//     return state.ui.filter;
+// }
+
 export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
 export const getMovingFromZone = (state) => state.ui.filter.__movingFromZone;
 
 export const getFilterOrder = (state) => state.ui.filter.__order;
+
+// this only in selector.index.js  ->> not better to keep it directly with the getFilter
+// export const getSelectedCities = (state) => state.ui.filter.city.sel;
+// export const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
+// export const getSelectedCompIndy = (state) => state.ui.filter.compIndy.sel;
+
 
 export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get (zone);
 export const getFilterTopOnlyFor = (state) => (filter) => !state.ui.filter[filter].inclRest
