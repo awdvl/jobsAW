@@ -8,6 +8,7 @@ import FilterCompEmply from '../records/FilterCompEmply';
 import R from 'ramda';
 
 import { 
+    selectableTypes,
     updateTypes,
     moveTypes,
     onlyTopTypes,
@@ -161,8 +162,10 @@ const moveToZone = (state, action) => {
 
 export const city = (state=initStateCity, action) => {
     switch (action.type) {
-        case 'A':
-            return state.set ('rest', action.payload);  // --> set Record basics for other filters!!
+        case selectableTypes.city:
+                                                                // bug('slectableTypes action.payload', action.payload)
+            // return state;
+            return state.set ('rest', List (action.payload));  // --> set Record basics for other filters!!
 
         // UPDATE_CITY_ORDER:
         case updateTypes.city:

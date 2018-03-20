@@ -3,11 +3,13 @@ import R from 'ramda';
 import makeIndex from '../../_libs/makeIndex';
 import filterPropAccessorFor from '../reducers/filterPropAccessorFor';
 
+import bug from '../../_libs/bug';
+
 
 
 // const extractAll = (filterNames, filters, data) => {
 export const extractAll = (filters, data) => {
-    // bug ('*** extractAll filters ', filters);
+                                                                            bug ('*** extractAll filters ', filters);
     const bucketReducer = (getProp, bucket) => (prev, curr) => {
         const propValue = getProp(curr);
         // bug('curr', curr, propValue)
@@ -40,7 +42,7 @@ export const extractAll = (filters, data) => {
     const mapper = (filters) => (filterName) =>
         R.pipe(
             R.reduce(uniqueReducer(filters, filterName), []),
-            // R.filter (selectablesPredicate (filters, filterName))
+            R.filter (selectablesPredicate (filters, filterName))
         );
 
     const xmap = R.pipe(

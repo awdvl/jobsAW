@@ -5,7 +5,7 @@ import { Map } from 'immutable';
 import { SET_MODAL_ISOPEN, SET_MODAL_TYPE } from '../constants/ui';
 
 
-const initStateModal = Map({
+const initStateModal = Map ({
     isOpen: false,
     type: ''
 });
@@ -29,11 +29,11 @@ export const modal = (state=initStateModal, action) => {
     }
 };
 
-export const getModalIsOpen = (state) => state.ui.modal.get('isOpen');
-export const getModalType = (state) => state.ui.modal.get('type');
+export const getModalIsOpen = (state) => state.ui.modal.get ('isOpen');
+export const getModalType = (state) => state.ui.modal.get ('type');
 
 
-export const ui = combineReducers({
+export const ui = combineReducers ({
     filter,
     modal,
 });

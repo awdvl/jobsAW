@@ -13,9 +13,9 @@ import { fromJS } from 'immutable';
  * 
  *          const loadCtrl =  simpleLoadCtrl(FETCH_CTRL_SET_NUMBER, FETCH_CTRL_INCREMENT);
  * 
- *          export const actionLc = loadCtrl.action;
+ *          export const loader = loadCtrl.loader;
  *          export const reducerLc = loadCtrl.reducer;
- *          export const dispatchIncLc = loadCtrl.dispatchInc;
+ *          export const dispatchIncLc = loadCtrl.incLoadedCounter;
  *          export const finishedLc = loadCtrl.finished('loadCtrl');  // pass the reducer name as key 
  * 
  *      actions: 
@@ -41,14 +41,18 @@ export default (
     const initState = fromJS({n: 0, i: 0, finished: false});
 
     const updateState = (state) => {
-        const newI = state.get('i') + 1;
-        const finished = newI === state.get('n');
+        const newI = state.get ('i') + 1;
+        const finished = newI === state.get ('n');
 
-        return state.set('i', newI).set('finished', finished);
+        return state.set ('i', newI).set ('finished', finished);
     }
 
     return {
-        action(n) {
+        loader(loadCallbacks) {
+            const n = loadCallbacks.length;
+
+            loadCallbacks.forEach (element => element ());
+
             return (dispatch) => {
                 dispatch({
                     type: setActionConst,
@@ -60,32 +64,25 @@ export default (
         reducer(state=initState, action) {
             switch (action.type) {
                 case setActionConst:
-                    return state.set('n', action.payload);
+                    return state.set ('n', action.payload);
         
                 case incActionConst:
-                    return updateState(state);
+                    return updateState (state);
         
                 default: 
                     return state;
             }
         },
 
-        dispatchInc(dispatch) {
+        incLoadedCounter(dispatch) {
             return dispatch({
                 type: incActionConst
             });
         },
 
         finished(stateKey) {
-            return (state) => state[stateKey].get('finished');
-            // return (state) => {
-            //     console.log ('*** simpleLoadCgrl.js finished', stateKey, state[stateKey], state[stateKey].get('finished'))
-            //     return state[stateKey].get('finished');
-            // }
+            return (state) => state[stateKey].get ('finished');
         },
 
-        // fin(state) {
-        //     return state.loadCtrl.get ('finished');
-        // }
     };
 }

@@ -4,6 +4,7 @@ import typesFactory from '../../_libs/typesFactory';
 // const filterTypes = ['city', 'jobType'];
 export const filterTypes = ['city', 'jobType', 'compIndy', 'compEmply'];
 
+export const selectableTypes = typesFactory (filterTypes, ['SET_', '_SELECTABLES'])
 export const updateTypes = typesFactory (filterTypes, ['UPDATE_', '_ORDER'], {_: 'UPDATE_FILTER_ORDER'})
 export const moveTypes = typesFactory (filterTypes, ['MOVE_TO_', '_ZONE']);
 export const onlyTopTypes = typesFactory (filterTypes, ['UPDATE_', '_ONLY_TOP']);

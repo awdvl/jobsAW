@@ -1,8 +1,10 @@
 import { Map, fromJS } from 'immutable';
 import * as api from '../api';
 import * as consts from '../constants/fetch';
+import { selectableTypes } from '../constants/filter';
+
 import reviverFor from '../utils/reviverFor';
-import { actionLc, dispatchIncLc, finishedLc, fin } from '../utils/loadCtrl';
+import { loader, incLoadedCounter, getLoadingFinished } from '../utils/loadCtrl';
 
 import City from '../records/City';
 import Company from '../records/Company';
@@ -10,33 +12,23 @@ import Jobs from '../records/Jobs';
 import JobsLoc from '../records/JobsLoc';
 
 
-export { actionLc as loadCtrl };
-// export { finishedLc as loadFinished };
-
-export { finishedLc };
-// export { fin };
-
-// export const fetchData = () => (dispatch, getState) => {
-//     if (!finishedLc(getState())) {
-
-//     }
-// }
+export { loader, getLoadingFinished };
 
 export const fetchCities = (fetched) => (dispatch, getState) => {
     const { FETCH_CITIES_SUCCESS, FETCH_CITIES_ERROR } = consts;
 
-    return api.fetchCities(fetched).then(
+    return api.fetchCities (fetched).then (
         response => {
-            dispatch({
+            dispatch ({
                 type: FETCH_CITIES_SUCCESS,
                 fetched,
-                payload: fromJS(response, reviverFor(City)),
+                payload: fromJS (response, reviverFor (City)),
             });
 
-            dispatchIncLc(dispatch);            
+            incLoadedCounter (dispatch);            
         },
         error => {
-            dispatch({
+            dispatch ({
                 type: FETCH_CITIES_ERROR,
                 message: error.message || 'Something went wrong.'
             });
@@ -47,17 +39,17 @@ export const fetchCities = (fetched) => (dispatch, getState) => {
 export const fetchCompanies = () => (dispatch) => {
     const { FETCH_COMPANIES_SUCCESS, FETCH_COMPANIES_ERROR} = consts;
 
-    return api.fetchCompanies().then(
+    return api.fetchCompanies ().then (
         response => {
-            dispatch({
+            dispatch ({
                 type: FETCH_COMPANIES_SUCCESS,
-                payload: fromJS(response, reviverFor(Company)),
+                payload: fromJS (response, reviverFor (Company)),
             });
 
-            dispatchIncLc(dispatch);            
+            incLoadedCounter (dispatch);            
         },
         error => {
-            dispatch({
+            dispatch ({
                 type: FETCH_COMPANIES_ERROR,
                 message: error.message || 'Something went wrong.'
             });
@@ -68,17 +60,17 @@ export const fetchCompanies = () => (dispatch) => {
 export const fetchLocCommon = () => (dispatch) => {
     const { FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR } = consts;
 
-    return api.fetchLocCommon().then(
+    return api.fetchLocCommon ().then (
         response => {
-            dispatch({
+            dispatch ({
                 type: FETCH_LOC_COMMON_SUCCESS,
-                payload: fromJS(response),
+                payload: fromJS (response),
             });
 
-            dispatchIncLc(dispatch);            
+            incLoadedCounter (dispatch);            
         },
         error => {
-            dispatch({
+            dispatch ({
                 type: FETCH_LOC_COMMON_ERROR,
                 message: error.message || 'Something went wrong.'
             });
@@ -89,26 +81,50 @@ export const fetchLocCommon = () => (dispatch) => {
 export const fetchJobs = () => (dispatch) => {
     const { FETCH_CTRL_INCREMENT, FETCH_JOBS_REQUEST, FETCH_JOBS_SUCCESS, FETCH_JOBS_ERROR } = consts;
 
-    return api.fetchJobs().then(
+    return api.fetchJobs ().then (
         response => {
             const recordCondition = key => key.length > 3;
 
-            dispatch({
+            dispatch ({
                 type: FETCH_JOBS_SUCCESS,
                 payload: Map({
-                    details: fromJS(response.details, reviverFor(Jobs, recordCondition)),
-                    loc: fromJS(response.loc, reviverFor(JobsLoc, recordCondition))
+                    details: fromJS (response.details, reviverFor (Jobs, recordCondition)),
+                    loc: fromJS (response.loc, reviverFor (JobsLoc, recordCondition))
                 }),
             });
 
-            dispatchIncLc(dispatch);
-            
+            incLoadedCounter (dispatch);
         },
         error => {
-            dispatch({
+            dispatch ({
                 type: FETCH_JOBS_ERROR,
                 message: error.message || 'Something went wrong.'
             });
         }
     );
+};
+
+
+export const setSelectablesLoadedFlag = (loaded) => ({
+    type: consts.SET_SELECTABLES_LOADED,
+    payload: loaded
+});
+
+// export const setSelectablesLoadedFlag = (loaded) => {
+//     console.log ('fetch.js action - consts, loaded',consts, consts.SET_SELECTABLES_LOADED, loaded)
+//     return ({
+//     type: consts.SET_SELECTABLES_LOADED,
+//     payload: loaded
+// })};
+
+// export const setSelectables = (type, payload) => ({
+//     type: selectableTypes[type],
+//     payload
+// });
+export const setSelectables = (type, payload) => {
+    console.log ('fetch.js action - type, selectableTypes[type], payload', type, selectableTypes[type], payload)
+    return ({
+    type: selectableTypes[type],
+    payload
+    })
 };

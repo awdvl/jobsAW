@@ -24,9 +24,9 @@ const jobs = (state=initState, action) => {
     }
 };
 
-const cities = buildDumbDataReducer(FETCH_CITIES_SUCCESS);
-const companies = buildDumbDataReducer(FETCH_COMPANIES_SUCCESS);
-const locCommon = buildDumbDataReducer(FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
+const cities = buildDumbDataReducer (FETCH_CITIES_SUCCESS);
+const companies = buildDumbDataReducer (FETCH_COMPANIES_SUCCESS);
+const locCommon = buildDumbDataReducer (FETCH_LOC_COMMON_SUCCESS, FETCH_LOC_COMMON_ERROR, 'mergeDeep');
 
 export const data = combineReducers({
     cities,

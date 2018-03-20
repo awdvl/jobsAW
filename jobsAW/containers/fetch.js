@@ -1,34 +1,23 @@
 import { connect } from 'react-redux';
-// import { createSelector } from 'reselect';
 
-import { getJobData, getLoc } from '../selectors';
+import { getJobData, getLoc, getSelectableFilters } from '../selectors';
 import * as actions from '../actions/fetch';
+
+import { getFilterIsMoving } from '../reducers/filter';
+import { getModalIsOpen } from '../reducers/ui';
+import { getSelectablesLoadedFlag } from '../reducers'; 
 
 import App from '../components/elements/App';
 
-// const finished = (state) => state.loadCtrl.get ('finished');
-// console.log (
-//     'action.loadFinished', actions.loadFinished
-// )
-// --> ownProps comes from the props passed from the presentational component
-// --> see: https://egghead.io/lessons/javascript-redux-filtering-redux-state-with-react-router-params
-// --> here in the container apply the fitlered data logic and pass the props to the presentational components!
-// const mapStateToProps = (state) => ({state: state});
-const mapStateToProps = (state, props) => {
-    // console.log('ownProps', props)
-
-    return {
-        state,
-        // loadFinished: actions.loadFinished (state),
-        // loadFinishedSol: actions.loadFinished,
-        // loadFin: actions.fin (state),
-        loaded: actions.finishedLc (state),
-        // loadFinLc: actions.finishedLc (state),
-        // finished: finished (state),
-        jobs: getJobData (state),
-        loc: getLoc (state)
-    };
-};
+const mapStateToProps = (state, ownProps) => ({
+    loaded: actions.getLoadingFinished (state),
+    jobs: getJobData (state),
+    loc: getLoc (state),
+    selectableFilters: getSelectableFilters (state),
+    selectablesLoadedFlag: getSelectablesLoadedFlag (state),
+    modalIsOpen: getModalIsOpen (state),
+    filterIsMoving: getFilterIsMoving (state),
+});
 
 // const mapDispatchToProps = dispatch => {
 //     return {

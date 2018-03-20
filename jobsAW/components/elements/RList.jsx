@@ -7,10 +7,7 @@ import bug from '../../../_libs/bug';
 import RListItems from './RListItems';
 
 
-// export default RList;
-export default  (props) => {
-                                                                        // bug('RList.jsx props', props)
-    // bug('props.jobs', props.jobs, props.cities, props.allLoaded)
+export default  ({ loaded, jobs}) => {
 
     const heading = 'Front-end Engineer';
     const numberOfJobs = '12';
@@ -50,7 +47,6 @@ export default  (props) => {
     `;
 
 
-
     const LoadedList = ({jobs}) => (
         <div>
             <RListHeader className='listElemW'>
@@ -62,9 +58,7 @@ export default  (props) => {
                 </HeaderJobNumers>
             </RListHeader>   
             <RListItemsWrapper className='listElemW'>
-                {/* {bug('inside props.jobs', props.get('jobs'))} */}
-                {/* {bug('inside props.state.jobs', jobs)} */}
-                {jobs.map((job) => (
+                {jobs.map ((job) => (
                     <RListItems key={job.id}
                         job={job}
                     />
@@ -73,16 +67,16 @@ export default  (props) => {
         </div>
     );
     
-    // -->> this not better via props.jobs??
-    const List = () => (props.allLoaded ?
-            <LoadedList jobs={props.jobs} /> :
+    const List = () => 
+        (loaded ?
+            <LoadedList jobs={jobs} /> :
             <p>Loading...</p>);
     
+            
     return (
         <ListWrapper >
             <List />
         </ListWrapper >
     );
 
-    // return <ListWrapper />;
 };

@@ -1,4 +1,5 @@
 import { 
+    // selectableTypes,
     updateTypes,
     moveTypes,
     onlyTopTypes,
@@ -25,6 +26,11 @@ export const setIsMovingFromZone = (payload) => ({
 export const toggleTopOnly = (type) => ({
     type: onlyTopTypes[type],
 })
+
+// export const setSelectables = (type, payload) => ({
+//     type: selectableTypes[type],
+//     payload
+// });
 
 /**
  * 

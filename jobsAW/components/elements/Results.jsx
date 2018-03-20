@@ -35,15 +35,10 @@ const Wrapper = styled.div`
 
 export default class Results extends Component {
     shouldComponentUpdate (nextProps, nextState) {
-        // const props = this.props;
-
-        // return !getFilterIsMoving (nextProps.state);
-        return !getModalIsOpen (nextProps.state) && !getFilterIsMoving (nextProps.state);
+        return !nextProps.modalIsOpen && !nextProps.filterIsMoving;
     }
 
     render() {
-        // const props = this.props;
-
         return (
             <Wrapper>
                 <RList {...this.props} />

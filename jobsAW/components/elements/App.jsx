@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import bug from '../../../_libs/bug';
@@ -6,14 +7,13 @@ import bug from '../../../_libs/bug';
 import '../../styles/base.css';
 import styled from 'styled-components';
 
-// import { finishedLc } from '../../utils/loadCtrl';
-
 import Head from './Head';
-// import Filters from './FilterSection';
 import Filters from '../../containers/filter';
 import Results from './Results';
 import Footer from './Footer';
 
+// import { Iterable } from 'immutable';
+import { getLoc, getJobData, getData } from '../../selectors';
 
 // s. https://jsfiddle.net/MadLittleMods/LmYay/
 const Site = styled.div`
@@ -32,41 +32,54 @@ const Site = styled.div`
 
 @DragDropContext(HTML5Backend)
 class JobsList extends Component {
+    static propTypes = {
+        loader: PropTypes.func.isRequired,
+        fetchCities: PropTypes.func.isRequired,
+        fetchCompanies: PropTypes.func.isRequired,
+        fetchLocCommon: PropTypes.func.isRequired,
+        fetchJobs: PropTypes.func.isRequired,
+        loaded: PropTypes.bool.isRequired,
+        loc: PropTypes.object.isRequired,
+        jobs: PropTypes.array.isRequired,
+    }
+
+    getData() {
+        const { loader, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
+        
+        loader ([fetchCities, fetchCompanies, fetchLocCommon, fetchJobs]);
+    }
+
     componentDidMount() {
         this.getData ();
     }
 
-    getData() {
-        const { loadCtrl, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
-                                                            // bug.rt('App.jsx::getData, this.props', this.props);
-        // init load control for fetch actions - pass number of async fetch actions
-        loadCtrl (4);
-        // -->> these in loadCtrl instead of number?
-        fetchCities ();
-        fetchCompanies ();
-        fetchLocCommon ();
-        fetchJobs ();
+    componentDidUpdate(prevProps) {
+        const { loaded, setSelectables, selectableFilters, 
+            setSelectablesLoadedFlag, selectablesLoadedFlag } = this.props;
+
+        if (!selectablesLoadedFlag && loaded) {
+            setSelectablesLoadedFlag (true);
+            setSelectables ('city', selectableFilters[0]);
+        }
     }
 
 
     render () {
                                                             bug('App.jsx -> this.props', this.props)
-                                                            // bug.rt('rt: App.jsx -> this.props', this.props)
-        // const { state, loc } = this.props;
-        const { loaded, loc } = this.props;
+        const { loaded, loc, jobs, selectableFilters, setSelectables } = this.props;
+                                                        // bug('getLoc.recomputations()', getLoc.recomputations())
+                                                        // bug('getJobData.recomputations()', getJobData.recomputations())
+                                                        // bug('getData.recomputations()', getData.recomputations())
 
         return (
             <Site>
                 <Head></Head>
                 <Filters 
-                    // state={state}
                     loc={loc}
-                    // {...this.props}
                 />
                 <Results 
-                    // allLoaded={finishedLc (state)}  // or reducers.getAllLoaded(state)
-                    allLoaded={loaded}  // or reducers.getAllLoaded(state)
-                    {...this.props} 
+                    loaded={loaded} 
+                    jobs={jobs} 
                 />
                 <Footer />
             </Site>

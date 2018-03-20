@@ -3,19 +3,34 @@ import { combineReducers } from 'redux';
 import { settings } from './settings';
 import { data } from './fetchData';
 import { ui } from './ui';
-import { reducerLc, finishedLc } from '../utils/loadCtrl';
-// import fetch from '../containers/fetch';
+import { loadCtrlReducer, getLoadingFinished } from '../utils/loadCtrl';
+import { SET_SELECTABLES_LOADED } from '../constants/fetch';
 
-const reducers = combineReducers({
+
+const selectablesLoaded = (state=false, action) => {
+    switch (action.type) {
+        case SET_SELECTABLES_LOADED:
+            return action.payload;
+
+        default:
+            return state;
+    }
+};
+
+const loadFlags = combineReducers ({
+    // loadCtrlReducer,
+    selectablesLoaded
+})
+
+export default combineReducers ({
     settings,
-    loadCtrl: reducerLc,
+    loadCtrl: loadCtrlReducer,
+    loadFlags,
     data,
     ui,
 });
 
-                                                                        // console.log('reducers', reducers)
-export default reducers;
+const getSelectablesLoadedFlag = (state) => state.loadFlags.selectablesLoaded;
 
-// this necessary??
-// export const getAllLoaded = (state) => finishedLc(state.loadCtrl);
+export { getLoadingFinished, getSelectablesLoadedFlag };
 
