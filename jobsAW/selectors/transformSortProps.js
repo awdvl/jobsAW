@@ -184,12 +184,6 @@ const transformSortProps = (filterState, filteredRecords) => {
                 );
                                                     // bug ('+++ filterName, selIndex', filterName, selIndex)
                                                     // bug('+++  filteredRecords.size', filteredRecords.length)
-                        // bug ('+++ uniques', 
-                        //     reduceRestToUniqueValues (
-                        //         getProp (filterName), 
-                        //         propIsUndefinedIn (selIndex)
-                        //     ) (filteredRecords)
-                        // )
                                                     // bug ('+++ getSamplesFromRest', getSamplesFromRest (filteredRecords))
                 const sortedSamples = sortSamples (
                     filter, 

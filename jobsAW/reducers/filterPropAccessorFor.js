@@ -1,11 +1,14 @@
 import R from 'ramda';
 
+const getAutoProp = (prop) => 
+    (Array.isArray (prop) ? R.path : R.prop) (prop);
+
 const makePropAccessFor = R.curry ((filterState, type, filterName) =>
     (filterState[type].get (filterName) || filterName));
 
-// getPropFor -->> possible also for R.path with automatic switch
-// const getPropFor = filterName => obj => R.prop (filterName, obj);
-const filterPropAccessorFor = (filterState, getPropFor = R.prop) => {
+
+const filterPropAccessorFor = (filterState) => {
+    
     const makePropAccess = makePropAccessFor (filterState);
     const getPropName = makePropAccess ('__pointToPath');
     
@@ -13,9 +16,9 @@ const filterPropAccessorFor = (filterState, getPropFor = R.prop) => {
         getPropName, 
         makePropAccess ('__mapToPath')
     );
-    
-    const getProp = R.compose (getPropFor, getPropNameMapped);
 
+    const getProp = R.compose (getAutoProp, getPropNameMapped);
+    
     return {
         getPropName,
         getPropNameMapped,

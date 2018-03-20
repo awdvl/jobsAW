@@ -201,7 +201,8 @@ const compIndy = (state=initStateCompIndy, action) => {
 
 const initStateCompEmply = new FilterCompEmply({
     // sel: [],
-    sel: List ([4,5,6,9]),
+    // sel: List ([4,5,6,9]),
+    sel: List ([4, 6,9]),
     // sel: [9,6,5,4],
     // sortOrder: ['emply'],
     // sortOrder: ['DSC'],
@@ -237,12 +238,14 @@ const compEmply = (state=initStateCompEmply, action) => {
 const initStateJobType = new FilterJobType({
     // sel: [3]
     // sel: []
-    sel: List ([1,2,3]),
+    // sel: List ([1,2,3]),
+    sel: List ([1, 3]),
     sortOrder: List (['text']),
     sortByOrder: true,
     inclRest: false,
     sortRest: true,
     excl: List ([])
+    // excl: List ([2])
 });
 // const initStateJobType = new FilterJobType({
 //     // sel: [3]
