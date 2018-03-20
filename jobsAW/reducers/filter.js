@@ -118,8 +118,10 @@ const initStateCity = new FilterCity({
     // sortRest: ['text'],
     // excl: []
     // excl: ['K']
-    excl: List(['K'])
+    excl: List(['K']),
     // excl: List([])
+    rest: null
+    
 });
 
 
@@ -159,6 +161,9 @@ const moveToZone = (state, action) => {
 
 export const city = (state=initStateCity, action) => {
     switch (action.type) {
+        case 'A':
+            return state.set ('rest', action.payload);  // --> set Record basics for other filters!!
+
         // UPDATE_CITY_ORDER:
         case updateTypes.city:
             return updateZone (state, action);

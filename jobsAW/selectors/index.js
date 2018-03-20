@@ -4,6 +4,7 @@ import bug from '../../_libs/bug';
 
 import { getRichJobData, getLoc } from './getRichJobData';
 import { getPredicateCity, getPredicateJobType } from './getFilterPredicates';
+import { extractAll } from './filterSelectables';
 
 import { filterByPredicates } from './filterData';
 import { groupBySelection, flatten } from './groupData';
@@ -49,14 +50,11 @@ const extractSelectables = (filters, data) => {
 // bug('+++ --', filterPropAccessorFor (filters).getPropName (filterName))
 // bug('+++ --', filterPropAccessorFor (filters).getPropNameMapped ('emply'))
 
-    const filterPredicateWith = (notSelectablesIndex) => (elem) => {
-        // bug('elem', elem)
-        return !notSelectablesIndex[elem];
-    };
+    const filterPredicateWith = (notSelectablesIndex) => 
+        (elem) => !notSelectablesIndex[elem];
 
     const uniqueReducer = (filters, filterName) => 
         bucketReducer (filterPropAccessorFor (filters).getProp (filterName), {});
-        // bucketReducer (filterPropAccessorFor (filters).getPropNameMapped (filterName), {});
 
     const selectablesPredicate = (filters, filterName) => 
         R.compose (filterPredicateWith, getNotSelectablesIndex) (filters[filterName]);
@@ -64,7 +62,7 @@ const extractSelectables = (filters, data) => {
     const mapper = (filters) => (filterName) => 
         R.pipe (
             R.reduce (uniqueReducer (filters, filterName), []),
-            R.filter (selectablesPredicate (filters, filterName))
+            // R.filter (selectablesPredicate (filters, filterName))
         );
 
     const xmap = R.pipe (
@@ -89,7 +87,8 @@ const getSelectableFilters = createSelector (
         // // // const fi4 = fi4p (richJobData);
         // bug ('+++ fi4', fi4);
 
-        const fi5 = extractSelectables (filter, richJobData);
+        const fi5 = extractAll (filter, richJobData);
+        // const fi5 = extractSelectables (filter, richJobData);
         // const fi5i = fi5 (['city']);
         // const fi5i = fi5 (['jobType']);
         // const fi5i = fi5 (['compEmply']);

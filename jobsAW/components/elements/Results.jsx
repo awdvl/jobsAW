@@ -42,11 +42,11 @@ export default class Results extends Component {
     }
 
     render() {
-        const props = this.props;
+        // const props = this.props;
 
         return (
             <Wrapper>
-                <RList {...props} />
+                <RList {...this.props} />
                 {/* <Results>
                     Hurz
                 </Results> */}

@@ -2,7 +2,7 @@ import { Map, fromJS } from 'immutable';
 import * as api from '../api';
 import * as consts from '../constants/fetch';
 import reviverFor from '../utils/reviverFor';
-import { actionLc, dispatchIncLc, finishedLc } from '../utils/loadCtrl';
+import { actionLc, dispatchIncLc, finishedLc, fin } from '../utils/loadCtrl';
 
 import City from '../records/City';
 import Company from '../records/Company';
@@ -11,6 +11,10 @@ import JobsLoc from '../records/JobsLoc';
 
 
 export { actionLc as loadCtrl };
+// export { finishedLc as loadFinished };
+
+export { finishedLc };
+// export { fin };
 
 // export const fetchData = () => (dispatch, getState) => {
 //     if (!finishedLc(getState())) {

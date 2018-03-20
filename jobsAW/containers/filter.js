@@ -3,7 +3,7 @@ import { getFilterOrder } from '../reducers/filter';
 import { getModalIsOpen, getModalType } from '../reducers/ui';
 import { updateFilter, setIsMoving } from '../actions/filter';
 import { setModalType } from '../actions/ui';
-import filters from '../components/elements/FilterSection';
+import FilterSection from '../components/elements/FilterSection';
 
 const mapStateToProps = (state) => ({
     filterOrder: getFilterOrder (state),
@@ -21,4 +21,4 @@ const enhance = connect(
     mapDispatchToProps
 );
 
-export default enhance (filters);
+export default enhance (FilterSection);

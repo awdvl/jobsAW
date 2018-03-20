@@ -6,7 +6,7 @@ import bug from '../../../_libs/bug';
 import '../../styles/base.css';
 import styled from 'styled-components';
 
-import { finishedLc } from '../../utils/loadCtrl';
+// import { finishedLc } from '../../utils/loadCtrl';
 
 import Head from './Head';
 // import Filters from './FilterSection';
@@ -33,26 +33,27 @@ const Site = styled.div`
 @DragDropContext(HTML5Backend)
 class JobsList extends Component {
     componentDidMount() {
-        this.getData();
+        this.getData ();
     }
 
     getData() {
         const { loadCtrl, fetchCities, fetchCompanies, fetchLocCommon, fetchJobs } = this.props;
                                                             // bug.rt('App.jsx::getData, this.props', this.props);
         // init load control for fetch actions - pass number of async fetch actions
-        loadCtrl(4);
+        loadCtrl (4);
         // -->> these in loadCtrl instead of number?
-        fetchCities();
-        fetchCompanies();
-        fetchLocCommon();
-        fetchJobs();
+        fetchCities ();
+        fetchCompanies ();
+        fetchLocCommon ();
+        fetchJobs ();
     }
 
 
     render () {
-                                                            // bug('App.jsx -> this.props', this.props)
+                                                            bug('App.jsx -> this.props', this.props)
                                                             // bug.rt('rt: App.jsx -> this.props', this.props)
-        const { state, loc } = this.props;
+        // const { state, loc } = this.props;
+        const { loaded, loc } = this.props;
 
         return (
             <Site>
@@ -63,7 +64,8 @@ class JobsList extends Component {
                     // {...this.props}
                 />
                 <Results 
-                    allLoaded={finishedLc(state)}  // or reducers.getAllLoaded(state)
+                    // allLoaded={finishedLc (state)}  // or reducers.getAllLoaded(state)
+                    allLoaded={loaded}  // or reducers.getAllLoaded(state)
                     {...this.props} 
                 />
                 <Footer />

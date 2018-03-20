@@ -6,6 +6,10 @@ import * as actions from '../actions/fetch';
 
 import App from '../components/elements/App';
 
+// const finished = (state) => state.loadCtrl.get ('finished');
+// console.log (
+//     'action.loadFinished', actions.loadFinished
+// )
 // --> ownProps comes from the props passed from the presentational component
 // --> see: https://egghead.io/lessons/javascript-redux-filtering-redux-state-with-react-router-params
 // --> here in the container apply the fitlered data logic and pass the props to the presentational components!
@@ -15,8 +19,14 @@ const mapStateToProps = (state, props) => {
 
     return {
         state,
-        jobs: getJobData(state),
-        loc: getLoc(state)
+        // loadFinished: actions.loadFinished (state),
+        // loadFinishedSol: actions.loadFinished,
+        // loadFin: actions.fin (state),
+        loaded: actions.finishedLc (state),
+        // loadFinLc: actions.finishedLc (state),
+        // finished: finished (state),
+        jobs: getJobData (state),
+        loc: getLoc (state)
     };
 };
 
@@ -34,11 +44,11 @@ const mapStateToProps = (state, props) => {
 // };
 
 
-const enhance = connect(
+const enhance = connect (
     mapStateToProps,
     // mapDispatchToProps
     actions
 );
 
 // export default withRouter(enhance(JobsList));
-export default enhance(App);
+export default enhance (App);

@@ -90,7 +90,7 @@ export default class Filters extends Component {
     }
 
     render() {
-                                                                    // bug('*** Filters this.props', this.props)
+                                                                    bug('*** Filters this.props', this.props)
         const { 
             connectDropTarget, 
             filterOrder, 
@@ -102,7 +102,7 @@ export default class Filters extends Component {
             setModalType 
         } = this.props;
                                                                     // bug('*** Filters modalIsOpen', modalIsOpen)
-        return connectDropTarget(
+        return connectDropTarget (
             // div to transform into native componenet
             <div>
                 <Wrapper>
@@ -110,7 +110,7 @@ export default class Filters extends Component {
                         Filter
                     </Header>
 
-                    {FilterElems({
+                    {FilterElems ({
                         locFilter: loc.filter,
                         moveFilter: moveElem (updateFilter, {setIsMoving}),
                         findFilter: findElem (filterOrder),

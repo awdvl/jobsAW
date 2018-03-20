@@ -39,6 +39,7 @@ export default (
     incActionConst = 'LOADER_INC'
 ) => {
     const initState = fromJS({n: 0, i: 0, finished: false});
+
     const updateState = (state) => {
         const newI = state.get('i') + 1;
         const finished = newI === state.get('n');
@@ -77,6 +78,14 @@ export default (
 
         finished(stateKey) {
             return (state) => state[stateKey].get('finished');
-        }
+            // return (state) => {
+            //     console.log ('*** simpleLoadCgrl.js finished', stateKey, state[stateKey], state[stateKey].get('finished'))
+            //     return state[stateKey].get('finished');
+            // }
+        },
+
+        // fin(state) {
+        //     return state.loadCtrl.get ('finished');
+        // }
     };
 }
