@@ -1,7 +1,9 @@
-import * as reducer from './filter';
+// import * as reducer from './filter';
+import { __order, filterReducers, initStateCity } from './filter';
 import * as types from '../constants/filter';
 
 import FilterCity from '../records/FilterCity';
+import FilterCompIndustry from '../records/FilterCompIndustry';
 
 import { List } from 'immutable';
 
@@ -24,12 +26,12 @@ describe ('filter reducer', () => {
         };
 
         it ('should return the initial state', () => {
-            expect (reducer.__order (undefined, {})).toEqual (initialState);
+            expect (__order (undefined, {})).toEqual (initialState);
         });
 
         describe ('update order', () => {
             it ('should swap city backward', () => {
-                expect (reducer.__order (initialState, {
+                expect (__order (initialState, {
                     // type: types.UPDATE_FILTER_ORDER,
                     type: types.updateTypes._,
                     payload: payload_swapCity
@@ -37,7 +39,7 @@ describe ('filter reducer', () => {
             })
     
             it ('should swap jobType forward', () => {
-                expect (reducer.__order (endState_citySwapped, {
+                expect (__order (endState_citySwapped, {
                     // type: types.UPDATE_FILTER_ORDER,
                     type: types.updateTypes._,
                     payload: payload_swapJobType
@@ -50,15 +52,19 @@ describe ('filter reducer', () => {
     });
 
     describe ('city', () => {
+        // const initialState = initStateCity;
         const initialState = new FilterCity({
             sel: List(['S', 'M']),
             sortOrder: List(['pop']),
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            excl: List([])
-            // excl: List(['K'])
+            excl: List([]),
+            // excl: List(['K']),
+            // rest: null
         });        
+
+        const restPayload = ['K', 'F'];
 
         const endState_selSwapped = new FilterCity({
             sel: List(['M', 'S']),
@@ -66,8 +72,10 @@ describe ('filter reducer', () => {
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            excl: List([])
-            // excl: List(['K'])
+            excl: List([]),
+            // excl: List(['K']),
+            // rest: List (restPayload),
+            // rest: List([]),
         });
 
         const endState_movedFromSelToExcl = new FilterCity({
@@ -76,8 +84,9 @@ describe ('filter reducer', () => {
             sortByOrder: false,
             inclRest: true,
             sortRest: List(['pop']),
-            excl: List(['S'])
-            // excl: List(['K', 'S'])
+            excl: List(['S']),
+            // excl: List(['K', 'S']),
+            // rest: List (restPayload),
         })
 
         const payload_swapSel = {
@@ -93,47 +102,137 @@ describe ('filter reducer', () => {
         };
 
         it ('should return the initial state', () => {
-            expect (reducer.city (undefined, {})).toEqual (initialState);
+            expect (filterReducers.city (undefined, {})).toEqual (initialState);
 
         });
+
+        describe ('fill in rest values', () => {
+            describe ('rest list', () => {
+                it ('should change from null to passed values', () => {
+                    expect (filterReducers.city (initialState, {
+                        type: types.selectableTypes.city,
+                        payload: restPayload
+                    }).rest).toEqual (List (restPayload));
+                });
+            });
+        });
+        
 
         describe ('update order', () => {
             describe('for selected filters sel', () => {
                 it ('should swap the first two elems', () => {
-                    expect (reducer.city (initialState, {
+                    expect (filterReducers.city (initialState, {
                         type: types.updateTypes.city,
                         env: ['sel'],
                         payload: payload_swapSel
                     })).toEqual (endState_selSwapped);
                 });
-              
             });
-          
         });
 
         describe ('move between zones', () => {
             describe('from sel to excl', () => {
                 it ('should move S', () => {
-                    expect (reducer.city (initialState, {
+                    expect (filterReducers.city (initialState, {
                         type: types.moveTypes.city,
                         env: ['sel', 'excl'],
                         payload: payload_moveSelToExcl
                     })).toEqual (endState_movedFromSelToExcl);
                 });
-              
-            })
-            
+            });
         });
 
         describe('toggle only top flag', () => {
             it ('should return false for .inclRest', () => {
-                expect (reducer.city (initialState, {
+                expect (filterReducers.city (initialState, {
                     type: types.onlyTopTypes.city,
                     
                 }).inclRest).toEqual (false);
             });
+        });
+                
+    });
+    
+
+    describe ('compIndy', () => {
+        const type = 'compIndy';
+        const reducer = filterReducers[type]
+
+        const initialState = new FilterCompIndustry({
+            sel: List ([2,1]),
+            sortOrder: List (['text']),
+            sortByOrder: true,
+            inclRest: true,
+            sortRest: false,
+            excl: List ([]),
+            // rest: List ([])
+        });        
+
+        const restPayload = [3];
+
+        const endState_rest = new FilterCompIndustry({
+            sel: List ([2,1]),
+            sortOrder: List (['text']),
+            sortByOrder: true,
+            inclRest: true,
+            sortRest: false,
+            excl: List ([]),
+            rest: List (restPayload),
+        });        
+
+        it ('should return the initial state', () => {
+            expect (reducer (undefined, {})).toEqual (initialState);
+        });
+
+        describe ('fill in rest values', () => {
+            describe ('rest list', () => {
+                it ('should change from null to passed values', () => {
+                                                        // console.log ('types.selectableTypes.', types.selectableTypes)
+                    expect (reducer (initialState, {
+                        type: types.selectableTypes[type],
+                        payload: restPayload
+                    })).toEqual (endState_rest);
+                    // }).rest).toEqual (List (restPayload));
+                });
+            });
+        });
+        
+
+        // describe ('update order', () => {
+        //     describe('for selected filters sel', () => {
+        //         it ('should swap the first two elems', () => {
+        //             expect (filterReducers.city (initialState, {
+        //                 type: types.updateTypes.city,
+        //                 env: ['sel'],
+        //                 payload: payload_swapSel
+        //             })).toEqual (endState_selSwapped);
+        //         });
+        //     });
+        // });
+
+        // describe ('move between zones', () => {
+        //     describe('from sel to excl', () => {
+        //         it ('should move S', () => {
+        //             expect (filterReducers.city (initialState, {
+        //                 type: types.moveTypes.city,
+        //                 env: ['sel', 'excl'],
+        //                 payload: payload_moveSelToExcl
+        //             })).toEqual (endState_movedFromSelToExcl);
+        //         });
+              
+        //     })
+            
+        // });
+
+        // describe('toggle only top flag', () => {
+        //     it ('should return false for .inclRest', () => {
+        //         expect (filterReducers.city (initialState, {
+        //             type: types.onlyTopTypes.city,
+                    
+        //         }).inclRest).toEqual (false);
+        //     });
           
-        })
+        // })
         
         
     });

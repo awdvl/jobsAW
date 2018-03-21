@@ -83,10 +83,11 @@ const locRefForModalType = {
 };
 
 // ---->> does not return values, if modalType not 'city'!!
+// -->>> this better only one time before the Section calls in FModal.jsx!!!
 const getLocForModalType = (loc, modalType) => {
     const locRef = locRefForModalType[modalType];
-                                    // bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
-                                    //         loc, modalType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
+                                    bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
+                                            loc, modalType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
     return loc[locRef[0]].get (locRef[1]);
 }
 
@@ -97,10 +98,10 @@ const SecElems = (props) => {
     if (loc) {
         const locForElem = getLocForModalType (loc, modalType)
                                                                 //                     bug('*** locForElem', locForElem)
-                                                                // bug('*** props.zoneFilterOrder', props.zoneFilterOrder)
+                                                                bug('*** props.zoneFilterOrder', props.zoneFilterOrder)
         return props.zoneFilterOrder.map ((elem) => {
-                                                                //                     bug('*** order elem', elem)
-                                                                // bug('*** text ', locForElem.get (String (elem)))
+                                                                                    bug('*** order elem', elem)
+                                                                bug('*** text ', locForElem.get (String (elem)))
             return (
                 <FMSElem 
                     key={elem}
@@ -207,7 +208,7 @@ export default class FModalSelected extends Component {
         // const zoneLoc = uiLoc.zone[zoneType];  
         const zoneTitle = loc.filter.getIn (['zone', zoneType, 'title']);  
         const zoneFilterOrder = getFilterZone (modalType, zoneType);
-                                                    bug('+++ zoneFilterOrder', modalType, zoneType, zoneFilterOrder)
+                                                    bug('*** zoneFilterOrder', modalType, zoneType, zoneFilterOrder)
         return connectDropTarget (
             <div>
                 <Section>

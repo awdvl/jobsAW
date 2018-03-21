@@ -127,12 +127,9 @@ const initStateTypes = {};
  *              but should not be the sorting for the rest, e.g. ['city'] for FilterCity)
  *  excl: []  excluded items
 */
-const initStateCity = new FilterCity({
-    sel: List(['F']),
-    // sel: List(['S', 'M']),
-    // sel: ['S', 'M'],
-    // sel: ['F', 'M'],
-    // sel: [],
+export const initStateCity = new FilterCity({
+    // sel: List(['F']),
+    sel: List(['S', 'M']),
     // sortOrder: ['pop', 'name'],
     sortOrder: List(['pop']),
     // sortOrder: ['pop', 'name','DSC'],
@@ -148,38 +145,14 @@ const initStateCity = new FilterCity({
     // sortRest: ['pop', 'DSC'],
     // sortRest: ['text', 'DSC'],
     // sortRest: ['text'],
-    // excl: []
-    // excl: ['K']
-    excl: List(['K']),
-    // excl: List([])
-    rest: null
+    // excl: List(['K']),
+    excl: List([]),
+    // rest: null
     
 });
 
 initStateTypes.city = initStateCity;
 
-
-
-
-export const city = (state=initStateCity, action) => {
-    switch (action.type) {
-        case selectableTypes.city:
-            return state.set ('rest', List (action.payload));  // --> set Record basics for other filters!!
-
-        // UPDATE_CITY_ORDER:
-        case updateTypes.city:
-            return updateZone (state, action);
-
-        case moveTypes.city:
-            return moveToZone (state, action);
-
-        case onlyTopTypes.city:
-            return state.set ('inclRest', !state.inclRest);
-
-        default:
-            return state;
-    }
-};
 
 
 const initStateCompIndy = new FilterCompIndustry({
@@ -194,7 +167,8 @@ const initStateCompIndy = new FilterCompIndustry({
     sortRest: false,
     // excl: [3]
     excl: List ([]),
-    rest: null
+    // rest: null
+    // rest: List ([])
 });
 
 initStateTypes.compIndy = initStateCompIndy;
@@ -213,7 +187,7 @@ const initStateCompEmply = new FilterCompEmply({
     inclRest: false,
     sortRest: true,
     excl: List ([]),
-    rest: null
+    // rest: null
 });
 
 initStateTypes.compEmply = initStateCompEmply;
@@ -230,7 +204,7 @@ const initStateJobType = new FilterJobType({
     sortRest: true,
     excl: List ([]),
     // excl: List ([2]),
-    rest: null
+    // rest: null
 });
 
 initStateTypes.jobType = initStateJobType;
@@ -239,17 +213,17 @@ initStateTypes.jobType = initStateJobType;
 const makeFilterReducer = (filter) =>
     (state=initStateTypes[filter], action) => {
         switch (action.type) {
-            case selectableTypes.city:
+            case selectableTypes[filter]:
                 return state.set ('rest', List (action.payload));  // --> set Record basics for other filters!!
 
             // UPDATE_CITY_ORDER:
-            case updateTypes.city:
+            case updateTypes[filter]:
                 return updateZone (state, action);
 
-            case moveTypes.city:
+            case moveTypes[filter]:
                 return moveToZone (state, action);
 
-            case onlyTopTypes.city:
+            case onlyTopTypes[filter]:
                 return state.set ('inclRest', !state.inclRest);
 
             default:
@@ -258,28 +232,7 @@ const makeFilterReducer = (filter) =>
     };
 
 
-const compIndy = (state=initStateCompIndy, action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
-};
-
-const compEmply = (state=initStateCompEmply, action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
-};
-
-const jobType = (state=initStateJobType, action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
-};
-
-const filterReducers = filterTypes.reduce ((acc, filter) => {
+export const filterReducers = filterTypes.reduce ((acc, filter) => {
     acc[filter] = makeFilterReducer (filter);
     return acc;
 }, {});
@@ -290,10 +243,6 @@ export const filter = combineReducers ({
     __movingFromZone,
     __pointToPath,
     __mapToPath,
-    // city,
-    // compIndy,
-    // compEmply,
-    // jobType,
     city: filterReducers.city,
     compIndy: filterReducers.compIndy,
     compEmply: filterReducers.compEmply,
@@ -312,12 +261,6 @@ export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
 export const getMovingFromZone = (state) => state.ui.filter.__movingFromZone;
 
 export const getFilterOrder = (state) => state.ui.filter.__order;
-
-// this only in selector.index.js  ->> not better to keep it directly with the getFilter
-// export const getSelectedCities = (state) => state.ui.filter.city.sel;
-// export const getSelectedJobType = (state) => state.ui.filter.jobType.sel;
-// export const getSelectedCompIndy = (state) => state.ui.filter.compIndy.sel;
-
 
 export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get (zone);
 export const getFilterTopOnlyFor = (state) => (filter) => !state.ui.filter[filter].inclRest

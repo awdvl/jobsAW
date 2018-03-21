@@ -7,6 +7,7 @@ import { Record, List } from 'immutable';
  *  inclRest: boolean  include other items (except excluded values)
  *  sortRest: true/[]  true: same sort order as in sortOrder,  []: define a different sort order
  *  excl: []  excluded items
+ *  rest: []  selectable items
 */
 const FilterCompEmplyRecord = Record({
     sel: List([]),
@@ -15,7 +16,7 @@ const FilterCompEmplyRecord = Record({
     inclRest: false,
     sortRest: true,
     excl: List([]),
-    rest: null
+    rest: List([]),
 });
 
 const FilterCompEmply = FilterCompEmplyRecord;
