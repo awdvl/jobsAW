@@ -164,7 +164,7 @@ export default class FilterZoneElem extends Component {
         // bug('FElem.jsx this.props', this.props)
         const opacity = isDragging ? 0 : 1;
 
-        return compose(connectDragSource, connectDropTarget)(
+        return compose (connectDragSource, connectDropTarget)(
             // div necessary, as "Only native element nodes can now be passed to React DnD connectors"
             <div>
                 <FMSECompButton
@@ -173,7 +173,7 @@ export default class FilterZoneElem extends Component {
                         opacity
                     }}
                 >
-                    {makeFilterButton({
+                    {makeFilterButton ({
                         text
                     })}
                 </FMSECompButton>

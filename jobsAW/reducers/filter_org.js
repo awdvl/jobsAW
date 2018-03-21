@@ -8,7 +8,6 @@ import FilterCompEmply from '../records/FilterCompEmply';
 import R from 'ramda';
 
 import { 
-    filterTypes,
     selectableTypes,
     updateTypes,
     moveTypes,
@@ -19,11 +18,15 @@ import {
 
 import bug from '../../_libs/bug';
 
-// this from user params
+// const initStateOrder = List(['city', 'compIndy']);
+// const initStateOrder = List(['city', 'compIndy', 'jobType']);
+
 const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
+// const initStateOrder = List(['compIndy', 'city', 'jobType', 'compEmply']);
 
 export const __order = (state=initStateOrder, action) => {
     switch (action.type) {
+        // UPDATE_FILTER_ORDER:
         case updateTypes._:
             // return state.splice(action.payload.index, 1).splice(action.payload.atIndex, 0, action.payload.filter);
             return swapOrder (state, action);
@@ -82,40 +85,6 @@ const __mapToPath = (state=initMapToPath, action) => {
 };
 
 
-// immutable array swap
-// const swapInArray = (arrayOrg, {filter, index, atIndex}) => {
-//     const array = [...arrayOrg];
-//     array[index] = array[atIndex];
-//     array[atIndex] = filter;
-
-//     return array;
-// }
-
-// this in helper with a higher order switch, checking if it is a swap, a delete or a insert
-const swapOrder = (state, action) => 
-    state
-        .set (action.payload.index, state.get (action.payload.atIndex))
-        .set (action.payload.atIndex, action.payload.elem);
-
-const updateZone = (state, action) => 
-    state.set (action.env[0], swapOrder (state.get (action.env[0]), action));
-
-const moveToZone = (state, action) => {
-    const fromZone = state.get (action.env[0]);
-    const toZone = state.get (action.env[1]);
-                                    // bug('*** fromZone', fromZone); bug('*** moveToZOne state, action', state, action)
-                                    // bug('## action.payload.atIndex', action.payload.atIndex)
-    const newState = state
-        .set (action.env[0], fromZone.delete (action.payload.index))
-        .set (action.env[1], toZone.insert (action.payload.atIndex, action.payload.elem))
-        // .set (action.env[0], fromZone.splice (action.payload.index, 1))
-        // .set (action.env[1], toZone.splice (action.payload.atIndex, 0, action.payload.elem))
-
-    return newState;
-};
-
-const initStateTypes = {};
-
 /** 
  *  sel: []  selected items
  *  sortOrder: []  sort by a predefined order concept, e.g. by name, population, ...
@@ -156,10 +125,40 @@ const initStateCity = new FilterCity({
     
 });
 
-initStateTypes.city = initStateCity;
 
 
+// immutable array swap
+// const swapInArray = (arrayOrg, {filter, index, atIndex}) => {
+//     const array = [...arrayOrg];
+//     array[index] = array[atIndex];
+//     array[atIndex] = filter;
 
+//     return array;
+// }
+
+
+// this in helper with a higher order switch, checking if it is a swap, a delete or a insert
+const swapOrder = (state, action) => 
+    state
+        .set (action.payload.index, state.get (action.payload.atIndex))
+        .set (action.payload.atIndex, action.payload.elem);
+
+const updateZone = (state, action) => 
+    state.set (action.env[0], swapOrder (state.get (action.env[0]), action));
+
+const moveToZone = (state, action) => {
+    const fromZone = state.get (action.env[0]);
+    const toZone = state.get (action.env[1]);
+                                    // bug('*** fromZone', fromZone); bug('*** moveToZOne state, action', state, action)
+                                    // bug('## action.payload.atIndex', action.payload.atIndex)
+    const newState = state
+        .set (action.env[0], fromZone.delete (action.payload.index))
+        .set (action.env[1], toZone.insert (action.payload.atIndex, action.payload.elem))
+        // .set (action.env[0], fromZone.splice (action.payload.index, 1))
+        // .set (action.env[1], toZone.splice (action.payload.atIndex, 0, action.payload.elem))
+
+    return newState;
+};
 
 export const city = (state=initStateCity, action) => {
     switch (action.type) {
@@ -175,6 +174,8 @@ export const city = (state=initStateCity, action) => {
 
         case onlyTopTypes.city:
             return state.set ('inclRest', !state.inclRest);
+            // with a set option!
+            // return state.set ('inclRest', action.payload !== undefined ? action.payload : !state.inclRest);
 
         default:
             return state;
@@ -197,7 +198,12 @@ const initStateCompIndy = new FilterCompIndustry({
     rest: null
 });
 
-initStateTypes.compIndy = initStateCompIndy;
+const compIndy = (state=initStateCompIndy, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+};
 
 
 const initStateCompEmply = new FilterCompEmply({
@@ -215,8 +221,26 @@ const initStateCompEmply = new FilterCompEmply({
     excl: List ([]),
     rest: null
 });
+// const initStateCompEmply = new FilterCompEmply({
+//     // sel: [],
+//     sel: [4,5,6,9],
+//     // sel: [9,6,5,4],
+//     // sortOrder: ['emply'],
+//     // sortOrder: ['DSC'],
+//     sortOrder: ['DSC'],
+//     sortByOrder: true,
+//     // sortByOrder: false,
+//     inclRest: false,
+//     sortRest: true,
+//     excl: []
+// });
 
-initStateTypes.compEmply = initStateCompEmply;
+const compEmply = (state=initStateCompEmply, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+};
 
 
 const initStateJobType = new FilterJobType({
@@ -232,45 +256,18 @@ const initStateJobType = new FilterJobType({
     // excl: List ([2]),
     rest: null
 });
-
-initStateTypes.jobType = initStateJobType;
-
-
-const makeFilterReducer = (filter) =>
-    (state=initStateTypes[filter], action) => {
-        switch (action.type) {
-            case selectableTypes.city:
-                return state.set ('rest', List (action.payload));  // --> set Record basics for other filters!!
-
-            // UPDATE_CITY_ORDER:
-            case updateTypes.city:
-                return updateZone (state, action);
-
-            case moveTypes.city:
-                return moveToZone (state, action);
-
-            case onlyTopTypes.city:
-                return state.set ('inclRest', !state.inclRest);
-
-            default:
-                return state;
-        }
-    };
-
-
-const compIndy = (state=initStateCompIndy, action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
-};
-
-const compEmply = (state=initStateCompEmply, action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
-};
+// const initStateJobType = new FilterJobType({
+//     // sel: [3]
+//     // sel: []
+//     // sel: [1,2,3],
+//     // sel: List ([1,2,3]),
+//     sel: List ([1,2]),
+//     sortOrder: ['text'],
+//     sortByOrder: true,
+//     // inclRest: false,
+//     // sortRest: true,
+//     excl: List ([3])
+// });
 
 const jobType = (state=initStateJobType, action) => {
     switch (action.type) {
@@ -279,10 +276,6 @@ const jobType = (state=initStateJobType, action) => {
     }
 };
 
-const filterReducers = filterTypes.reduce ((acc, filter) => {
-    acc[filter] = makeFilterReducer (filter);
-    return acc;
-}, {});
 
 export const filter = combineReducers ({
     __order,
@@ -290,14 +283,10 @@ export const filter = combineReducers ({
     __movingFromZone,
     __pointToPath,
     __mapToPath,
-    // city,
-    // compIndy,
-    // compEmply,
-    // jobType,
-    city: filterReducers.city,
-    compIndy: filterReducers.compIndy,
-    compEmply: filterReducers.compEmply,
-    jobType: filterReducers.jobType,
+    city,
+    compIndy,
+    compEmply,
+    jobType,
 });
 
 

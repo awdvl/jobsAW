@@ -82,6 +82,7 @@ const locRefForModalType = {
     city: ['city', 'name'],
 };
 
+// ---->> does not return values, if modalType not 'city'!!
 const getLocForModalType = (loc, modalType) => {
     const locRef = locRefForModalType[modalType];
                                     // bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
@@ -181,7 +182,8 @@ export default class FModalSelected extends Component {
         updateFilter: PropTypes.func.isRequired,
         setIsMovingFromZone: PropTypes.func.isRequired,
         toggleTopOnly: PropTypes.func.isRequired,
-        topOnly: PropTypes.bool.isRequired,
+        // topOnly: PropTypes.bool.isRequired,
+        topOnly: PropTypes.bool,
     }
 
     render() {
@@ -215,7 +217,8 @@ export default class FModalSelected extends Component {
                         </SectionTitle>
 
                         <SectionCtrls>
-                            {zoneType === 'sel' ? 
+                            {/* {zoneType === 'sel' ?  */}
+                            {topOnly !== undefined ? 
                                 topOnlyButton ({
                                     topOnly, 
                                     topOnlyOnClick: () => toggleTopOnly (modalType), 

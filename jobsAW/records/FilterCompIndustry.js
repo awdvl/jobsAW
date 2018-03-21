@@ -14,7 +14,8 @@ const FilterCompIndustryRecord = Record({
     sortByOrder: false,
     inclRest: false,
     sortRest: true,
-    excl: List([])
+    excl: List([]),
+    rest: null
 });
 
 const FilterCompIndustry = FilterCompIndustryRecord;

@@ -14,7 +14,8 @@ const FilterCompEmplyRecord = Record({
     sortByOrder: false,
     inclRest: false,
     sortRest: true,
-    excl: List([])
+    excl: List([]),
+    rest: null
 });
 
 const FilterCompEmply = FilterCompEmplyRecord;

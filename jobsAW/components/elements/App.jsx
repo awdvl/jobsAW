@@ -7,6 +7,9 @@ import bug from '../../../_libs/bug';
 import '../../styles/base.css';
 import styled from 'styled-components';
 
+import { filterTypes } from '../../constants/filter';
+
+
 import Head from './Head';
 import Filters from '../../containers/filter';
 import Results from './Results';
@@ -41,6 +44,8 @@ class JobsList extends Component {
         loaded: PropTypes.bool.isRequired,
         loc: PropTypes.object.isRequired,
         jobs: PropTypes.array.isRequired,
+        modalIsOpen: PropTypes.bool.isRequired,
+        filterIsMoving: PropTypes.bool.isRequired,
     }
 
     getData() {
@@ -49,28 +54,42 @@ class JobsList extends Component {
         loader ([fetchCities, fetchCompanies, fetchLocCommon, fetchJobs]);
     }
 
+    loadSelectablesIntoFilterRecord() {
+        const { loaded, setSelectables, selectableFilters, setSelectablesLoadedFlag, selectablesLoadedFlag } = this.props;
+
+        if (!selectablesLoadedFlag && loaded) {
+            setSelectablesLoadedFlag (true);
+            // setSelectables ('city', selectableFilters[0]);
+            // filterTypes.map ((filter, index) => setSelectables (filter, selectableFilters[index]));
+            filterTypes.map ((filter, index) => {
+                bug ('index', index,selectableFilters[index])
+                return setSelectables (filter, selectableFilters[index]);
+            })
+        }
+    }
+
     componentDidMount() {
         this.getData ();
     }
 
     componentDidUpdate(prevProps) {
-        const { loaded, setSelectables, selectableFilters, 
-            setSelectablesLoadedFlag, selectablesLoadedFlag } = this.props;
+        this.loadSelectablesIntoFilterRecord ();
+        // const { loaded, setSelectables, selectableFilters, 
+        //     setSelectablesLoadedFlag, selectablesLoadedFlag } = this.props;
 
-        if (!selectablesLoadedFlag && loaded) {
-            setSelectablesLoadedFlag (true);
-            setSelectables ('city', selectableFilters[0]);
-        }
+        // if (!selectablesLoadedFlag && loaded) {
+        //     setSelectablesLoadedFlag (true);
+        //     setSelectables ('city', selectableFilters[0]);
+        // }
     }
 
 
     render () {
                                                             bug('App.jsx -> this.props', this.props)
-        const { loaded, loc, jobs, selectableFilters, setSelectables } = this.props;
+        const { loaded, loc, jobs, modalIsOpen, filterIsMoving } = this.props;
                                                         // bug('getLoc.recomputations()', getLoc.recomputations())
                                                         // bug('getJobData.recomputations()', getJobData.recomputations())
                                                         // bug('getData.recomputations()', getData.recomputations())
-
         return (
             <Site>
                 <Head></Head>
@@ -80,6 +99,8 @@ class JobsList extends Component {
                 <Results 
                     loaded={loaded} 
                     jobs={jobs} 
+                    modalIsOpen={modalIsOpen}
+                    filterIsMoving={filterIsMoving}
                 />
                 <Footer />
             </Site>

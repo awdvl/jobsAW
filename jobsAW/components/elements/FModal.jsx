@@ -143,9 +143,16 @@ class ReactModalAdapter extends Component {
                         />
 
                         <FModalSelected
+                            zoneType='rest'
+                            moveFilter={moveFilter}
+                            // topOnly={topOnly}
+                            {...this.props}
+                        />
+
+                        <FModalSelected
                             zoneType='excl'
                             moveFilter={moveFilter}
-                            topOnly={topOnly}
+                            // topOnly={topOnly}
                             {...this.props}
                         />
 
