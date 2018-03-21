@@ -8,9 +8,10 @@ import RListItems from './RListItems';
 
 
 export default  ({ loaded, jobs}) => {
-
-    const heading = 'Front-end Engineer';
-    const numberOfJobs = '12';
+                                                                        // bug ('#### jobs.length', jobs.length)
+    // const heading = 'Front-end Engineer';
+    const heading = 'Software Engineer';
+    const numberOfJobs = jobs.length;
     
     const ListWrapper = styled.div`
         background: white;
@@ -33,7 +34,7 @@ export default  ({ loaded, jobs}) => {
     `;
 
     const HeaderJobNumers = styled.span`
-        color: #9994a2;
+        color: #8c858c;
         font-size: 1.75em;
         font-weight: bold;
         width: 60px;

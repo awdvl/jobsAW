@@ -161,7 +161,7 @@ export default class FilterZoneElem extends Component {
             connectDropTarget,
 
         } = this.props;
-        // bug('FElem.jsx this.props', this.props)
+                                                                            // bug('FElem.jsx this.props', this.props)
         const opacity = isDragging ? 0 : 1;
 
         return compose (connectDragSource, connectDropTarget)(

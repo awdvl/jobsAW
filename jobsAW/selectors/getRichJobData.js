@@ -9,9 +9,7 @@ import { getLoadingFinished } from '../reducers';
 
 const getLanguage = (state) => state.settings.language;
 const getData = (state) => state.data;
-// const getLoadingFinished = (state) => loadingFinished (state);
 
-// ---> this to connect with the ui reducer data, when defined
 const getId = (state) => state.id;
 
 

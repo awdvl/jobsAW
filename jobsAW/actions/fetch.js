@@ -117,14 +117,14 @@ export const setSelectablesLoadedFlag = (loaded) => ({
 //     payload: loaded
 // })};
 
-// export const setSelectables = (type, payload) => ({
-//     type: selectableTypes[type],
-//     payload
-// });
-export const setSelectables = (type, payload) => {
-    console.log ('fetch.js action - type, selectableTypes[type], payload', type, selectableTypes[type], payload)
-    return ({
+export const setSelectables = (type, payload) => ({
     type: selectableTypes[type],
     payload
-    })
-};
+});
+// export const setSelectables = (type, payload) => {
+//     console.log ('fetch.js action - type, selectableTypes[type], payload', type, selectableTypes[type], payload)
+//     return ({
+//     type: selectableTypes[type],
+//     payload
+//     })
+// };

@@ -58,6 +58,26 @@ const CloseModalButton = ModalButton.extend`
     }
 `;
 
+const locRefForModalType = {
+    jobType: ['job', 'type'],
+    compIndy: ['comp', 'indy'],
+    compEmply: ['comp', 'emply'],
+    city: ['city', 'name'],
+};
+
+// ---->> does not return values, if modalType not 'city'!!
+// -->>> this better only one time before the Section calls in FModal.jsx!!!
+const getLocForModalType = (loc, modalType) => {
+    if (!loc) {
+        return;
+    }
+
+    const locRef = locRefForModalType[modalType];
+                                    // bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
+                                    //         loc, modalType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
+    return loc[locRef[0]].get (locRef[1]);
+}
+
 
 class ReactModalAdapter extends Component {
     static propTypes = {
@@ -122,8 +142,10 @@ class ReactModalAdapter extends Component {
                     type: modalType, setIsMovingFromZone
                 });
 
+                const locForModalType = getLocForModalType (loc, modalType);
                 const topOnly = getFilterTopOnly (modalType);
                                                                                         // bug('topOnly', topOnly)
+                const props = { ...this.props, ...{ moveFilter, locForModalType }};
                                             // bug('*** reactModalContent - loc', loc)
                 return (
                     <div>
@@ -137,23 +159,18 @@ class ReactModalAdapter extends Component {
 
                         <FModalSelected
                             zoneType='sel'
-                            moveFilter={moveFilter}
                             topOnly={topOnly}
-                            {...this.props}
+                            {...props}
                         />
 
                         <FModalSelected
                             zoneType='rest'
-                            moveFilter={moveFilter}
-                            // topOnly={topOnly}
-                            {...this.props}
+                            {...props}
                         />
 
                         <FModalSelected
                             zoneType='excl'
-                            moveFilter={moveFilter}
-                            // topOnly={topOnly}
-                            {...this.props}
+                            {...props}
                         />
 
                     </div>

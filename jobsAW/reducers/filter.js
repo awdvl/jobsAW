@@ -133,8 +133,8 @@ export const initStateCity = new FilterCity({
     // sortOrder: ['pop', 'name'],
     sortOrder: List(['pop']),
     // sortOrder: ['pop', 'name','DSC'],
-    sortByOrder: false,
-    // sortByOrder: true,
+    // sortByOrder: false,
+    sortByOrder: true,
     // inclRest: false,
     inclRest: true,
     // sortRest: false,
@@ -194,17 +194,14 @@ initStateTypes.compEmply = initStateCompEmply;
 
 
 const initStateJobType = new FilterJobType({
-    // sel: [3]
-    // sel: []
-    // sel: List ([1,2,3]),
     sel: List ([1, 3]),
     sortOrder: List (['text']),
-    sortByOrder: true,
+    // sortByOrder: true,
+    sortByOrder: false,
     inclRest: false,
     sortRest: true,
     excl: List ([]),
     // excl: List ([2]),
-    // rest: null
 });
 
 initStateTypes.jobType = initStateJobType;

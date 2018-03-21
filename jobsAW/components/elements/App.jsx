@@ -59,12 +59,13 @@ class JobsList extends Component {
 
         if (!selectablesLoadedFlag && loaded) {
             setSelectablesLoadedFlag (true);
-            // setSelectables ('city', selectableFilters[0]);
-            // filterTypes.map ((filter, index) => setSelectables (filter, selectableFilters[index]));
-            filterTypes.map ((filter, index) => {
-                bug ('index', index,selectableFilters[index])
-                return setSelectables (filter, selectableFilters[index]);
-            })
+            
+            filterTypes.map ((filter, index) => 
+                setSelectables (filter, selectableFilters[index]));
+            // filterTypes.map ((filter, index) => {
+            //                                                     bug ('index', index,selectableFilters[index])
+            //     return setSelectables (filter, selectableFilters[index]);
+            // })
         }
     }
 
@@ -74,13 +75,6 @@ class JobsList extends Component {
 
     componentDidUpdate(prevProps) {
         this.loadSelectablesIntoFilterRecord ();
-        // const { loaded, setSelectables, selectableFilters, 
-        //     setSelectablesLoadedFlag, selectablesLoadedFlag } = this.props;
-
-        // if (!selectablesLoadedFlag && loaded) {
-        //     setSelectablesLoadedFlag (true);
-        //     setSelectables ('city', selectableFilters[0]);
-        // }
     }
 
 

@@ -9,19 +9,19 @@ import bug from '../../_libs/bug';
 
 // const extractAll = (filterNames, filters, data) => {
 export const extractAll = (filters, data) => {
-                                                                            bug ('*** extractAll filters ', filters);
+                                                        bug ('*** filterSelectables.js extractAll filters ', filters);
     const bucketReducer = (getProp, bucket) => (prev, curr) => {
-        const propValue = getProp(curr);
-        // bug('curr', curr, propValue)
+        const propValue = getProp (curr);
+                                                                                    // bug('curr', curr, propValue)
         bucket[propValue] = bucket[propValue] ||
-            prev.push(propValue) && propValue;
+            prev.push (propValue) && propValue;
 
         return prev;
     };
 
     const getNotSelectablesIndex = (filter) => ({
-        ...makeIndex(filter.sel, 1),
-        ...makeIndex(filter.excl, 1)
+        ...makeIndex (filter.sel, 1),
+        ...makeIndex (filter.excl, 1)
     });
 
     // const filterName = 'jobType';
@@ -34,20 +34,20 @@ export const extractAll = (filters, data) => {
         (elem) => !notSelectablesIndex[elem];
 
     const uniqueReducer = (filters, filterName) =>
-        bucketReducer(filterPropAccessorFor(filters).getProp(filterName), {});
+        bucketReducer (filterPropAccessorFor (filters).getProp (filterName), {});
 
     const selectablesPredicate = (filters, filterName) =>
-        R.compose(filterPredicateWith, getNotSelectablesIndex)(filters[filterName]);
+        R.compose (filterPredicateWith, getNotSelectablesIndex) (filters[filterName]);
 
     const mapper = (filters) => (filterName) =>
-        R.pipe(
-            R.reduce(uniqueReducer(filters, filterName), []),
+        R.pipe (
+            R.reduce (uniqueReducer (filters, filterName), []),
             R.filter (selectablesPredicate (filters, filterName))
         );
 
     const xmap = R.pipe(
-        R.map(R.applyTo(filters, mapper)),
-        R.map(R.applyTo(data))
+        R.map (R.applyTo (filters, mapper)),
+        R.map (R.applyTo (data))
     );
 
     return xmap;

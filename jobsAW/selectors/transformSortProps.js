@@ -7,12 +7,6 @@ import filterPropAccessorFor from '../reducers/filterPropAccessorFor';
 
 import { List, Iterable } from 'immutable';
 
-// const citySel = ['city', {
-//     S: 0,
-//     M: 1,
-//     // F: 2
-// }];
-
 // sel: [],
 // sortOrder: [],
 // sortByOrder: false,
@@ -20,76 +14,35 @@ import { List, Iterable } from 'immutable';
 // sortRest: true,
 // excl: []
 
-// const asArray = (value) => Array.isArray(value) ? value: [value];
+
 // generic 
-const getByPropValueOf = R.curry((obj, getProp, item) => obj[getProp (item)]);
-const propIsUndefinedIn = R.curry((obj, prop) => obj[prop] === undefined);
+const getByPropValueOf = R.curry ((obj, getProp, item) => obj[getProp (item)]);
+const propIsUndefinedIn = R.curry ((obj, prop) => obj[prop] === undefined);
 
 const wrapInArray = (value) => [value];
 
 
-// const reduceIndexed = R.addIndex (R.reduce);
 
-// /**
-//  *  @param ary {Array} -  the array for which the index will be made
-//  *  @param i {Number} -  array index from which on the index will be added  -  default: 0 (new index)
-//  */
-// const makeIndex = (ary, i = 0) => (
-//         reduceIndexed ( (acc, value, index) => {
-//             acc[value] = index + i;
-//             return acc;
-//         }, 
-//         {}
-
-//     ) (ary, i));
-
-// const makeIndex2 = (ary, acc = {}, i = 0) => (
-//         reduceIndexed ( (acc, value, index) => {
-//             acc[value] = index + i;
-//             return acc;
-//         }, 
-//         acc
-
-//     ) (ary, i));
-
-
-// get the start index independent, whether or not the object is a iterable (List)    
-const getIndexStart = (obj) =>
+// get the start index, whether or not the object is a iterable (List)    
+const getSize = (obj) =>
     obj[Iterable.isIterable (obj) ? 'size' : 'length'];
-
 
 const makePropAccessFor = R.curry ((filterState, type, filterName) =>
     (filterState[type].get (filterName) || filterName));
-// const makePropAccessFor = R.curry((filterState, type, filterName) => {
-//     // bug('+++ makePropAccessFor - filterState, type, filterName', filterState, type, filterName)
-//     bug('+++ makePropAccessFor -- filterName', filterName, (filterState[type].get(filterName) || filterName))
-//     return (filterState[type].get(filterName) || filterName);
-// })
 
 
 // this better as transform
 const transformSortProps = (filterState, filteredRecords) => {
-                                                            bug('+++++ filterState', filterState)
-                                                            // bug('++ filterState.__order', filterState.__order)
-                                                            // bug('++ filterState.city', filterState.city)
+                                                                        // bug('+++++ filterState', filterState)
     const filterPropAccessor = filterPropAccessorFor (filterState);
 
     const getPropName = filterPropAccessor.getPropName;
     const getPropNameMapped = filterPropAccessor.getPropNameMapped;
     const getProp = filterPropAccessor.getProp;
 
-    // const makePropAccess = makePropAccessFor (filterState);
-    // const getPropName = makePropAccess ('__pointToPath');
-
-    // const getPropNameMapped = R.pipe (
-    //     getPropName, 
-    //     makePropAccess ('__mapToPath')
-    // );
-
     const getSortOrder = (filter) => filter.sortRest === true ?
             !R.isEmpty (filter.sortOrder) ? filter.sortOrder : undefined :
             filter.sortRest;
-
 
     const sortSamples = (filter, sortFilterProps, samples) => {
                                                                         // bug('** filter.sortRest',filter.sortRest)
@@ -99,7 +52,7 @@ const transformSortProps = (filterState, filteredRecords) => {
             getByPropValueOf (samples.index)
         );
 
-        const mapAsFilterValue = R.map ( getValueFromIndexBy('id') );
+        const mapAsFilterValue = R.map ( getValueFromIndexBy ('id') );
 
 
         // multi sort for the extracted items
@@ -108,7 +61,6 @@ const transformSortProps = (filterState, filteredRecords) => {
 
         const sortSamplesFor = R.pipe (multiSorted, mapAsFilterValue);
         const sortedSamples = sortSamplesFor (samples.list);
-        
                                                                         // bug('** sortedSamples', sortedSamples)
         return sortedSamples;
 
@@ -142,10 +94,6 @@ const transformSortProps = (filterState, filteredRecords) => {
         return preparedProp;
     });
 
-
-    // -->> possible also for R.path with automatic switch
-    // const getPropFor = filterName => obj => R.prop (filterName, obj);
-    // const getPropFor = R.prop;
     
     const reduceRestToSamples = (getProp, indexIsUndefined) => {
 
@@ -176,8 +124,6 @@ const transformSortProps = (filterState, filteredRecords) => {
             preparedProp = [ getPropNameMapped (filterName) ];
 
             if (filter.sortRest) {
-                // const getProp = R.compose (getPropFor, getPropNameMapped);
-
                 const getSamplesFromRest = reduceRestToSamples (
                     getProp (filterName), 
                     propIsUndefinedIn (selIndex)
@@ -193,7 +139,7 @@ const transformSortProps = (filterState, filteredRecords) => {
                                                                         // bug('+++ sortedSamples', sortedSamples)
                 selIndex = {
                     ...selIndex, 
-                    ...makeIndex (sortedSamples, getIndexStart (filter.sel))
+                    ...makeIndex (sortedSamples, getSize (filter.sel))
                 };
                 
             }
@@ -205,7 +151,7 @@ const transformSortProps = (filterState, filteredRecords) => {
                                                         // bug('sortByOrder -> filter.sortOrder', filter.sortOrder)
             preparedProp = getSortedFilterProps (filterName, filter.sortOrder);
         }
-                                                                            // bug('>>> preparedProp', preparedProp)
+                                                                            bug('>>> preparedProp', preparedProp)
         return preparedProp;
 
 

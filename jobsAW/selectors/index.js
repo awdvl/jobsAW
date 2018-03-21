@@ -12,7 +12,6 @@ import { groupBySelection, flatten } from './groupData';
 import transformSortProps from './transformSortProps';
 import multiSort from './multiSort';
 
-import { setSelectables } from '../actions/filter';
 import { getFilter } from '../reducers/filter';
 import filterPropAccessorFor from '../reducers/filterPropAccessorFor';
 
@@ -33,19 +32,14 @@ const getSelectableFilters = createSelector (
     getFilter,
 
     (richJobData, filter) => {
-        
 
         const fi5 = extractAll (filter, richJobData);
         const fi5i = fi5 (filterTypes);
-
-                                                        bug ('+++ selectors - fi5i', fi5i, fi5i[0]);
-        // setSelectables ('city', fi5i[0]);
-
+                                                        // bug ('+++ selectors - fi5i', fi5i, fi5i[0]);
         return fi5i;
-        
     }
-
 );
+
 
 // --> call getJobData (via fetch.js) only on Modal close!!!
 const getJobData = createSelector (
@@ -74,11 +68,11 @@ const getJobData = createSelector (
 
             // basic predicate filtering
             const multiFiltered = filterByPredicates (predicates, richJobData);
-                                                                    // bug('multiFiltered', multiFiltered)
+                                                                bug('>> selectors - multiFiltered', multiFiltered)
             const sortProps = transformSortProps (filters, multiFiltered);
-                                                                    // bug('sortProps', sortProps)
+                                                                bug('>> selectors - sortProps', sortProps)
             const multiSorted = multiSort (sortProps, multiFiltered);
-                                                                    // bug('multiSorted', multiSorted)
+                                                                bug('>> selectors - multiSorted', multiSorted)
 
             return multiSorted;
 

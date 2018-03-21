@@ -15,7 +15,7 @@ const RListItem = ListElem.extend`
 
 const Left = styled.div`
     width: 40px;
-    background: blanchedalmond;
+    /* background: blanchedalmond; */
     display:flex;
 `;
 
@@ -29,7 +29,7 @@ const Main = styled.div`
 
 const Right = styled.div`
     width: 60px;
-    background: azure;
+    /* background: azure; */
     display:flex;
 `;
 
@@ -64,6 +64,10 @@ const Item = ({job}) => (
         <Main>
             <ItemTitle>
                 {job.text.title}
+                &nbsp; &middot; &nbsp;
+                <CompanyButton>
+                    {job.text.type}
+                </CompanyButton>
             </ItemTitle>
             <MainLines>
                 <CompanyButton>
