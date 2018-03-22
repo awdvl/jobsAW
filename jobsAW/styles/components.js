@@ -9,6 +9,7 @@ export const ListElem = styled.li`
         flex: 1;
     /* padding: .5em 0; */
     padding: .5em 1.25em;
+    background: white;
 `;
 
 export const SoftButton = styled.button`

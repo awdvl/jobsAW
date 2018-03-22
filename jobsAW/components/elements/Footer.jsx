@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
     font-size: 1em;
-    color: grey;
+    color: #710b60;
     background: white;
     padding: .5em 2.5em;
 
@@ -13,8 +13,17 @@ const Wrapper = styled.div`
     border-top: 1px solid #710b60;    
 `;
 
+const Copy = styled.span`
+    font-size: .75em;
+    color: grey;
+    margin-left: 1.5em;
+`;
+
 export default () => (
     <Wrapper>
-        BlueJobs
+        JobsFiltered 
+        <Copy>
+        React Showcase &copy; 2018 Alexander Werner 
+        </Copy>
     </Wrapper>
 );

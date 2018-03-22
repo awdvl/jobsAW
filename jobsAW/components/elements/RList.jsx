@@ -14,7 +14,7 @@ export default  ({ loaded, jobs}) => {
     const numberOfJobs = jobs.length;
     
     const ListWrapper = styled.div`
-        background: white;
+        background: #e8cde4;
         border-top: 1px solid #000000;
         border-bottom: 1px solid #000000;
         /* width: 500px; */
@@ -31,7 +31,7 @@ export default  ({ loaded, jobs}) => {
         position: fixed;
         background: white;
         margin-top: -1em;
-        padding: 0 1.25em;
+        padding: 0 1.75em 0 3em;
     `;
 
     const HeaderHeading = styled.h3`

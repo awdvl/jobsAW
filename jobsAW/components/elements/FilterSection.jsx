@@ -17,7 +17,7 @@ import bug from '../../../_libs/bug';
 const Wrapper = styled.div`
     font-size: 1.5em;
     color: gray;
-    padding: 1em 2.25em;
+    padding: 1em 5em;
     width: 100%;
     position: fixed;
     margin-top: 58.5px;
@@ -40,10 +40,11 @@ const Wrapper = styled.div`
 
 const Header = styled.div`
     color: white;
-    font-size: 1.25em;
+    font-size: 1.33em;
     font-weight: 300;
     height: 1.25em;
-    margin-right: 1.5em;
+    margin-right: 1.75em;
+    line-height: 1.75em;
 `;
 
 const FilterElems = (props) => {

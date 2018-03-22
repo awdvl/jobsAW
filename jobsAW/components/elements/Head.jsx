@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    font-size: 1.5em;
-    color: grey;
+    font-size: 2em;
+    color: #710b60;
     font-style: italic;
     background: white;
-    border-bottom: 1px solid saddlebrown;
-    padding: .75em 3em;
+    border-bottom: 1px solid #710b60;
+    padding: .45em 1.75em;
     position: fixed;
     width: 100%;
 `;
@@ -24,6 +24,6 @@ const Logo = styled.div`
 export default () => (
     <Wrapper>
         {/* <Logo /> */}
-        BlueJobs
+        JobsFiltered
     </Wrapper>
 );
