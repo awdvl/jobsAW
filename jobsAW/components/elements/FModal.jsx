@@ -222,7 +222,7 @@ const StyledModal = styled(ReactModalAdapter).attrs({
         background: seagreen;
         position: absolute;
         top: 0px;
-        left: 151px;
+        left: 222px;
     }
     .Overlay {
         background: #3d4641;

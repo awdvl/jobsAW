@@ -11,52 +11,36 @@ import bug from '../../../_libs/bug';
 
 
 const FComp = styled.div`
-    /* width: 100px; */
     background: #8c0275;
     border: 1px solid white;
     padding: .5em;
     margin: 0 .5em;
     text-align: center;
-    /* line-height: .75em; */
 
-    &:hover {
-        background: #630353;
-    }
+    background: ${props => (
+        props.hovered ?
+            '#630353' :
+            props.active ? 
+                'white' : 
+                'transparent'
+    )};
 `;
 
 const FCompButton = SoftButton.extend`
-    color: white;
+    color: ${props => (props.active ? 
+        props.hovered ?
+            '#e0bdda' :
+            '#96097f' : 
+        'white'
+    )};
     padding: .25em;
     border-radius: 3px;
-
-    /* &:hover {
-        background: #d9e4e4;
-    } */
-    /* &:focus {
-        border-color: red;
-    } */
 `;
 
 const dndStyle = {
     cursor: 'move'
 };
 
-// const clickFilterButton = (e) => {
-//     bug('button clicked!')
-// };
-
-
-
-const makeFilterButton = ({text, setModalParams}) => {
-    return (
-        <FCompButton
-            onClick={setModalParams}
-        >
-            {text}
-        </FCompButton>
-    );
-
-};
 
 const filterSource = {
     beginDrag (props) {
@@ -75,7 +59,6 @@ const filterSource = {
         const didDrop = monitor.didDrop ();
                                                                     // bug('*** didDrop',didDrop)
         if (!didDrop) {
-            // props.moveFilter (droppedId, originalIndex);
             const { moveFilter, filterOrder } = props;
             moveFilter (filterOrder, droppedId, originalIndex);
         }
@@ -90,12 +73,10 @@ const filterTarget = {
     hover (props, monitor) {
                                                                 // bug('*** hover item-props', monitor.getItem(), props)
         const { id: draggedId } = monitor.getItem ();
-        // const { id: overId } = props;
         const { id: overId, filterOrder, moveFilter } = props;
 
         if (draggedId !== overId) {
             const overIndex = props.findFilter (overId);
-            // props.moveFilter (draggedId, overIndex);
             moveFilter (filterOrder, draggedId, overIndex);
         }
     },
@@ -118,6 +99,8 @@ export default class FilterElem extends Component {
         moveFilter: PropTypes.func.isRequired,
         findFilter: PropTypes.func.isRequired,
         id: PropTypes.string.isRequired,
+        active: PropTypes.bool.isRequired,
+        hovered: PropTypes.bool.isRequired,
         text: PropTypes.string.isRequired,
         setModalType: PropTypes.func.isRequired,        
 
@@ -129,6 +112,8 @@ export default class FilterElem extends Component {
             connectDropTarget,
             isDragging,
             id,
+            active,
+            hovered,
             text, 
             setModalType
         } = this.props;
@@ -143,13 +128,16 @@ export default class FilterElem extends Component {
                         ...dndStyle,
                         opacity
                     }}
+                    active={active}
+                    hovered={hovered}
+                    onClick={() => {setModalType(id)}}
                 >
-                    {makeFilterButton ({
-                        text, 
-                        setModalParams: () => {
-                            setModalType(id)
-                        }
-                    })}
+                    <FCompButton
+                        active={active}
+                        hovered={hovered}
+                    >
+                        {text}
+                    </FCompButton>
                 </FComp>
             </div>
         );

@@ -9,7 +9,6 @@ import RListItems from './RListItems';
 
 export default  ({ loaded, jobs}) => {
                                                                         // bug ('#### jobs.length', jobs.length)
-    // const heading = 'Front-end Engineer';
     const heading = 'Software Engineer';
     const numberOfJobs = jobs.length;
     
@@ -57,7 +56,6 @@ export default  ({ loaded, jobs}) => {
 
     const LoadedList = ({jobs}) => (
         <div>
-            {/* <RListHeader className='listElemW'> */}
             <RListHeader>
                 <HeaderHeading>
                     {heading}

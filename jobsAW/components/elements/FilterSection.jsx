@@ -8,6 +8,7 @@ import { findElem, moveElem } from '../../../_libs/dnd';
 import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
+import StateComponent from '../facc/StateComponent'
 import FElem from './FElem';
 import FModal from '../../containers/filterModal';
 
@@ -25,17 +26,6 @@ const Wrapper = styled.div`
 
     display: flex;
 
-    /* font-size: 1.5em;
-    color: gray;
-    background: seagreen;
-    padding: 1em 2.5em;
-    width: 100%;
-    position: fixed;
-    margin-top: 58.5px;
-    background: wheat;
-
-    display: flex; */
-
 `;
 
 const Header = styled.div`
@@ -52,12 +42,23 @@ const FilterElems = (props) => {
         return props.filterOrder.map((elem) => {
 
             return (
-                <FElem 
-                    key={elem}
-                    id={elem}
-                    text={props.locFilter.get(elem)}
-                    {...props}
-                />
+                <StateComponent key={elem}
+                    active={false}
+                >
+                    {(elemState) => {
+                                                                        // bug('+++ FilterSection props', props)
+                        return (
+                            <FElem 
+                                key={elem}
+                                id={elem}
+                                active={props.modalType === elem}
+                                hovered={elemState.hovered}
+                                text={props.locFilter.get(elem)}
+                                {...props}
+                            />
+                        );
+                    }}
+                </StateComponent>
             );
         });
     }
@@ -91,7 +92,7 @@ export default class Filters extends Component {
     }
 
     render() {
-                                                                    bug('*** Filters this.props', this.props)
+                                                                    // bug('*** Filters this.props', this.props)
         const { 
             connectDropTarget, 
             filterOrder, 

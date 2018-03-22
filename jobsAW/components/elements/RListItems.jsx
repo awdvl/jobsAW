@@ -3,6 +3,10 @@ import '../../styles/rlist.css';
 import styled from 'styled-components';
 import { ListElem, SoftButton } from '../../styles/components';
 
+import StateComponent from '../facc/StateComponent';
+
+import bug from '../../../_libs/bug';
+
 // const RListItem = styled.div`
 //     display: flex;
 // `;
@@ -49,24 +53,59 @@ const ItemTitle = MainLines.extend`
 // `;
 
 const CompanyButton = SoftButton.extend`
-    /* color: red; */
-    /* padding-right: .5em; */
     &:hover {
         color: #878a8a;
     }
 `;
 
 const JobTypeButton = CompanyButton.extend`
-    line-height: 2em
+    line-height: 2em;
 `;
 
-
+// this as Component with modalType
 const Item = ({job}) => (
     <RListItem>
         <Left>
         </Left>
 
-        <Main>
+        <StateComponent 
+            /* key={elem} */
+            active={false}
+        >
+            {(elemState) => {
+                                                                // bug('+++ FilterSection props', props)
+                return (
+                    <Main>
+                        <ItemTitle>
+                            {job.text.title}
+                            &nbsp; &middot; &nbsp;
+                            <JobTypeButton>
+                                {job.text.type}
+                            </JobTypeButton>
+                        </ItemTitle>
+                        <MainLines>
+                            <CompanyButton>
+                                {job.text.company}
+                            </CompanyButton>
+                                &nbsp; &middot; &nbsp;
+                            <CompanyButton>
+                                {job.text.city}
+                            </CompanyButton>
+                        </MainLines>
+                    </Main>
+                    
+                    /* <FElem 
+                        key={elem}
+                        id={elem}
+                        active={props.modalType === elem}
+                        hovered={elemState.hovered}
+                        text={props.locFilter.get(elem)}
+                        {...props}
+                    /> */
+                );
+            }}
+        </StateComponent>
+        {/* <Main>
             <ItemTitle>
                 {job.text.title}
                 &nbsp; &middot; &nbsp;
@@ -83,7 +122,7 @@ const Item = ({job}) => (
                     {job.text.city}
                 </CompanyButton>
             </MainLines>
-        </Main>
+        </Main> */}
 
         <Right>
         </Right>

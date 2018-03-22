@@ -151,7 +151,7 @@ const transformSortProps = (filterState, filteredRecords) => {
                                                         // bug('sortByOrder -> filter.sortOrder', filter.sortOrder)
             preparedProp = getSortedFilterProps (filterName, filter.sortOrder);
         }
-                                                                            bug('>>> preparedProp', preparedProp)
+                                                                            // bug('>>> preparedProp', preparedProp)
         return preparedProp;
 
 

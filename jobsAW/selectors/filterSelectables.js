@@ -6,7 +6,6 @@ import filterPropAccessorFor from '../reducers/filterPropAccessorFor';
 import bug from '../../_libs/bug';
 
 
-
 export const extractAll = (filters, data) => {
                                                     // bug ('*** filterSelectables.js extractAll filters ', filters);
     const bucketReducer = (getProp, bucket) => (prev, curr) => {

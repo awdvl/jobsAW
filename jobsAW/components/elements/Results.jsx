@@ -45,13 +45,11 @@ export default class Results extends Component {
     }
 
     render() {
+        bug ('Results props', this.props)
         return (
             <div>
                 <Wrapper>
                     <RList {...this.props} />
-                    {/* <RDetails>
-                    Hurz
-                </RDetails> */}
                 </Wrapper>
                 <RDetails>
                     Hurz
