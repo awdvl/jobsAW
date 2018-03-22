@@ -36,7 +36,7 @@ const FMHTitle = styled.div`
 
 const ModalButton = SoftButton.extend`
     width: 50px;
-    height: 50px;
+    height: 46px;
     background: transparent;
 `;
 
@@ -222,12 +222,12 @@ const StyledModal = styled(ReactModalAdapter).attrs({
         background: seagreen;
         position: absolute;
         top: 0px;
-        left: 211px;
+        left: 151px;
     }
     .Overlay {
         background: #3d4641;
         opacity: .95;
-        position: absolute;
+        position: fixed;
         top: 130px;
         bottom: 0;
         left: 0;

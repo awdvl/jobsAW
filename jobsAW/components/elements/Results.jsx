@@ -19,33 +19,44 @@ const Wrapper = styled.div`
     align-content: stretch; /* Extra space in Cross Axis */    
 
     margin-top: 148.5px;
-    margin-bottom: 32px;
-    padding-bottom: 32px;
+    margin-bottom: 31px;
 `;
 
-// const Results = styled.div`
-//     background: rgba(0, 0, 0, .3);
-//     border: 1px solid #000000;
+const RDetails = styled.div`
+    background: rgba(0, 0, 0, .3);
+    border: 1px solid #000000;
 
-//     flex: 1; /* same as flex: 1 1 auto; */
-    
-//     /* Needed for when the area gets squished too far and there is content that can't be displayed */
-//     overflow: auto; 
-// `;
+    /* same as flex: 1 1 auto; */
+     /* flex: 1; */
+
+    /* Needed for when the area gets squished too far and there is content that can't be displayed */
+    /* overflow: auto;  */
+
+    position: fixed;
+    top: 148.5px;
+    right: 0;
+    width: calc(100% - 411px);
+    bottom: 31px;
+`;
 
 export default class Results extends Component {
-    shouldComponentUpdate (nextProps, nextState) {
+    shouldComponentUpdate(nextProps, nextState) {
         return !nextProps.modalIsOpen && !nextProps.filterIsMoving;
     }
 
     render() {
         return (
-            <Wrapper>
-                <RList {...this.props} />
-                {/* <Results>
+            <div>
+                <Wrapper>
+                    <RList {...this.props} />
+                    {/* <RDetails>
                     Hurz
-                </Results> */}
-            </Wrapper>
+                </RDetails> */}
+                </Wrapper>
+                <RDetails>
+                    Hurz
+                </RDetails>
+            </div>
         );
     }
 }

@@ -25,6 +25,13 @@ export default  ({ loaded, jobs}) => {
 
         border-bottom: 1px solid grey;
         display: flex;
+
+        /* fix header */
+        width: 411px;
+        position: fixed;
+        background: white;
+        margin-top: -1em;
+        padding: 0 1.25em;
     `;
 
     const HeaderHeading = styled.h3`
@@ -50,7 +57,8 @@ export default  ({ loaded, jobs}) => {
 
     const LoadedList = ({jobs}) => (
         <div>
-            <RListHeader className='listElemW'>
+            {/* <RListHeader className='listElemW'> */}
+            <RListHeader>
                 <HeaderHeading>
                     {heading}
                 </HeaderHeading>

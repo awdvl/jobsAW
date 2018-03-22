@@ -44,8 +44,8 @@ const SectionCtrls = styled.div`
 `;
 
 const SectionBody = styled.div`
-    min-height: 5.5em;
-    padding: 1em;
+    min-height: 4.5em;
+    padding: .5em 1em;
     display: flex;
 `;
 

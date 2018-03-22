@@ -20,8 +20,7 @@ import {
 import bug from '../../_libs/bug';
 
 // this from user params
-// const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
-const initStateOrder = List(['city', 'jobType', 'compIndy', 'compEmply']);
+export const initStateOrder = List(['city', 'jobType', 'compIndy', 'compEmply']);
 
 export const __order = (state=initStateOrder, action) => {
     switch (action.type) {
@@ -194,17 +193,6 @@ const initStateCompEmply = new FilterCompEmply({
 initStateTypes.compEmply = initStateCompEmply;
 
 
-// const initStateJobType = new FilterJobType({
-//     sel: List ([1, 3]),
-//     sortOrder: List (['text']),
-//     sortByOrder: true,
-//     // sortByOrder: false,
-//     inclRest: true,
-//     // inclRest: false,
-//     sortRest: true,
-//     excl: List ([]),
-//     // excl: List ([2]),
-// });
 const initStateJobType = new FilterJobType({
     sel: List ([1, 3]),
     sortOrder: List (['text']),
@@ -263,10 +251,6 @@ export const filter = combineReducers ({
 
 // accessor functions
 export const getFilter = (state) => state.ui.filter;
-// const getFilters = (state) => {
-//             bug('----->>> filters state', state);bug('----->>> filters state2', JSON.stringify(state))
-//     return state.ui.filter;
-// }
 
 export const getFilterIsMoving = (state) => state.ui.filter.__isMoving;
 export const getMovingFromZone = (state) => state.ui.filter.__movingFromZone;

@@ -1,5 +1,5 @@
 // import * as reducer from './filter';
-import { __order, filterReducers, initStateCity } from './filter';
+import { __order, initStateOrder, filterReducers, initStateCity } from './filter';
 import * as types from '../constants/filter';
 
 import FilterCity from '../records/FilterCity';
@@ -9,9 +9,9 @@ import { List } from 'immutable';
 
 describe ('filter reducer', () => {
     describe ('__order', () => {
-        const initialState = List(['city', 'compIndy', 'jobType', 'compEmply']);
-        const endState_citySwapped = List(['compIndy', 'city', 'jobType', 'compEmply']);
-        const endState_jobTypeSwapped = List(['compIndy', 'jobType', 'city', 'compEmply']);
+        const initialState = initStateOrder;
+        const endState_citySwapped = List(['jobType', 'city', 'compIndy', 'compEmply']);
+        const endState_jobTypeSwapped = List(['jobType', 'compIndy', 'city', 'compEmply']);
         
         const payload_swapCity = {
             elem: 'city',
@@ -20,7 +20,7 @@ describe ('filter reducer', () => {
         };
 
         const payload_swapJobType = {
-            elem: 'jobType',
+            elem: 'compIndy',
             index: 2,
             atIndex: 1
         };
@@ -161,7 +161,7 @@ describe ('filter reducer', () => {
         const initialState = new FilterCompIndustry({
             sel: List ([2,1]),
             sortOrder: List (['text']),
-            sortByOrder: true,
+            sortByOrder: false,
             inclRest: true,
             sortRest: false,
             excl: List ([]),
@@ -173,7 +173,7 @@ describe ('filter reducer', () => {
         const endState_rest = new FilterCompIndustry({
             sel: List ([2,1]),
             sortOrder: List (['text']),
-            sortByOrder: true,
+            sortByOrder: false,
             inclRest: true,
             sortRest: false,
             excl: List ([]),
