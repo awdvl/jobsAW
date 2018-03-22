@@ -23,8 +23,8 @@ const Wrapper = styled.div`
 `;
 
 const RDetails = styled.div`
-    background: rgba(0, 0, 0, .3);
-    border: 1px solid #000000;
+    background: #fdf4fc;
+    border: 1px solid #710b60;
 
     /* same as flex: 1 1 auto; */
      /* flex: 1; */
@@ -35,7 +35,7 @@ const RDetails = styled.div`
     position: fixed;
     top: 148.5px;
     right: 0;
-    width: calc(100% - 411px);
+    width: calc(100% - 420px);
     bottom: 31px;
 `;
 

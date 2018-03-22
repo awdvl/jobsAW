@@ -56,6 +56,11 @@ const CompanyButton = SoftButton.extend`
     }
 `;
 
+const JobTypeButton = CompanyButton.extend`
+    line-height: 2em
+`;
+
+
 const Item = ({job}) => (
     <RListItem>
         <Left>
@@ -65,9 +70,9 @@ const Item = ({job}) => (
             <ItemTitle>
                 {job.text.title}
                 &nbsp; &middot; &nbsp;
-                <CompanyButton>
+                <JobTypeButton>
                     {job.text.type}
-                </CompanyButton>
+                </JobTypeButton>
             </ItemTitle>
             <MainLines>
                 <CompanyButton>

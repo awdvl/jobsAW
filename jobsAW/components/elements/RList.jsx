@@ -27,7 +27,7 @@ export default  ({ loaded, jobs}) => {
         display: flex;
 
         /* fix header */
-        width: 411px;
+        width: 420px;
         position: fixed;
         background: white;
         margin-top: -1em;
