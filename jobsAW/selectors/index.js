@@ -3,7 +3,14 @@ import R, { sort } from 'ramda';
 import bug from '../../_libs/bug';
 
 import { getRichJobData, getLoc } from './getRichJobData';
-import { getPredicateCity, getPredicateJobType } from './getFilterPredicates';
+import { 
+    getPredicateCity, 
+    getPredicateJobType,
+    getPredicateCompIndy,
+    getPredicateCompEmply,
+
+} from './getFilterPredicates';
+
 import { extractAll } from './filterSelectables';
 
 import { filterByPredicates } from './filterData';
@@ -48,13 +55,18 @@ const getJobData = createSelector (
 
     getPredicateCity,
     getPredicateJobType,
+    getPredicateCompIndy,
+    getPredicateCompEmply,
 
     (
         richJobData,
         filters,
 
         predicateCity, 
-        predicateJobType
+        predicateJobType,
+        predicateCompIndy,
+        predicateCompEmply,
+
     ) => {
                                                                     // bug('------------------------- selectors ---')
                                                                     bug('selectors::richJobData', richJobData)
@@ -63,7 +75,9 @@ const getJobData = createSelector (
 
             const predicates = [
                 predicateCity,
-                predicateJobType
+                predicateJobType,
+                predicateCompIndy,
+                predicateCompEmply,
             ];
 
             // basic predicate filtering

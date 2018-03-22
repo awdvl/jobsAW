@@ -20,7 +20,8 @@ import {
 import bug from '../../_libs/bug';
 
 // this from user params
-const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
+// const initStateOrder = List(['city', 'compIndy', 'jobType', 'compEmply']);
+const initStateOrder = List(['city', 'jobType', 'compIndy', 'compEmply']);
 
 export const __order = (state=initStateOrder, action) => {
     switch (action.type) {
@@ -133,8 +134,8 @@ export const initStateCity = new FilterCity({
     // sortOrder: ['pop', 'name'],
     sortOrder: List(['pop']),
     // sortOrder: ['pop', 'name','DSC'],
-    // sortByOrder: false,
-    sortByOrder: true,
+    sortByOrder: false,
+    // sortByOrder: true,
     // inclRest: false,
     inclRest: true,
     // sortRest: false,
@@ -160,8 +161,8 @@ const initStateCompIndy = new FilterCompIndustry({
     // sel: [],
     // sortOrder: [1,2],
     sortOrder: List (['text']),
-    // sortByOrder: false,
-    sortByOrder: true,
+    // sortByOrder: true,
+    sortByOrder: false,
     inclRest: true,
     // sortRest: true,
     sortRest: false,
@@ -182,8 +183,8 @@ const initStateCompEmply = new FilterCompEmply({
     // sortOrder: ['emply'],
     // sortOrder: ['DSC'],
     sortOrder: List (['DSC']),
-    sortByOrder: true,
-    // sortByOrder: false,
+    // sortByOrder: true,
+    sortByOrder: false,
     inclRest: false,
     sortRest: true,
     excl: List ([]),
@@ -193,13 +194,26 @@ const initStateCompEmply = new FilterCompEmply({
 initStateTypes.compEmply = initStateCompEmply;
 
 
+// const initStateJobType = new FilterJobType({
+//     sel: List ([1, 3]),
+//     sortOrder: List (['text']),
+//     sortByOrder: true,
+//     // sortByOrder: false,
+//     inclRest: true,
+//     // inclRest: false,
+//     sortRest: true,
+//     excl: List ([]),
+//     // excl: List ([2]),
+// });
 const initStateJobType = new FilterJobType({
     sel: List ([1, 3]),
     sortOrder: List (['text']),
     // sortByOrder: true,
     sortByOrder: false,
-    inclRest: false,
+    inclRest: true,
+    // inclRest: false,
     sortRest: true,
+    // sortRest: false,
     excl: List ([]),
     // excl: List ([2]),
 });
