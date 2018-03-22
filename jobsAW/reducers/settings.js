@@ -3,7 +3,7 @@ import { SET_LANGUAGE_SETTINGS } from '../constants/settings';
 
 // --->> change to en in final version
 // --> as Map??
-const language = (state='de', action) => {
+const language = (state='en', action) => {
     switch (action.type) {
         case SET_LANGUAGE_SETTINGS:
             return action.payload;

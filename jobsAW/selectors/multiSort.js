@@ -52,9 +52,5 @@ const makeComparator = (props) => {
 };
 
 
-const multiSort = R.curry ((props, list) => 
+export default R.curry ((props, list) => 
     R.sort (variadicEither (...R.map (makeComparator, props)), list));
-
-
-
-export default multiSort;

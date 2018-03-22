@@ -7,9 +7,8 @@ import bug from '../../_libs/bug';
 
 
 
-// const extractAll = (filterNames, filters, data) => {
 export const extractAll = (filters, data) => {
-                                                        bug ('*** filterSelectables.js extractAll filters ', filters);
+                                                    // bug ('*** filterSelectables.js extractAll filters ', filters);
     const bucketReducer = (getProp, bucket) => (prev, curr) => {
         const propValue = getProp (curr);
                                                                                     // bug('curr', curr, propValue)
@@ -23,12 +22,6 @@ export const extractAll = (filters, data) => {
         ...makeIndex (filter.sel, 1),
         ...makeIndex (filter.excl, 1)
     });
-
-    // const filterName = 'jobType';
-    //     const filterName = 'compEmply';
-    // bug('+++ selector getNotSelectablesIndex', getNotSelectablesIndex (filters[filterName]));
-    // bug('+++ --', filterPropAccessorFor (filters).getPropName (filterName))
-    // bug('+++ --', filterPropAccessorFor (filters).getPropNameMapped ('emply'))
 
     const filterPredicateWith = (notSelectablesIndex) =>
         (elem) => !notSelectablesIndex[elem];
@@ -45,14 +38,9 @@ export const extractAll = (filters, data) => {
             R.filter (selectablesPredicate (filters, filterName))
         );
 
-    const xmap = R.pipe(
+    return R.pipe(
         R.map (R.applyTo (filters, mapper)),
         R.map (R.applyTo (data))
     );
 
-    return xmap;
-    // const xmap2 = xmap (filterNames);
-    //                                                                     bug ('*** extractAll xmap2', xmap2);
-
-    // return xmap2;
 };

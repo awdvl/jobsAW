@@ -10,10 +10,11 @@ import { getLoadingFinished } from '../reducers';
 const getLanguage = (state) => state.settings.language;
 const getData = (state) => state.data;
 
+// this not implemented (details for a single job id)
 const getId = (state) => state.id;
 
 
-export const getRichJobData = createSelector (
+export default createSelector (
     getLoadingFinished,
     getLanguage,
     getData,

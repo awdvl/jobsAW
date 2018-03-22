@@ -54,7 +54,7 @@ export const __movingFromZone = (state=null, action) => {
     }
 };
 
-const initPointToPath = Map({
+const initPointToPath = Map ({
     jobType: 'type',
     compIndy: 'indy',
     compEmply: 'emply',
@@ -68,7 +68,7 @@ const __pointToPath = (state=initPointToPath, action) => {
     }
 };
 
-const initMapToPath = Map({
+const initMapToPath = Map ({
     indy: ['param', 'indy'],
     emply: ['param', 'emply'],
     pop: ['param', 'pop'],

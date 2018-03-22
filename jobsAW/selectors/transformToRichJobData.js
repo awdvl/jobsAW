@@ -1,6 +1,6 @@
 import bug from '../../_libs/bug';
 
-
+// id would be for a single job details
 export default (language, data, id) => {
 
     const jobDetails = data.jobs.get ('details');
