@@ -30,6 +30,7 @@ const comparator = R.curry ((sel, inclRest, excl, x) => {
 
 });
 
+// ---> instead of key pass an access function identity or key!!!
 const comparator2 = (key) => {
                                                                 // bug('°° comparator2 invoke key', key)
 
@@ -54,25 +55,74 @@ const comparator2 = (key) => {
     }));
 };
 
+const comparator3 = (getProp) => {
+    return (R.curry ((sel, inclRest, excl, xObj) => {
+
+        const x = getProp (xObj);
+                                                                        // bug('°° comparator2 xObj, x', xObj, x)
+        // only sel
+        if (!inclRest && !R.isEmpty (sel)) {
+            return R.contains (x, sel);
+
+        // all without excl
+        // } else if (excl && !R.isEmpty (excl)) {
+        } else if (!R.isEmpty (excl)) {
+            return !R.contains (x, excl);
+
+        // all
+        } else {
+            return true;
+        }
+    }));
+};
+const comparator4 = (R.curry ((getProp, sel, inclRest, excl, xObj) => {
+
+        const x = getProp (xObj);
+                                                                        // bug('°° comparator2 xObj, x', xObj, x)
+        // only sel
+        if (!inclRest && !R.isEmpty (sel)) {
+            return R.contains (x, sel);
+
+        // all without excl
+        // } else if (excl && !R.isEmpty (excl)) {
+        } else if (!R.isEmpty (excl)) {
+            return !R.contains (x, excl);
+
+        // all
+        } else {
+            return true;
+        }
+    }));
+
+
 
 // const makePredicate = (sel, inclRest, excl, key) => R.propSatisfies (comparator (sel, inclRest, excl), key);
 
 const makePredicate = (sel, inclRest, excl, key) => {
-    let predicateComparator;
+    // let predicateComparator;
 
     bug('°° keyA', key)
 
-    if (Array.isArray (key)) {
-        predicateComparator = comparator2 (key[1]);
-        key = key[0];
+    // if (Array.isArray (key)) {
+    //     predicateComparator = comparator2 (key[1]);
+    //     key = key[0];
 
-    } else {
-        predicateComparator = comparator;
+    // } else {
+    //     predicateComparator = comparator;
+    // }
+    let getProp = R.identity;
+
+    if (Array.isArray (key)) {
+        getProp = R.prop (key[1]);
+        key = key[0];
     }
+
+    const predicateComparator = comparator3 (getProp);
 
     bug('°° keyB', key)
 
-    return R.propSatisfies (predicateComparator (sel, inclRest, excl), key);
+    // return R.propSatisfies (predicateComparator (sel, inclRest, excl), key);
+    return R.propSatisfies (comparator4 (getProp, sel, inclRest, excl), key);
 }
 
 export default makePredicate;
