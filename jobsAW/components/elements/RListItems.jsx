@@ -68,9 +68,9 @@ const ItemTitle = MainLines.extend`
 // `;
 
 const CompanyButton = SoftButton.extend`
-    &:hover {
+    /* &:hover {
         color: #878a8a;
-    }
+    } */
 `;
 
 const JobTypeButton = CompanyButton.extend`

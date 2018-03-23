@@ -15,8 +15,8 @@ const FMSECompButton = SoftButton.extend`
     background: snow;
     box-shadow: 0 0 0 0.5px #424e3d;
     margin: .5em;
-    /* padding-left: .5em; */
-    padding-left: 1em;
+    /* padding-left: 1em; */
+    padding: 0em 1em;
     text-align: left;
     line-height: 36px;
 
@@ -34,6 +34,7 @@ const ButtonClose = styled.div`
     color: #9dd0c6;
     width: 36px;
     height: 36px;
+    margin-right: -1em;
     background: transparent;
     text-align: center;
     float: right;
@@ -71,9 +72,9 @@ const makeFilterButton = ({ text }) => {
                 {text}
             </ButtonText>
 
-            <ButtonClose 
+            {/* <ButtonClose 
                 onClick={() => {bug('Exclude item')}}
-            />
+            /> */}
         </div>
     );
 
