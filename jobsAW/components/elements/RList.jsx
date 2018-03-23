@@ -7,13 +7,14 @@ import bug from '../../../_libs/bug';
 import RListItems from './RListItems';
 
 
-export default  ({ loaded, jobs}) => {
+export default  (props) => {
+    const {loaded, jobs, resultId, setResultId} = props;
                                                                         // bug ('#### jobs.length', jobs.length)
     const heading = 'Software Engineer';
     const numberOfJobs = jobs.length;
     
     const ListWrapper = styled.div`
-        background: #e8cde4;
+        background: #e0e0e0;
         border-top: 1px solid #000000;
         border-bottom: 1px solid #000000;
         /* width: 500px; */
@@ -26,7 +27,7 @@ export default  ({ loaded, jobs}) => {
         display: flex;
 
         /* fix header */
-        width: 420px;
+        width: 430px;
         position: fixed;
         background: white;
         margin-top: -1em;
@@ -48,13 +49,21 @@ export default  ({ loaded, jobs}) => {
         text-align: right;
     `;
 
+    const Loading = styled.div`
+        color: #775271;
+        font-size: 2.5em;
+        padding: 1.5em 2em;
+        background: white;
+        width: 100%;
+    `;
+
     const RListItemsWrapper = styled.ul`
         display: flex;
         flex-direction: column;
     `;
 
 
-    const LoadedList = ({jobs}) => (
+    const LoadedList = ({jobs, setResultId, resultId}) => (
         <div>
             <RListHeader>
                 <HeaderHeading>
@@ -68,22 +77,22 @@ export default  ({ loaded, jobs}) => {
                 {jobs.map ((job) => (
                     <RListItems key={job.id}
                         job={job}
+                        resultId={resultId}
+                        onClickItem={() => setResultId (job.id)}
                     />
                 ))}
             </RListItemsWrapper>
         </div>
     );
     
-    const List = () => 
-        (loaded ?
-            <LoadedList jobs={jobs} /> :
-            <p>Loading...</p>);
-    
-            
     return (
-        <ListWrapper >
-            <List />
-        </ListWrapper >
+        loaded ? (
+            <ListWrapper >
+                <LoadedList {...props} />
+            </ListWrapper >
+            
+        ) : 
+        <Loading>Loading...</Loading>
     );
 
 };

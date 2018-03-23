@@ -23,6 +23,10 @@ const Wrapper = styled.div`
 `;
 
 const RDetails = styled.div`
+    color: #9a528e;    
+    font-size: 2em;
+    padding: 2em 3em;
+
     background: #fdf4fc;
     border: 1px solid #710b60;
 
@@ -35,9 +39,15 @@ const RDetails = styled.div`
     position: fixed;
     top: 148.5px;
     right: 0;
-    width: calc(100% - 420px);
+    width: calc(100% - 430px);
     bottom: 31px;
 `;
+
+const getResultDetails = ({jobs, resultId}) => {
+    const job = jobs.filter ((job, index) => job.id === resultId);
+
+    return job[0] && job[0].text.intro;
+};
 
 export default class Results extends Component {
     shouldComponentUpdate(nextProps, nextState) {
@@ -45,14 +55,14 @@ export default class Results extends Component {
     }
 
     render() {
-        bug ('Results props', this.props)
+                                                                        // bug ('Results props', this.props)
         return (
             <div>
                 <Wrapper>
                     <RList {...this.props} />
                 </Wrapper>
                 <RDetails>
-                    Hurz
+                    {getResultDetails (this.props)}
                 </RDetails>
             </div>
         );

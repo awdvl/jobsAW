@@ -37,6 +37,14 @@ const Header = styled.div`
     line-height: 1.75em;
 `;
 
+const Loading = styled.span`
+    color: white;
+    font-size: 1.75em;
+    line-height: 1.2em;
+    position: absolute;
+    left: 6em;
+`;
+
 const FilterElems = (props) => {
     if (props.locFilter) {
         return props.filterOrder.map((elem) => {
@@ -63,7 +71,8 @@ const FilterElems = (props) => {
         });
     }
 
-    return <span>Loading...</span>;
+    return <Loading>Loading...</Loading>;
+    // return <span>Loading...</span>;
 };
 
 

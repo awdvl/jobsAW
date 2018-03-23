@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
     setModalType: (type) => dispatch (setModalType (type)),
 });
 
-const enhance = connect(
+const enhance = connect (
     mapStateToProps,
     mapDispatchToProps
 );

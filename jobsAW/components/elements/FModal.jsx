@@ -44,17 +44,13 @@ const CloseModalButton = ModalButton.extend`
 
     color: #9dd0c6;
 
-    /* &:after {
-        content: '\00D7';
-        font-size: 3em;
-    } */
     &:after {
         content: '\\2713';
         font-size: 2em;
     }
 
     &:hover {
-        color: #f35d5d;
+        color: #ad1f96;
     }
 `;
 
@@ -217,12 +213,12 @@ const StyledModal = styled(ReactModalAdapter).attrs({
     modalClassName: 'Modal',
 }) `
     .Modal {
-        /* width: 820px; */
         width: 800px;
         background: seagreen;
         position: absolute;
         top: 0px;
         left: 222px;
+        outline: none;
     }
     .Overlay {
         background: #3d4641;

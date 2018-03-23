@@ -13,12 +13,15 @@ import bug from '../../../_libs/bug';
 class StateComponent extends Component {
     constructor(props) {
         super (props);
+        
+        const {active = false} = props;
 
         this.state = {
             hover: false,
             hovered: false,
             focus: false,
-            active: this.props.active,
+            // active: this.props.active,
+            active: active,
         };
     }
 

@@ -7,14 +7,29 @@ import StateComponent from '../facc/StateComponent';
 
 import bug from '../../../_libs/bug';
 
-// const RListItem = styled.div`
-//     display: flex;
+
+// const RListItem = ListElem.extend`
+//     /* display: flex; */
+//     &:hover {
+//         background: aliceblue;
+//     }
 // `;
+
 const RListItem = ListElem.extend`
-    /* display: flex; */
-    &:hover {
-        background: aliceblue;
-    }
+    margin: 1px 5px;
+
+    background: ${(props) => {
+                                            /* bug('RListItem props', props)         */
+        /* return props.active ?
+            'red':
+            'white' */
+        return props.hovered ?
+            '#eafbe9' :
+
+            props.active ?
+                '#f0e0fb':
+                'white'
+    }};
 `;
 
 const Left = styled.div`
@@ -63,18 +78,20 @@ const JobTypeButton = CompanyButton.extend`
 `;
 
 // this as Component with modalType
-const Item = ({job}) => (
-    <RListItem>
-        <Left>
-        </Left>
+const Item = ({job, resultId, onClickItem}) => (
+    <StateComponent>
+        {(elemState) => {
+            return (
 
-        <StateComponent 
-            /* key={elem} */
-            active={false}
-        >
-            {(elemState) => {
-                                                                // bug('+++ FilterSection props', props)
-                return (
+                <RListItem
+                    onClick={onClickItem}
+                    // active={elemState.active}
+                    active={resultId === job.id}
+                    hovered={elemState.hovered}
+                >
+                    <Left>
+                    </Left>
+
                     <Main>
                         <ItemTitle>
                             {job.text.title}
@@ -93,40 +110,16 @@ const Item = ({job}) => (
                             </CompanyButton>
                         </MainLines>
                     </Main>
-                    
-                    /* <FElem 
-                        key={elem}
-                        id={elem}
-                        active={props.modalType === elem}
-                        hovered={elemState.hovered}
-                        text={props.locFilter.get(elem)}
-                        {...props}
-                    /> */
-                );
-            }}
-        </StateComponent>
-        {/* <Main>
-            <ItemTitle>
-                {job.text.title}
-                &nbsp; &middot; &nbsp;
-                <JobTypeButton>
-                    {job.text.type}
-                </JobTypeButton>
-            </ItemTitle>
-            <MainLines>
-                <CompanyButton>
-                    {job.text.company}
-                </CompanyButton>
-                    &nbsp; &middot; &nbsp;
-                <CompanyButton>
-                    {job.text.city}
-                </CompanyButton>
-            </MainLines>
-        </Main> */}
 
-        <Right>
-        </Right>
-    </RListItem>
+                    <Right>
+                    </Right>
+                </RListItem>
+
+            );
+        }}
+
+    </StateComponent>
+        
 );
 
 export default Item;

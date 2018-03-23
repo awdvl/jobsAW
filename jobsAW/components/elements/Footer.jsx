@@ -23,7 +23,7 @@ export default () => (
     <Wrapper>
         JobsFiltered 
         <Copy>
-        React Showcase &copy; 2018 Alexander Werner 
+            &copy; 2018 Alexander Werner, &nbsp;React Showcase
         </Copy>
     </Wrapper>
 );

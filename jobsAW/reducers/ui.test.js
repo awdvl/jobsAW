@@ -52,9 +52,20 @@ describe ('ui modal reducer', () => {
                     payload: 'city'
                 }).get('type')).toEqual ('city');
             });
-        })
-
+        });
     });
 
+    describe('result', () => {
+        describe('set result detail id', () => {
+            it  ('should return', () => {
+                expect (reducer.result (undefined, {
+                    type: types.SET_RESULT_ID,
+                    payload: 12312212
+                }).get ('id')).toEqual (12312212);
+            });
+        });
+      
+    });
+    
     
 });

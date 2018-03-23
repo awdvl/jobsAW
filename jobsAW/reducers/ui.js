@@ -2,7 +2,11 @@ import { combineReducers } from 'redux';
 import { filter } from './filter';
 
 import { Map } from 'immutable';
-import { SET_MODAL_ISOPEN, SET_MODAL_TYPE } from '../constants/ui';
+import { 
+    SET_MODAL_ISOPEN, 
+    SET_MODAL_TYPE,
+    SET_RESULT_ID
+} from '../constants/ui';
 
 
 const initStateModal = Map ({
@@ -29,13 +33,30 @@ export const modal = (state=initStateModal, action) => {
     }
 };
 
+const initStateResult = Map({
+    id: null
+});
+
+export const result = (state=initStateResult, action) => {
+    switch (action.type) {
+        case SET_RESULT_ID:
+            return state.set ('id', action.payload);
+
+        default:
+            return state;
+    }
+};
+
 export const getModalIsOpen = (state) => state.ui.modal.get ('isOpen');
 export const getModalType = (state) => state.ui.modal.get ('type');
+
+export const getResultId = (state) => state.ui.result.get ('id');
 
 
 export const ui = combineReducers ({
     filter,
     modal,
+    result,
 });
 
  

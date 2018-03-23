@@ -7,25 +7,27 @@ import locCommon from '../_loc/common';
 
 const delay = (ms) => new Promise (resolve => setTimeout (resolve, ms));
 
+const delayValue = 500;
+
 export const fetchCities = (fetched) => 
-    delay (500).then (() => {
+    delay (delayValue).then (() => {
         return cities;
     });
 
 export const fetchCompanies = () => (
-    delay (500).then (() => {
+    delay (delayValue).then (() => {
         return companies;
     })
 )
     
 export const fetchLocCommon = () => (
-    delay (500).then (() => {
+    delay (delayValue).then (() => {
         return locCommon;
     })
 )
     
 export const fetchJobs = () => (
-    delay (500).then (() => {
+    delay (delayValue).then (() => {
         return jobs;
     })
 )

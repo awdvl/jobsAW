@@ -12,7 +12,8 @@ import { filterTypes } from '../../constants/filter';
 
 import Head from './Head';
 import Filters from '../../containers/filter';
-import Results from './Results';
+// import Results from './Results';
+import Results from '../../containers/result';
 import Footer from './Footer';
 
 // import { Iterable } from 'immutable';
@@ -79,7 +80,7 @@ class JobsList extends Component {
 
 
     render () {
-                                                            bug('App.jsx -> this.props', this.props)
+                                                            // bug('App.jsx -> this.props', this.props)
         const { loaded, loc, jobs, modalIsOpen, filterIsMoving } = this.props;
                                                         // bug('getLoc.recomputations()', getLoc.recomputations())
                                                         // bug('getJobData.recomputations()', getJobData.recomputations())
