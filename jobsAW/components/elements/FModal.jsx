@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { SoftButton } from '../../styles/components';
 
 import FModalSelected from './FModalSelected';
+import { getLocForFilterType } from '../../reducers/filter';
 
 import { moveElem } from '../../../_libs/dnd';
 import bug from '../../../_libs/bug';
@@ -54,25 +55,24 @@ const CloseModalButton = ModalButton.extend`
     }
 `;
 
-const locRefForModalType = {
-    jobType: ['job', 'type'],
-    compIndy: ['comp', 'indy'],
-    compEmply: ['comp', 'emply'],
-    city: ['city', 'name'],
-};
+// const locRefForModalType = {
+//     jobType: ['job', 'type'],
+//     compIndy: ['comp', 'indy'],
+//     compEmply: ['comp', 'emply'],
+//     city: ['city', 'name'],
+// };
 
-// ---->> does not return values, if modalType not 'city'!!
-// -->>> this better only one time before the Section calls in FModal.jsx!!!
-const getLocForModalType = (loc, modalType) => {
-    if (!loc) {
-        return;
-    }
 
-    const locRef = locRefForModalType[modalType];
-                                    // bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
-                                    //         loc, modalType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
-    return loc[locRef[0]].get (locRef[1]);
-}
+// const getLocForModalType = (loc, modalType) => {
+//     if (!loc) {
+//         return;
+//     }
+
+//     const locRef = locRefForModalType[modalType];
+//                                     // bug('*** FModalSelected::getLocForModalType - loc, modalType, locRef', 
+//                                     //         loc, modalType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
+//     return loc[locRef[0]].get (locRef[1]);
+// }
 
 
 class ReactModalAdapter extends Component {
@@ -138,7 +138,7 @@ class ReactModalAdapter extends Component {
                     type: modalType, setIsMovingFromZone
                 });
 
-                const locForModalType = getLocForModalType (loc, modalType);
+                const locForModalType = getLocForFilterType (loc, modalType);
                 const topOnly = getFilterTopOnly (modalType);
                                                                                         // bug('topOnly', topOnly)
                 const props = { ...this.props, ...{ moveFilter, locForModalType }};
@@ -224,7 +224,7 @@ const StyledModal = styled(ReactModalAdapter).attrs({
         background: #3d4641;
         opacity: .95;
         position: fixed;
-        top: 130px;
+        top: 177px;
         bottom: 0;
         left: 0;
         right: 0;

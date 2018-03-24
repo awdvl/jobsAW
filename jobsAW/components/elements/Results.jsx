@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     align-items: stretch; /* align items in Cross Axis */
     align-content: stretch; /* Extra space in Cross Axis */    
 
-    margin-top: 148.5px;
+    margin-top: 179px;
     margin-bottom: 31px;
 `;
 
@@ -37,7 +37,7 @@ const RDetails = styled.div`
     /* overflow: auto;  */
 
     position: fixed;
-    top: 148.5px;
+    top: 179px;
     right: 0;
     width: calc(100% - 430px);
     bottom: 31px;

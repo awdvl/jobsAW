@@ -19,6 +19,27 @@ import {
 
 import bug from '../../_libs/bug';
 
+
+const initPointToPath = Map ({
+    jobType: 'type',
+    compIndy: 'indy',
+    compEmply: 'emply',
+});
+
+const initMapToPath = Map ({
+    indy: ['param', 'indy'],
+    emply: ['param', 'emply'],
+    pop: ['param', 'pop'],
+});
+
+const locRefForFilterType = {
+    jobType: ['job', 'type'],
+    compIndy: ['comp', 'indy'],
+    compEmply: ['comp', 'emply'],
+    city: ['city', 'name'],
+};
+
+
 // this from user params
 export const initStateOrder = List(['city', 'jobType', 'compIndy', 'compEmply']);
 
@@ -53,11 +74,6 @@ export const __movingFromZone = (state=null, action) => {
     }
 };
 
-const initPointToPath = Map ({
-    jobType: 'type',
-    compIndy: 'indy',
-    compEmply: 'emply',
-});
 
 //  necessary for the different object keys in state.ui.filter and the jobs.json  ->  used in prepareFilterState
 const __pointToPath = (state=initPointToPath, action) => {
@@ -66,12 +82,6 @@ const __pointToPath = (state=initPointToPath, action) => {
             return state;
     }
 };
-
-const initMapToPath = Map ({
-    indy: ['param', 'indy'],
-    emply: ['param', 'emply'],
-    pop: ['param', 'pop'],
-});
 
 //  necessary for entering a path in the multiFiltered records
 const __mapToPath = (state=initMapToPath, action) => {
@@ -258,4 +268,15 @@ export const getMovingFromZone = (state) => state.ui.filter.__movingFromZone;
 export const getFilterOrder = (state) => state.ui.filter.__order;
 
 export const getFilterZoneFor = (state) => (filter, zone) => state.ui.filter[filter].get (zone);
-export const getFilterTopOnlyFor = (state) => (filter) => !state.ui.filter[filter].inclRest
+export const getFilterTopOnlyFor = (state) => (filter) => !state.ui.filter[filter].inclRest;
+
+export const getLocForFilterType = (loc, filterType) => {
+    if (!loc) {
+        return;
+    }
+
+    const locRef = locRefForFilterType[filterType];
+                                // bug('*** FModalSelected::getLocForFilterType - loc, filterType, locRef', 
+                                //         loc, filterType, locRef, loc[locRef[0]], loc[locRef[0]].get (locRef[1]))
+    return loc[locRef[0]].get (locRef[1]);
+};

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getFilterOrder } from '../reducers/filter';
+import { getFilterOrder, getFilterZoneFor } from '../reducers/filter';
 import { getModalIsOpen, getModalType } from '../reducers/ui';
 import { updateFilter, setIsMoving } from '../actions/filter';
 import { setModalType } from '../actions/ui';
@@ -9,6 +9,7 @@ const mapStateToProps = (state) => ({
     filterOrder: getFilterOrder (state),
     modalIsOpen: getModalIsOpen (state),
     modalType: getModalType (state),
+    getFilterZone: getFilterZoneFor (state),
 });
 const mapDispatchToProps = (dispatch) => ({
     updateFilter: (...props) => dispatch (updateFilter (...props)),

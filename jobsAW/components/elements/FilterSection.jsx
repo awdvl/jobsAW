@@ -11,6 +11,8 @@ import { SoftButton } from '../../styles/components';
 import StateComponent from '../facc/StateComponent'
 import FElem from './FElem';
 import FModal from '../../containers/filterModal';
+import { getLocForFilterType } from '../../reducers/filter';
+
 
 import bug from '../../../_libs/bug';
 
@@ -18,8 +20,9 @@ import bug from '../../../_libs/bug';
 const Wrapper = styled.div`
     font-size: 1.5em;
     color: gray;
-    padding: 1em 5em;
+    padding: .75em 4em;
     width: 100%;
+    min-height: 121px;
     position: fixed;
     margin-top: 58.5px;
     background: #96097f;
@@ -30,11 +33,11 @@ const Wrapper = styled.div`
 
 const Header = styled.div`
     color: white;
-    font-size: 1.33em;
+    font-size: 1.5em;
     font-weight: 300;
     height: 1.25em;
-    margin-right: 1.75em;
-    line-height: 1.75em;
+    margin-right: 1.25em;
+    line-height: 2.75em;
 `;
 
 const Loading = styled.span`
@@ -61,7 +64,8 @@ const FilterElems = (props) => {
                                 id={elem}
                                 active={props.modalType === elem}
                                 hovered={elemState.hovered}
-                                text={props.locFilter.get(elem)}
+                                text={props.locFilter.get (elem)}
+                                locForFilterType={getLocForFilterType (props.loc, elem)}
                                 {...props}
                             />
                         );
